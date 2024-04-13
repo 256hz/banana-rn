@@ -1,4 +1,3 @@
-// TODO: this may be obsolete
 import { DrawerActions } from '@react-navigation/native';
 
 let navigator;
@@ -15,11 +14,20 @@ function navigate(name, params?) {
 }
 
 function goBack() {
-  navigator?.goBack();
+  if (navigator) {
+    navigator.goBack();
+  } else {
+    console.log('no navigator to go back');
+  }
 }
 
 function toggleDrawer() {
-  navigator?.dispatch(DrawerActions.toggleDrawer());
+  if (navigator) {
+    console.log('dispatch', navigator);
+    navigator.dispatch(DrawerActions.toggleDrawer());
+  } else {
+    console.log('No navigator to toggle drawer');
+  }
 }
 
 export {

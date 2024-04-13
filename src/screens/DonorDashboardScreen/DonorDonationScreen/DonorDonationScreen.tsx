@@ -125,7 +125,7 @@ export default function DonorDonationScreen(props) {
   return (
     <View style={styles.outerContainer}>
       <View>
-        <NavBar {...props} showMenu={false} />
+        <NavBar {...props} />
         <SpacerInline height={20} />
 
         <View style={styles.iconRow}>

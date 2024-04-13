@@ -2,7 +2,7 @@ import { Dimensions, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 import * as colors from '@util/constants/colors';
 
-const screenWidth = Math.round(Dimensions.get('window').width);
+// const screenWidth = Math.round(Dimensions.get('window').width);
 
 export default StyleSheet.create({
   text: { color: colors.NAVY_BLUE },
@@ -10,7 +10,7 @@ export default StyleSheet.create({
   contentContainer: {
     backgroundColor: colors.LIGHT_GRAY,
     height: 56 + Constants.statusBarHeight,
-    width: screenWidth,
+    // width: screenWidth,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

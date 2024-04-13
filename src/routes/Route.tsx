@@ -3,7 +3,9 @@ import getEnv from '@util/environment';
 import { setTopLevelNavigator } from '@util/navigationService';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import {
+  createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerContentComponentProps,
+} from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import MakeClaimScreen from '../screens/MakeClaimScreen/MakeClaimScreen';
@@ -79,22 +81,62 @@ function donorOrClientDrawer() {
     };
 }
 
+// Interface for the options property
+interface DrawerItemOptions {
+  drawerLabel: () => React.ReactNode; // Assuming drawerLabel is a function returning a React Node
+  // Add other properties as needed, e.g., icon
+}
+
+// Interface for the structure of each drawer item
+interface DrawerItemConfig {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  component: React.ComponentType<any>; // Component type for the screen
+  options: DrawerItemOptions;
+}
+
+// Extending the DrawerContentComponentProps to include the custom drawerItems
+interface CustomDrawerContentProps extends DrawerContentComponentProps {
+  drawerItems: Record<string, DrawerItemConfig>; // Record of key to DrawerItemConfig
+}
+
+const CustomDrawerContent: React.FC<CustomDrawerContentProps> = ({ drawerItems, navigation, ...drawerProps }) => (
+  <DrawerContentScrollView {...drawerProps}>
+    {Object.entries(drawerItems).map(([ key, { component: { name }, options } ]) => (
+      <DrawerItem
+        key={key}
+        label={options.drawerLabel}
+        onPress={() => {
+          console.log('drawer nav button clicked', key);
+          console.log('component', name);
+          console.log('options', options);
+          navigation.navigate('DrawerNavigator', { screen: name });
+        }}
+      />
+    ))}
+    {/* Include the default DrawerItemList if needed */}
+    {/* <DrawerItemList {...props} /> */}
+  </DrawerContentScrollView>
+);
+
+
 /* Drawer Navigator */
 const Drawer = createDrawerNavigator();
 
 function DrawerNavigator() {
   const { USER_IDENTITY } = getEnv();
+  const drawerItems = donorOrClientDrawer();
 
   return (
-    <Drawer.Navigator initialRouteName="LoginScreen">
+    <Drawer.Navigator
+      // eslint-disable-next-line react/no-unstable-nested-components
+      drawerContent={props => <CustomDrawerContent {...props} drawerItems={drawerItems} />}
+      initialRouteName="LoginScreen"
+      screenOptions={{ headerShown: false }}
+    >
       {/* Common screens TODO: verify that these are correct */}
+      <Drawer.Screen name="LoginScreen" component={LoginScreen} />
       <Drawer.Screen name="LoginSuccessScreen" component={LoginSuccessScreen} />
       <Drawer.Screen name="ContactScreen" component={ContactScreen} />
-      <Drawer.Screen
-        name="LoginScreen"
-        component={LoginScreen}
-        options={{ headerShown: false }}
-      />
       <Drawer.Screen name="LogoutScreen" component={LogoutScreen} />
       <Drawer.Screen name="MapScreen" component={MapScreen} />
       <Drawer.Screen name="RegistrationScreen" component={RegistrationScreen} />

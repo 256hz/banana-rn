@@ -39,18 +39,18 @@ function DonorDashboardScreen({ navigation }) {
   // };
 
   const toggleDrawer = () => {
-    navigation.navigate('DrawerNavigator');
+    navigation.toggleDrawer();
     console.log('navigation', navigation);
   };
 
   return (
     <View style={styles.outerContainer}>
-      {/* <NavBar
+      <NavBar
         navigate={navigation.navigate}
         goBack={navigation.goBack}
         toggleDrawer={toggleDrawer}
         showBackButton={false}
-      /> */}
+      />
 
       <View style={styles.contentContainer}>
         <Title text="Donations" />

@@ -7,7 +7,6 @@ import {
   View,
 } from 'react-native';
 import { DrawerItem } from '@react-navigation/drawer';
-// import { useNavigation } from "@react-navigation/native";
 import useGlobalStore from '@state';
 import MainOption from './MainOption/MainOption';
 import styles from './MenuDrawer.styles';

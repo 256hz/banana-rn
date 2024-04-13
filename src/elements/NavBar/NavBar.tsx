@@ -10,6 +10,11 @@ import Selector from '@elements/NavBar/Selector';
 import useGlobalStore from '@state';
 import { NAVBAR_ICON_SIZE } from '@util/constants/icons';
 import HamburgerPopupMenu from '@elements/HamburgerPopupMenu';
+import {
+  navigate,
+  toggleDrawer,
+  goBack,
+} from '@util/navigationService';
 import styles from './NavBar.styles';
 
 interface NavBarProps {
@@ -22,9 +27,6 @@ interface NavBarProps {
   onMap?: () => any;
   onList?: () => any;
   backButtonFn?: () => void;
-  navigate: any;
-  toggleDrawer: any;
-  goBack: any;
 }
 
 export default function NavBar({
@@ -37,9 +39,6 @@ export default function NavBar({
   onMap,
   onList,
   backButtonFn,
-  navigate,
-  toggleDrawer,
-  goBack,
 }: NavBarProps) {
   const buttonStyle: ButtonStyle = {
     default: {

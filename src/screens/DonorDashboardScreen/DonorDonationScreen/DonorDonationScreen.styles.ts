@@ -9,7 +9,6 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     backgroundColor: colors.BANANA_YELLOW,
-    paddingHorizontal: '11%',
   },
   card: {
     height: 120,
