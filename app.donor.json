@@ -24,7 +24,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.thebegoodproject.org.bananaapp"
+      "bundleIdentifier": "com.thebegoodproject.org.bananaapp",
+	  "infoPlist": {
+		"NSCameraUsageDescription": "Our app uses your camera to scan QR codes to facilitate transactions between donor and client users, enabling a swift and secure exchange of food that would otherwise go to waste."
+	  }
     },
     "android": {
       "package": "com.thebegoodproject.org.bananaapp__donor",
