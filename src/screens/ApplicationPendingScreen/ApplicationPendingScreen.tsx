@@ -7,7 +7,8 @@ export default function ApplicationPendingScreen() {
   return (
     <InfoScreen
       title="Your application is being reviewed."
-      showBackButton={false}
+      nextScreenTitle="Contact Us"
+      nextScreenDestination="ContactScreen"
     >
       <Paragraph fontSize={20}>
         Please allow 24-48 hours for your registration to be reviewed.

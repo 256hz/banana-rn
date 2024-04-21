@@ -20,6 +20,7 @@ import {
 } from '@state/index.types';
 import donationConstraints from '@util/validators/donation';
 import { categoryImage } from '@util/donationCategory';
+import { goBack } from '@util/navigationService';
 import styles from './DonationScreen.styles';
 
 export default function DonationScreen(props) {
@@ -39,10 +40,12 @@ export default function DonationScreen(props) {
   };
 
   const [ newDonation, setNewDonation ] = useState<NewDonation>(emptyDonation);
-  const [ validateError, setValidateError ] = useState({} as any); /* TODO: add proper type */
+  const [ validateError, setValidateError ] = useState(Object); /* TODO: add proper type */
 
+  // eslint-disable-next-line max-len
   const hasUnsavedChanges = Boolean(newDonation.itemName || newDonation.totalAmount || newDonation.pickupInstructions !== donor.pickup_instructions);
 
+  // TODO: erm.. call this at some point?
   const preventBack = () => {
     /* TODO: I just filled this out with valid types-- not sure if intent/copy is correct, please double check */
     updateAlert({
@@ -50,7 +53,7 @@ export default function DonationScreen(props) {
       message: 'Please fill out the rest of the form.',
       type: 'incomplete form',
       dismissible: false,
-      confirmFn: () => props.navigation.goBack(),
+      confirmFn: () => goBack(),
     });
   };
 
@@ -76,7 +79,7 @@ export default function DonationScreen(props) {
     >
       <NavBar
         showBackButton={true}
-        goBack={hasUnsavedChanges ? preventBack : props.navigation.goBack()}
+        preventNavBack={hasUnsavedChanges}
       />
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.imageInputContainer}>

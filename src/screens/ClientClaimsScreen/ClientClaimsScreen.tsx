@@ -34,10 +34,7 @@ function ClientClaimsScreen(props) {
 
   return (
     <View style={styles.outerContainer}>
-      <NavBar
-        showBackButton={true}
-        goBack={() => props.navigation.goBack()}
-      />
+      <NavBar showBackButton={true} />
       <View style={styles.contentContainer}>
         <Title text="Claims" />
         <SpacerInline height={20} />
@@ -51,7 +48,6 @@ function ClientClaimsScreen(props) {
                   key={claimedDonation.id}
                   isClaim={true}
                   isHistory={false}
-                  navigation={props.navigation}
                 />
               </View>
             ))}

@@ -12,7 +12,6 @@ import { NAVBAR_ICON_SIZE } from '@util/constants/icons';
 import HamburgerPopupMenu from '@elements/HamburgerPopupMenu';
 import {
   navigate,
-  toggleDrawer,
   goBack,
 } from '@util/navigationService';
 import styles from './NavBar.styles';
@@ -23,6 +22,7 @@ interface NavBarProps {
   showBackButton?: boolean;
   leftButton?: 'qrCode' | 'back';
   showSelector?: boolean;
+  preventNavBack?: boolean;
   position?: 'map' | 'list';
   onMap?: () => any;
   onList?: () => any;
@@ -32,6 +32,7 @@ interface NavBarProps {
 export default function NavBar({
   showMenu = true,
   showBackButton = true,
+  preventNavBack = false,
   leftButton = 'back',
   backDestination,
   showSelector,
@@ -55,6 +56,7 @@ export default function NavBar({
         {leftButton === 'back' && showBackButton && (
           <Button
             buttonStyle={buttonStyle}
+            disabled={preventNavBack}
             onPress={
               backButtonFn
               || (backDestination
@@ -95,7 +97,7 @@ export default function NavBar({
         >
           {foregroundColor => <Icon size={NAVBAR_ICON_SIZE} color={foregroundColor} name="bell" />}
         </Button>
-        {showMenu && <HamburgerPopupMenu toggleDrawer={toggleDrawer} />}
+        {showMenu && <HamburgerPopupMenu />}
       </View>
     </View>
   );

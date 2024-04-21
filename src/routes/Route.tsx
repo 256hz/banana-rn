@@ -1,13 +1,13 @@
 import React, { useRef, useEffect } from 'react';
 import getEnv from '@util/environment';
+import useGlobalStore from '@state/index';
 import { setTopLevelNavigator } from '@util/navigationService';
 
 import { NavigationContainer } from '@react-navigation/native';
-import {
-  createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerContentComponentProps,
-} from '@react-navigation/drawer';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import MenuDrawer from '@elements/MenuDrawer/MenuDrawer';
 import MakeClaimScreen from '../screens/MakeClaimScreen/MakeClaimScreen';
 import LoginScreen from '../screens/LoginScreen';
 import ClientDashboardScreen from '../screens/ClientDashboardScreen';
@@ -36,37 +36,37 @@ function donorOrClientDrawer() {
   const DONOR_MENU = {
     'Scan QR Code': {
       component: QRCodeScannerScreen,
-      options: { drawerLabel: () => <MainOption text="Scan QR Code" icon="qrCode" /> },
+      options: { drawerLabel: () => <MainOption text="Scan QR Code" icon="qrCode" />, showNavBar: true },
     },
     Donations: {
       component: DonorDashboardScreen,
-      options: { drawerLabel: () => <MainOption text="Donations" icon="claims" /> },
+      options: { drawerLabel: () => <MainOption text="Donations" icon="claims" />, showNavBar: true },
     },
     History: {
       component: DonorHistoryScreen,
-      options: { drawerLabel: () => <SubOption text="History" /> },
+      options: { drawerLabel: () => <SubOption text="History" />, showNavBar: true },
     },
   };
 
   const CLIENT_MENU = {
     Donations: {
       component: ClientDashboardScreen,
-      options: { drawerLabel: () => <MainOption text="Donations" icon="donations" /> },
+      options: { drawerLabel: () => <MainOption text="Donations" icon="donations" />, showNavBar: true },
     },
     Claims: {
       component: ClientClaimsScreen,
-      options: { drawerLabel: () => <MainOption text="Claims" icon="claims" /> },
+      options: { drawerLabel: () => <MainOption text="Claims" icon="claims" />, showNavBar: true },
     },
     History: {
       component: ClientHistoryScreen,
-      options: { drawerLabel: () => <SubOption text="History" /> },
+      options: { drawerLabel: () => <SubOption text="History" />, showNavBar: true },
     },
   };
 
   const COMMON_MENU = {
     'Contact Us': {
       component: ContactScreen,
-      options: { drawerLabel: () => <MainOption text="Contact Us" icon="help" /> },
+      options: { drawerLabel: () => <MainOption text="Contact Us" icon="help" />, showNavBar: true },
     },
   };
 
@@ -81,66 +81,34 @@ function donorOrClientDrawer() {
     };
 }
 
-// Interface for the options property
-interface DrawerItemOptions {
-  drawerLabel: () => React.ReactNode; // Assuming drawerLabel is a function returning a React Node
-  // Add other properties as needed, e.g., icon
-}
-
-// Interface for the structure of each drawer item
-interface DrawerItemConfig {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  component: React.ComponentType<any>; // Component type for the screen
-  options: DrawerItemOptions;
-}
-
-// Extending the DrawerContentComponentProps to include the custom drawerItems
-interface CustomDrawerContentProps extends DrawerContentComponentProps {
-  drawerItems: Record<string, DrawerItemConfig>; // Record of key to DrawerItemConfig
-}
-
-const CustomDrawerContent: React.FC<CustomDrawerContentProps> = ({ drawerItems, navigation, ...drawerProps }) => (
-  <DrawerContentScrollView {...drawerProps}>
-    {Object.entries(drawerItems).map(([ key, { component: { name }, options } ]) => (
-      <DrawerItem
-        key={key}
-        label={options.drawerLabel}
-        onPress={() => {
-          console.log('drawer nav button clicked', key);
-          console.log('component', name);
-          console.log('options', options);
-          navigation.navigate('DrawerNavigator', { screen: name });
-        }}
-      />
-    ))}
-    {/* Include the default DrawerItemList if needed */}
-    {/* <DrawerItemList {...props} /> */}
-  </DrawerContentScrollView>
-);
-
-
 /* Drawer Navigator */
 const Drawer = createDrawerNavigator();
-
 function DrawerNavigator() {
   const { USER_IDENTITY } = getEnv();
   const drawerItems = donorOrClientDrawer();
+  const jwt = useGlobalStore(state => state.jwt);
 
   return (
     <Drawer.Navigator
-      // eslint-disable-next-line react/no-unstable-nested-components
-      drawerContent={props => <CustomDrawerContent {...props} drawerItems={drawerItems} />}
+      /* eslint-disable-next-line react/no-unstable-nested-components, react/jsx-props-no-spreading */
+      drawerContent={props => <MenuDrawer {...props} drawerItems={drawerItems} />}
       initialRouteName="LoginScreen"
-      screenOptions={{ headerShown: false }}
+      screenOptions={{
+        headerShown: false,
+        drawerPosition: 'right',
+        swipeEnabled: jwt !== null,
+      }}
+      backBehavior="history"
+      // backBehavior='order' // TODO: or should i use this back behavior ...?
     >
       {/* Common screens TODO: verify that these are correct */}
       <Drawer.Screen name="LoginScreen" component={LoginScreen} />
       <Drawer.Screen name="LoginSuccessScreen" component={LoginSuccessScreen} />
-      <Drawer.Screen name="ContactScreen" component={ContactScreen} />
       <Drawer.Screen name="LogoutScreen" component={LogoutScreen} />
       <Drawer.Screen name="MapScreen" component={MapScreen} />
-      <Drawer.Screen name="RegistrationScreen" component={RegistrationScreen} />
-      <Drawer.Screen name="TermsScreen" component={TermsScreen} />
+      <Drawer.Screen name="ContactScreen" component={ContactScreen} />
+      {/* <Drawer.Screen name="RegistrationScreen" component={RegistrationScreen} />
+      <Drawer.Screen name="TermsScreen" component={TermsScreen} /> */}
 
       {/* Donor-specific screens */}
       {USER_IDENTITY === 'donor' && (
@@ -148,6 +116,8 @@ function DrawerNavigator() {
           <Drawer.Screen name="DonorDashboardScreen" component={DonorDashboardScreen} />
           <Drawer.Screen name="DonorDonationScreen" component={DonorDonationScreen} />
           <Drawer.Screen name="DonorHistoryScreen" component={DonorHistoryScreen} />
+          <Drawer.Screen name="QRCodeScannerScreen" component={QRCodeScannerScreen} />
+          <Drawer.Screen name="DonationsDetailScreen" component={DonationsDetailScreen} />
         </>
       )}
 
@@ -158,7 +128,6 @@ function DrawerNavigator() {
           <Drawer.Screen name="ClientClaimsScreen" component={ClientClaimsScreen} />
           <Drawer.Screen name="ClientHistoryScreen" component={ClientHistoryScreen} />
           <Drawer.Screen name="DonationScreen" component={DonationScreen} />
-          <Drawer.Screen name="QRCodeScannerScreen" component={QRCodeScannerScreen} />
           <Drawer.Screen name="ClaimDetailsScreen" component={ClaimDetailsScreen} />
           <Drawer.Screen name="MakeClaimScreen" component={MakeClaimScreen} />
           <Drawer.Screen name="DonationsDetailScreen" component={DonationsDetailScreen} />
@@ -172,12 +141,22 @@ function DrawerNavigator() {
 const Stack = createNativeStackNavigator();
 
 function StackNavigator() {
+  const jwt = useGlobalStore(state => state.jwt);
+
   return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false, gestureEnabled: false }}
-      initialRouteName="DrawerNavigator"
-    >
-      <Stack.Screen name="DrawerNavigator" component={DrawerNavigator} />
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {jwt ? (
+        <Stack.Group>
+          <Stack.Screen name="Drawer" component={DrawerNavigator} />
+        </Stack.Group>
+      ) : (
+        <Stack.Group>
+          <Stack.Screen name="LoginScreen" component={LoginScreen} />
+          <Stack.Screen name="RegistrationScreen" component={RegistrationScreen} />
+          <Stack.Screen name="TermsScreen" component={TermsScreen} />
+          <Stack.Screen name="ContactScreen" component={ContactScreen} />
+        </Stack.Group>
+      )}
     </Stack.Navigator>
   );
 }

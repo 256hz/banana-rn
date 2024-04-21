@@ -12,6 +12,7 @@ import * as Font from 'expo-font';
 import {
   CancelDonationModal,
   ComingSoonModal,
+  ErrorBoundary,
   IncompleteFormAlert,
   TheAlertModal,
 } from '@elements';
@@ -65,15 +66,17 @@ export default function App() {
 
   return (
     fontsLoaded && (
-      <PaperProvider>
-        <SafeAreaView style={styles.container}>
-          <Route />
-          <TheAlertModal />
-          <IncompleteFormAlert />
-          <ComingSoonModal />
-          <CancelDonationModal />
-        </SafeAreaView>
-      </PaperProvider>
+      <ErrorBoundary>
+        <PaperProvider>
+          <SafeAreaView style={styles.container}>
+            <Route />
+            <TheAlertModal />
+            <IncompleteFormAlert />
+            <ComingSoonModal />
+            <CancelDonationModal />
+          </SafeAreaView>
+        </PaperProvider>
+      </ErrorBoundary>
     )
   );
 }

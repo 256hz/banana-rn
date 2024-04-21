@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import * as Permissions from 'expo-permissions';
 
+// TODO: install expo camera (as permissions is now deprecated)
+// import { Camera } from 'expo-camera';
+
 import useGlobalStore from '@state';
 import { categoryImage } from '@util/donationCategory';
 import openAppSettings from '@util/openAppSettings';

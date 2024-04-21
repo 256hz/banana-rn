@@ -14,6 +14,7 @@ import * as colors from '@util/constants/colors';
 import typography from '@util/typography';
 import { ButtonStyle } from '@elements/Button';
 import claimStyles from '@util/claimStyles';
+import { goBack } from '@util/navigationService';
 import styles from './MakeClaimScreen.styles';
 
 function MakeClaimScreen(props) {
@@ -51,7 +52,7 @@ function MakeClaimScreen(props) {
   };
 
   const handleCancel = () => {
-    props.navigation.goBack();
+    goBack();
   };
 
   const fetchTravelTimes = async () => {
@@ -80,7 +81,7 @@ function MakeClaimScreen(props) {
             style={claimStyles.header}
           >
             <Text
-              onPress={() => props.navigation.goBack()}
+              onPress={() => goBack()}
               style={[ typography.h2, claimStyles.closeLnk ]}
             >
               X

@@ -7,26 +7,23 @@ function setTopLevelNavigator(navigatorRef) {
 }
 
 function navigate(name, params?) {
-  navigator?.navigate({
-    name,
-    params,
-  });
+  if (navigator) {
+    navigator.navigate({
+      name,
+      params,
+    });
+  }
 }
 
 function goBack() {
-  if (navigator) {
+  if (navigator && navigator.canGoBack()) {
     navigator.goBack();
-  } else {
-    console.log('no navigator to go back');
   }
 }
 
 function toggleDrawer() {
   if (navigator) {
-    console.log('dispatch', navigator);
     navigator.dispatch(DrawerActions.toggleDrawer());
-  } else {
-    console.log('No navigator to toggle drawer');
   }
 }
 

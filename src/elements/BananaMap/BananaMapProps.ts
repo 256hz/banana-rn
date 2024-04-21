@@ -6,5 +6,4 @@ export interface BananaMapProps {
   markerSize: number;
   clientLocation: Location;
   mapRegion: Region;
-  navigation: any;
 }

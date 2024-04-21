@@ -17,7 +17,7 @@ export interface Actions {
   requestResetToken: () => Promise<ResponseStatus>;
   submitResetToken: () => Promise<ResponseStatus>;
   submitNewPassword: () => Promise<ResponseStatus>;
-  getTravelTimes: () => Promise<{ status: ResponseStatus; times: {} }>;
+  getTravelTimes: () => Promise<{ status: ResponseStatus; times: object }>; // TODO: update times type
 }
 export { getActiveDonationsForClient } from './getActiveDonationsForClient';
 export { getClaimedDonationsForClient } from './getClaimedDonationsForClient';

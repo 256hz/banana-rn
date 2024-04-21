@@ -10,6 +10,7 @@ import {
   View,
 } from 'react-native';
 import { Divider } from 'react-native-paper';
+import { goBack, navigate } from '@util/navigationService';
 import {
   FormTextInput,
   Icon,
@@ -24,22 +25,31 @@ import validate from 'validate.js';
 import { DonorRegisterProps } from '@state/index.types';
 import styles from './RegistrationScreen.styles';
 
-// TODO: add prop types for this function component
-export default function DonorRegistrationScreen({
-  navigate,
-  goBack,
-}) {
+export default function DonorRegistrationScreen() {
   const updateAlert = useGlobalStore(state => state.updateAlert);
   const registerUser = useGlobalStore(state => state.registerUser);
   const userIdentity = useGlobalStore(state => state.userIdentity);
   const createUrl = useGlobalStore(state => state.createUrl);
 
-  // TODO: doublecheck and make sure this state is dynamic (i.e. we dont need to do useEffect & useState)
+  // TODO: is this dynamic? (i.e. do we need to implement useEffect & useState to show these alerts)
   const responseStatus = useGlobalStore(state => state.responseStatus);
 
+  const emptyDonor: DonorRegisterProps = {
+    email: '',
+    password: '',
+    retypedPassword: '',
+    firstName: '',
+    lastName: '',
+    businessName: '',
+    businessAddress: '',
+    city: '',
+    state: 'WA',
+    zip: '',
+    pickupInstructions: '',
+  };
 
-  const [ newDonor, setNewDonor ] = useState<DonorRegisterProps>({ state: 'WA' } as DonorRegisterProps);
-  const [ validationErrors, setValidationErrors ] = useState({} as any);
+  const [ newDonor, setNewDonor ] = useState<DonorRegisterProps>(emptyDonor);
+  const [ validationErrors, setValidationErrors ] = useState(Object); // TODO: update error type
   const [ termsOfService, setTermsOfService ] = useState(false);
   const stateList = getStateList();
   const passwordRef = useRef<TextInput>(null);
@@ -54,7 +64,7 @@ export default function DonorRegistrationScreen({
 
   const toggleTermsOfService = () => setTermsOfService(!termsOfService);
 
-  const validateInputs = async () => {
+  const handleUserRegistration = async () => {
     const validateResults = validate(newDonor, donorConstraints);
 
     if (validateResults) {
@@ -64,36 +74,36 @@ export default function DonorRegistrationScreen({
 
       if (responseStatus) {
         switch (responseStatus.code) {
-        case 201: {
-          navigate('LoginSuccessScreen');
-          break;
-        }
-        case 409: {
-          updateAlert({
-            title: 'Error',
-            message: `This email address has already been used (Error code:${responseStatus.code})`,
-            dismissible: true,
-            type: 'default',
-          });
-          break;
-        }
-        case 500: {
-          updateAlert({
-            title: 'Error',
-            message: `Network Issues (Error code:${responseStatus.code})`,
-            dismissible: true,
-            type: 'default',
-          });
-          break;
-        }
-        default: {
-          updateAlert({
-            title: 'Error',
-            message: `Unknown Error (Error code:${responseStatus.code})`,
-            dismissible: true,
-            type: 'default',
-          });
-        }
+          case 201: {
+            navigate('LoginSuccessScreen');
+            break;
+          }
+          case 409: {
+            updateAlert({
+              title: 'Error',
+              message: `This email address has already been used (Error code:${responseStatus.code})`,
+              dismissible: true,
+              type: 'default',
+            });
+            break;
+          }
+          case 500: {
+            updateAlert({
+              title: 'Error',
+              message: `Network Issues (Error code:${responseStatus.code})`,
+              dismissible: true,
+              type: 'default',
+            });
+            break;
+          }
+          default: {
+            updateAlert({
+              title: 'Error',
+              message: `Unknown Error (Error code:${responseStatus.code})`,
+              dismissible: true,
+              type: 'default',
+            });
+          }
         }
       }
     }
@@ -101,7 +111,7 @@ export default function DonorRegistrationScreen({
 
   const registerPressHandler = async () => {
     Keyboard.dismiss();
-    await validateInputs();
+    await handleUserRegistration();
   };
 
   return (
@@ -305,15 +315,10 @@ export default function DonorRegistrationScreen({
         </View>
 
         <View style={[ styles.row, { paddingHorizontal: '10%' } ]}>
+          <LinkButton text="back" onPress={() => goBack()} />
           <LinkButton
-            text="back"
-            navigate={navigate}
-            onPress={() => goBack()}
-          />
-          <LinkButton
-            disabled={!termsOfService}
             text="Register"
-            navigate={navigate}
+            disabled={!termsOfService}
             onPress={registerPressHandler}
           />
         </View>

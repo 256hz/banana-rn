@@ -35,9 +35,10 @@ export default function LoginSuccessScreen(props) {
     default:
       return (
         <InfoScreen
-          title="Login error"
+          title="Login Error"
           nextScreenDestination="LoginScreen"
           nextScreenTitle="Login"
+          showBackButton={false}
         />
       );
   }

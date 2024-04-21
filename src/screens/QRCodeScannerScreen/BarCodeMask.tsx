@@ -2,9 +2,10 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { Icon } from '@elements';
+import { goBack } from '@util/navigationService';
 import styles from './BarCodeMask.styles';
 
-export default function BarCodeMask(props) {
+export default function BarCodeMask() {
   return (
     <>
       <View style={styles.reticleUL} />
@@ -14,12 +15,12 @@ export default function BarCodeMask(props) {
       <View style={styles.background} />
       <View style={styles.xContainer}>
         <TouchableWithoutFeedback
-          onPress={() => props.navigation.navigate.goBack()}
+          onPress={() => goBack()}
         >
           <Icon name="chevron-left" size={48} color="gray" />
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback
-          onPress={() => props.navigation.navigate.goBack()}
+          onPress={() => goBack()}
         >
           <Icon name="close" size={48} color="gray" />
         </TouchableWithoutFeedback>

@@ -12,7 +12,7 @@ import useGlobalStore from '@state';
 
 import styles from './ClientHistoryScreen.styles';
 
-function ClientHistoryScreen(props) {
+function ClientHistoryScreen() {
   const isFocused = useIsFocused();
 
   const getClaimedDonationHistoryForClient = useGlobalStore(state => state.getClaimedDonationHistoryForClient);
@@ -28,10 +28,7 @@ function ClientHistoryScreen(props) {
 
   return (
     <View style={styles.outerContainer}>
-      <NavBar
-        showBackButton={true}
-        goBack={() => props.navigation.goBack()}
-      />
+      <NavBar showBackButton={true} />
       <View style={styles.contentContainer}>
         <Title text="Claims" />
         <View
@@ -55,7 +52,6 @@ function ClientHistoryScreen(props) {
                   key={claim.id}
                   isHistory={true}
                   isClaim={true}
-                  navigation={props.navigation}
                 />
               </View>
             ))}

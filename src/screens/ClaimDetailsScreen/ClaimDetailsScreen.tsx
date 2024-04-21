@@ -16,6 +16,7 @@ import * as colors from '@util/constants/colors';
 import typography from '@util/typography';
 import { ButtonStyle } from '@elements/Button';
 import claimStyles from '@util/claimStyles';
+import { goBack } from '@util/navigationService';
 import styles from './ClaimDetailsScreen.styles';
 
 export default function ClaimDetailsScreen(props) {
@@ -56,7 +57,7 @@ export default function ClaimDetailsScreen(props) {
             style={claimStyles.header}
           >
             <Text
-              onPress={() => props.navigation.goBack()}
+              onPress={() => goBack()}
               style={[ typography.h2, claimStyles.closeLnk ]}
             >
               X

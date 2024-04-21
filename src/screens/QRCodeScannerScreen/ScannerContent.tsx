@@ -2,13 +2,13 @@ import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { LinkButton } from '@elements';
+import { goBack } from '@util/navigationService';
 import BarCodeMask from './BarCodeMask';
 
 export default function ScannerContent({
   hasCameraPermission,
   handleBarCodeScanned,
   modalContent,
-  navigation,
   openSettings,
 }) {
   if (hasCameraPermission === null) {
@@ -28,7 +28,7 @@ export default function ScannerContent({
         />
         <LinkButton
           text="Go Back"
-          onPress={() => navigation.goBack()}
+          onPress={() => goBack()}
         />
       </>
     );

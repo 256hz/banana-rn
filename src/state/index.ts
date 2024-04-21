@@ -145,7 +145,6 @@ const useGlobalStore = create<GlobalState>(set => ({
       } else {
         updatedActiveDonations = state.activeDonationsFromDonor?.filter(donation => donation.id !== cancelledDonation.id);
 
-        // TODO: double-check this navigation
         navigate('DonorDashboardScreen');
       }
       return {
@@ -183,7 +182,6 @@ const useGlobalStore = create<GlobalState>(set => ({
         if (newDonation) {
           updatedActiveDonations?.push(newDonation);
 
-          // TODO: double-check this navigation
           navigate('DonorDashboardScreen');
         }
       } else {

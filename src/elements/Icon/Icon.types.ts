@@ -58,4 +58,5 @@ export type IconName =
   | 'user'
   | 'vector'
   | 'walk'
+  | 'plus'
   | 'website';

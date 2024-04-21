@@ -3,8 +3,9 @@ import { Dimensions, View } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import useGlobalStore from '@state';
 import { BananaMap, NavBar } from '@elements';
+import { navigate } from '@util/navigationService';
 
-function MapScreen(props) {
+function MapScreen() {
   const isFocused = useIsFocused();
   const { width, height } = Dimensions.get('window');
 
@@ -45,14 +46,10 @@ function MapScreen(props) {
       <NavBar
         showBackButton={false}
         showSelector={true}
-        onList={() => {
-          props.navigation.navigate('ClientDashboardScreen');
-        }}
-        goBack={props.navigation.goBack}
+        onList={() => navigate('ClientDashboardScreen')}
         position="map"
       />
       <BananaMap
-        navigation={props.navigation}
         donations={activeDonationsForClient || []}
         mapRegion={location}
         clientLocation={{

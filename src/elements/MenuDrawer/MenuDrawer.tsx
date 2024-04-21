@@ -1,65 +1,72 @@
 import React from 'react';
 import {
   SafeAreaView,
-  ScrollView,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import { DrawerItem } from '@react-navigation/drawer';
+import { DrawerItem, DrawerContentScrollView, DrawerContentComponentProps } from '@react-navigation/drawer';
 import useGlobalStore from '@state';
+import { navigate } from '@util/navigationService';
+import { NAVY_BLUE } from '@util/constants/colors';
 import MainOption from './MainOption/MainOption';
 import styles from './MenuDrawer.styles';
 
-function MenuDrawer(props) {
+// Assuming drawerItems comes from a parent component or context
+interface DrawerItemOptions {
+  drawerLabel: () => React.ReactNode;
+  showNavBar: boolean;
+}
+
+interface DrawerItemConfig {
+  // TODO: remove and update `any` type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  component: React.ComponentType<any>;
+  options: DrawerItemOptions;
+}
+
+interface CustomDrawerContentProps extends DrawerContentComponentProps {
+  drawerItems: Record<string, DrawerItemConfig>;
+}
+
+const MenuDrawer: React.FC<CustomDrawerContentProps> = ({ drawerItems, ...drawerProps }) => {
   const logOut = useGlobalStore(state => state.logOut);
   const user = useGlobalStore(state => state.user);
-  let name = '';
+  let userName = '';
 
   if (user) {
     if ('organization_name' in user) {
-      name = user.organization_name as string;
+      userName = user.organization_name as string;
     } else if ('first_name' in user) {
-      name = user.first_name as string;
+      userName = user.first_name as string;
     }
   }
 
   return (
-    <ScrollView>
+    <DrawerContentScrollView {...drawerProps} style={{ backgroundColor: NAVY_BLUE }}>
       <View style={styles.drawerHeader}>
-        <Text
-          style={{
-            ...styles.username,
-            marginBottom: 0,
-          }}
-        >
-          Hello,
-        </Text>
-        <Text style={styles.username}>{name}</Text>
+        <Text style={{ ...styles.username, marginBottom: 0 }}>Hello,</Text>
+        <Text style={styles.username}>{userName}</Text>
       </View>
       <SafeAreaView style={styles.container}>
-        <DrawerItem
-          {...props}
-          labelStyle={styles.labelText}
-          itemStyle={styles.menuItem}
-          onItemPress={async ({ route }) => {
-            props.navigation.toggleDrawer();
-            props.navigation.navigate(route.routeName);
-          }}
-        />
+        {Object.entries(drawerItems).map(([ key, { component: { name }, options: { drawerLabel, showNavBar } } ]) => (
+          <DrawerItem
+            key={key}
+            label={drawerLabel}
+            onPress={() => navigate(name, { showNavBar })}
+          />
+        ))}
       </SafeAreaView>
       <TouchableOpacity
         style={styles.menuItem}
         onPress={async () => {
-          props.navigation.toggleDrawer();
-          props.navigation.navigate('LogoutScreen');
           await logOut();
         }}
       >
         <MainOption icon="logout" text="Log Out" />
       </TouchableOpacity>
-    </ScrollView>
+    </DrawerContentScrollView>
   );
-}
+};
 
 export default MenuDrawer;

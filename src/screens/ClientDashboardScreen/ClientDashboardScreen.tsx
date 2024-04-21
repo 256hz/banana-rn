@@ -11,6 +11,7 @@ import {
   SpacerInline,
   Title,
 } from '@elements';
+import { navigate } from '@util/navigationService';
 import styles from './ClientDashboardScreen.styles';
 
 function ClientDashboardScreen(props) {
@@ -43,9 +44,8 @@ function ClientDashboardScreen(props) {
       <NavBar
         showBackButton={false}
         showSelector={true}
-        onMap={() => props.navigation.navigate('MapScreen')}
+        onMap={() => navigate('MapScreen')}
         position="list"
-        goBack={() => props.navigation.goBack()}
       />
       <View style={styles.contentContainer}>
         <Title text="Donations" />
@@ -67,7 +67,6 @@ function ClientDashboardScreen(props) {
                     key={donation.id}
                     isClaim={false}
                     isHistory={false}
-                    navigation={props.navigation}
                   />
                 </View>
               ))}

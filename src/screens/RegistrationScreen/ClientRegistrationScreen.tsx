@@ -21,12 +21,10 @@ import {
 import validate from 'validate.js';
 import clientConstraints from '@util/validators/clientRegistration';
 import { ClientRegisterProps } from '@state/index.types';
+import { navigate, goBack } from '@util/navigationService';
 import styles from './RegistrationScreen.styles';
 
-export default function ClientRegistrationScreen({
-  navigation,
-  goBack,
-}) {
+export default function ClientRegistrationScreen() {
   const updateAlert = useGlobalStore(state => state.updateAlert);
   const registerUser = useGlobalStore(state => state.registerUser);
   const responseStatus = useGlobalStore(state => state.responseStatus);
@@ -34,9 +32,17 @@ export default function ClientRegistrationScreen({
   const userIdentity = useGlobalStore(state => state.userIdentity);
   const createUrl = useGlobalStore(state => state.createUrl);
 
+  const emptyClient: ClientRegisterProps = {
+    email: '',
+    password: '',
+    retypedPassword: '',
+    firstName: '',
+    lastName: '',
+  };
+
   const [ termsOfService, setTermsOfService ] = useState(false);
-  const [ validateError, setValidateError ] = useState({} as any);
-  const [ newClient, setNewClient ] = useState<ClientRegisterProps>({} as ClientRegisterProps);
+  const [ validateError, setValidateError ] = useState(Object); // TODO: update type
+  const [ newClient, setNewClient ] = useState<ClientRegisterProps>(emptyClient);
 
   const passwordRef = useRef<TextInput>(null);
   const confirmPasswordRef = useRef<TextInput>(null);
@@ -60,36 +66,36 @@ export default function ClientRegistrationScreen({
 
       if (responseStatus) {
         switch (responseStatus.code) {
-        case 201: {
-          navigation.navigate('LoginSuccessScreen');
-          break;
-        }
-        case 500: {
-          updateAlert({
-            title: 'Error',
-            message: `Network Issues (Error code:${responseStatus.code})`,
-            type: 'default',
-            dismissible: true,
-          });
-          break;
-        }
-        case 409: {
-          updateAlert({
-            title: 'Error',
-            message: `This email address has already been used (Error code:${responseStatus.code})`,
-            type: 'default',
-            dismissible: true,
-          });
-          break;
-        }
-        default: {
-          updateAlert({
-            title: 'Error',
-            message: `Unknown Error (Error code:${responseStatus.code})`,
-            type: 'default',
-            dismissible: true,
-          });
-        }
+          case 201: {
+            navigate('LoginSuccessScreen');
+            break;
+          }
+          case 500: {
+            updateAlert({
+              title: 'Error',
+              message: `Network Issues (Error code:${responseStatus.code})`,
+              type: 'default',
+              dismissible: true,
+            });
+            break;
+          }
+          case 409: {
+            updateAlert({
+              title: 'Error',
+              message: `This email address has already been used (Error code:${responseStatus.code})`,
+              type: 'default',
+              dismissible: true,
+            });
+            break;
+          }
+          default: {
+            updateAlert({
+              title: 'Error',
+              message: `Unknown Error (Error code:${responseStatus.code})`,
+              type: 'default',
+              dismissible: true,
+            });
+          }
         }
       }
     }
@@ -208,7 +214,7 @@ export default function ClientRegistrationScreen({
           </Text>
           <View>
             <TouchableOpacity
-              onPress={() => navigation.navigate('TermsScreen')}
+              onPress={() => navigate('TermsScreen')}
             >
               <Text style={[ styles.text, styles.textBold ]}>
                 Terms & Conditions

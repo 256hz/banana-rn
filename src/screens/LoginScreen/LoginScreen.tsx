@@ -19,19 +19,17 @@ import {
   FormTextInput, LinkButton, Title,
 } from '@elements';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import getEnv from '@util/environment';
 import styles from './LoginScreen.styles';
 import ResetPassword from './ResetPassword';
 import { PasswordResetStage } from './ResetPassword/ResetPassword';
 
-export default function LoginScreen(props) {
-  const { USER_IDENTITY } = getEnv();
-  const responseStatus = useGlobalStore(state => state.responseStatus);
+export default function LoginScreen({ route }) {
   const userIdentity = useGlobalStore(state => state.userIdentity);
   const loginUrl = useGlobalStore(state => state.loginUrl);
+  const jwt = useGlobalStore(state => state.jwt);
 
-  const email = (props.route.params && props.route.params.email) ?? useGlobalStore(state => state.email);
-  const password = (props.route.params && props.route.params.password) ?? useGlobalStore(state => state.password);
+  const email = (route.params && route.params.email) ?? useGlobalStore(state => state.email);
+  const password = (route.params && route.params.password) ?? useGlobalStore(state => state.password);
 
   const logIn = useGlobalStore(state => state.logIn);
   const setEmail = useGlobalStore(state => state.setEmail);
@@ -50,27 +48,15 @@ export default function LoginScreen(props) {
   };
 
   useEffect(() => {
-    const reactToStatusCode = async () => {
-      if (responseStatus !== undefined && responseStatus.code === 202) {
-        // TODO: set user and jwt to async storage
-
+    const processLogin = async () => {
+      if (jwt) {
         clearEmailAndPassword();
         clearPasswordResetStage();
-        /* TODO: i believe this how we are supposed to navigate now,
-          look at the react docs for more info: https://reactnavigation.org/docs/nesting-navigators/
-          please remove and replace all `props.navigation.navigate()` calls
-        */
 
-        navigate('LoginSuccessScreen');
-
-        // if (USER_IDENTITY === 'donor') {
-        // props.navigation.navigate('Drawer', { screen: 'LoginSuccessScreen' });
-        // } else if (USER_IDENTITY === 'client') {
-        // props.navigation.navigate('Drawer', { screen: 'LoginSuccessScreen' });
-        // }
+        navigate('Drawer', { screen: 'LoginSuccessScreen' });
       }
     };
-    reactToStatusCode();
+    processLogin();
 
     const retrievePasswordResetStage = async () => {
       try {
@@ -83,7 +69,7 @@ export default function LoginScreen(props) {
       }
     };
     retrievePasswordResetStage();
-  }, [ responseStatus ]);
+  }, [ jwt ]);
 
   const storePasswordResetStage = async newStage => {
     try {
@@ -170,7 +156,7 @@ export default function LoginScreen(props) {
           />
           <LinkButton
             text="Register"
-            destination="RegistrationScreen"
+            onPress={() => navigate('RegistrationScreen')}
           />
         </View>
       </ScrollView>

@@ -1,7 +1,10 @@
+// TODO: add proper error type
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import railsAxios from '@util/railsAxios';
 import { UserIdentity, DonorRegisterProps, ClientRegisterProps } from '@state/index.types';
 
-export const registerDonor = async (createUrl, userIdentity: UserIdentity, donor: DonorRegisterProps) => {
+export const registerDonor = async (userIdentity: UserIdentity, createUrl, donor: DonorRegisterProps) => {
   const {
     email,
     password,
@@ -35,8 +38,8 @@ export const registerDonor = async (createUrl, userIdentity: UserIdentity, donor
     );
 
     return {
-      jwt: data?.jwt || '',
-      user: data?.client || {},
+      jwt: data.jwt || '',
+      user: data[userIdentity] || {},
       responseStatus: {
         code: status,
         message: statusText,
@@ -52,7 +55,7 @@ export const registerDonor = async (createUrl, userIdentity: UserIdentity, donor
   }
 };
 
-export const registerClient = async (createUrl, userIdentity: UserIdentity, client: ClientRegisterProps) => {
+export const registerClient = async (userIdentity: UserIdentity, createUrl, client: ClientRegisterProps) => {
   const {
     email,
     password,
@@ -74,8 +77,8 @@ export const registerClient = async (createUrl, userIdentity: UserIdentity, clie
     );
 
     return {
-      jwt: data?.jwt || '',
-      user: data?.client || {},
+      jwt: data.jwt || '',
+      user: data[userIdentity] || {},
       responseStatus: {
         code: status,
         message: statusText,
@@ -91,8 +94,11 @@ export const registerClient = async (createUrl, userIdentity: UserIdentity, clie
   }
 };
 
-const registerUser = (createUrl, userIdentity, userToRegister) => (userIdentity === 'donor'
-  ? registerDonor(createUrl, userIdentity, userToRegister)
-  : registerClient(createUrl, userIdentity, userToRegister));
+const registerUser = (userIdentity: UserIdentity, createUrl: string, userToRegister: any) => {
+  if (userIdentity === 'donor') {
+    return registerDonor(userIdentity, createUrl, userToRegister);
+  }
+  return registerClient(userIdentity, createUrl, userToRegister);
+};
 
 export { registerUser };

@@ -18,6 +18,8 @@ const getTravelTimes = async (
       },
       travelTimes: response.data.times,
     };
+  // TODO: update type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     return {
       responseStatus: {

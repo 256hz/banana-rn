@@ -10,7 +10,7 @@ import Donation from '@library/Donations/Donation/Donation';
 import useGlobalStore from '@state';
 import styles from './DonorHistoryScreen.styles';
 
-function DonorHistoryScreen(props) {
+function DonorHistoryScreen() {
   const isFocused = useIsFocused();
 
   const getDonationHistory = useGlobalStore(state => state.getDonationHistory);
@@ -26,10 +26,7 @@ function DonorHistoryScreen(props) {
 
   return (
     <View style={styles.outerContainer}>
-      <NavBar
-        showBackButton={false}
-        goBack={() => props.navigation.goBack()}
-      />
+      <NavBar showBackButton={false} />
       <View style={styles.contentContainer}>
         <Title text="Donations" />
         <View

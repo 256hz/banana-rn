@@ -29,7 +29,7 @@ DonorState,
 | 'coords'
 >;
 
-export interface ClientState extends SharedProps {å
+export interface ClientState extends SharedProps {
   transportation_method: string;
   ethnicity: string;
   gender: string;
@@ -122,8 +122,8 @@ export interface Donation {
   total_amount: number;
   status: string;
   distance: number;
-  claim: ClaimLite; /* NOTE: may need to add back fully fleshed out Claim type */
-  donor: DonorLite; /* NOTE: may need to add back fully fleshed out Donor type */
+  claim: ClaimLite; /* NOTE: may need to add back **full** Claim type */
+  donor: DonorLite; /* NOTE: may need to add back **full** Donor type */
   isHistory?: boolean;
 }
 

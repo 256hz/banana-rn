@@ -11,6 +11,7 @@ export { Title } from './Title';
 export { Paragraph } from './Paragraph';
 export { Modal } from './Modal';
 export { TheAlertModal } from './TheAlertModal';
+export { ErrorBoundary } from './ErrorBoundary';
 export { IncompleteFormAlert } from './IncompleteFormAlert';
 export { ComingSoonModal } from './ComingSoonModal';
 export { CancelDonationModal } from './CancelDonationModal';

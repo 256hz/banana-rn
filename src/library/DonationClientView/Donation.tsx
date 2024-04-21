@@ -5,23 +5,22 @@ import {
 } from 'react-native';
 import { Icon } from '@elements';
 import typography from '@util/typography';
-import formatDate from '@util/dateFormatter';
+import { formatDate } from '@util/dateFormatter';
 import { categoryImage } from '@util/donationCategory';
 import { Donation } from '@state/index.types';
+import { navigate } from '@util/navigationService';
 import styles from './Donation.styles';
 
 interface ClientDonationProps {
   isClaim: boolean;
   isHistory: boolean;
   donation: Donation;
-  navigation: any;
 }
 
 export default function ClientDonation({
   donation,
   isClaim,
   isHistory,
-  navigation,
 }: ClientDonationProps) {
   console.log('donation', donation);
   const {
@@ -34,11 +33,11 @@ export default function ClientDonation({
   return (
     <TouchableOpacity
       onPress={() => (!isClaim
-        ? navigation.navigate('MakeClaimScreen', {
+        ? navigate('MakeClaimScreen', {
           donation,
           id,
         })
-        : navigation.navigate('ClaimDetailsScreen', { donation }))}
+        : navigate('ClaimDetailsScreen', { donation }))}
     >
       <View
         style={[

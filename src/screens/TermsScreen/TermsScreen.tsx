@@ -5,6 +5,7 @@ import {
 } from '@elements';
 import getEnv from '@util/environment';
 import Terms from '@assets/documents/SampleToS';
+import { goBack } from '@util/navigationService';
 import ScrollContainer from '../../elements/ScrollContainer/ScrollContainer';
 import styles from './TermsScreen.styles';
 
@@ -33,7 +34,7 @@ export default function TermsScreen() {
         <LinkButton
           text="back"
           disabled={button}
-          destination="RegistrationScreen"
+          onPress={() => goBack()}
         />
       </View>
     </>

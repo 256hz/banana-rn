@@ -1,16 +1,17 @@
 export default {
   email: {
     presence: { allowEmpty: false },
-    email: true,
+    format: {
+      pattern: '^[^@]+@[^@]+\\.[^@]+$',
+      message: 'please enter a valid email address',
+    },
   },
   password: {
-    format: {
-      message:
-        'must be 8-25 characters with a mix of upper & lowercase letters, numbers, and special characters',
-      pattern:
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,-./:;<=>?@^_`{|}~])[A-Za-z\d!"#$%&'()*+,-./:;<=>?@^_`{|}~]{8,25}$/,
-    },
     presence: { allowEmpty: false },
+    format: {
+      message: 'must be 8-40 characters with a mix of letters and numbers',
+      pattern: /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,40}$/,
+    },
   },
   retypedPassword: {
     equality: 'password',
@@ -21,15 +22,15 @@ export default {
   businessName: { presence: { allowEmpty: false } },
   businessAddress: {
     presence: { allowEmpty: false },
-    format: { pattern: /^[a-zA-Z0-9\s,'-]*$/ },
+    format: { pattern: /^[a-zA-Z0-9\s,'.\-#/&()]*$/ },
   },
   city: { presence: { allowEmpty: false } },
   state: { presence: { allowEmpty: false } },
   zip: {
     presence: { allowEmpty: false },
     format: {
-      pattern: /^\d{5}$/,
-      message: '^Please enter a valid ZIP code',
+      pattern: /^\d{5}(-\d{4})?$/,
+      message: 'please enter a valid ZIP code',
     },
   },
   pickupInstructions: { presence: { allowEmpty: false } },

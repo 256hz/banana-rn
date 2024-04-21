@@ -17,7 +17,8 @@ function DonationsDetailScreen(props) {
 
   const jwt = useGlobalStore(state => state.jwt);
 
-  const { donation } = props.route;
+  const { donation } = props.route.params;
+
   const hasClaim = !!donation.claim;
 
   const handleCancel = async () => {
@@ -52,7 +53,8 @@ function DonationsDetailScreen(props) {
         <View style={styles.infoPair}>
           <Text style={typography.h3}>PICKUP ADDRESS</Text>
           <Text style={styles.infoText}>
-            {`${donation.donor.address_street} ${donation.donor.address_city}, ${donation.donor.address_state} ${donation.donor.address_zip}`}
+            {`${donation.donor.address_street} ${donation.donor.address_city},
+            ${donation.donor.address_state} ${donation.donor.address_zip}`}
           </Text>
         </View>
         <View style={styles.infoPair}>
@@ -87,6 +89,7 @@ function DonationsDetailScreen(props) {
           dismissible: false,
           confirmFn: () => handleCancel(),
         })}
+        /* TODO: in future, onClick => tell user why this is disabled */
         disabled={hasClaim}
       />
     </ScrollView>

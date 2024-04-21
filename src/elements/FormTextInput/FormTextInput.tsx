@@ -10,6 +10,7 @@ import {
   TextInputProps,
   TextStyle,
   View,
+  Platform,
 } from 'react-native';
 import { LIGHT_BLUE } from '@util/constants/colors';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
@@ -101,7 +102,7 @@ function PasswordInput(props: BasicTextInputProps) {
         >
           <View style={styles.passwordIconContainer}>
             <Icon
-              name={isPasswordVisible ? 'eyeOff' : 'eyeOn'}
+              name={isPasswordVisible ? 'eyeOn' : 'eyeOff'}
               size={24}
             />
           </View>
@@ -121,6 +122,27 @@ function PhoneNumberInput(props: BasicTextInputProps) {
         maxLength={14}
       />
     </View>
+  );
+}
+
+/* NOTE: styling/looks **not** important-- this replaces/fixes broken web-variant dropdowns */
+function WebDropdownInput({
+  dropdownData,
+  value,
+  setValue,
+}: Pick<FormTextInputProps, 'dropdownData' | 'value' | 'setValue' | 'style'>) {
+  return (
+    <select
+      value={value}
+      onChange={e => (setValue ? setValue(e.target.value) : null)}
+      style={{ height: '40px', fontSize: '16px', backgroundColor: 'white' }}
+    >
+      {dropdownData?.map(option => (
+        <option key={option} value={option}>
+          {option}
+        </option>
+      ))}
+    </select>
   );
 }
 
@@ -155,9 +177,10 @@ function FormTextInput(
     tempInput = PasswordInput;
     passedValue = value;
   } else if (type === 'dropdown') {
-    tempInput = DropdownInput;
+    tempInput = Platform.OS === 'web' ? WebDropdownInput : DropdownInput;
     passedValue = value;
   } else if (type === 'phoneNumber') {
+    /* TODO: clean this mess up (and honestly this whole file could use a refactor) */
     tempInput = PhoneNumberInput;
     /* To solve state infinite loop */
     const tempValue = numberFormat(value);

@@ -2,7 +2,12 @@ import railsAxios from '@util/railsAxios';
 import { GlobalState } from '@state/index';
 // import { AxiosError } from "axios";
 
-export const logIn = async (loginUrl: string, userIdentity: string, email: string, password: string): Promise<Partial<GlobalState>> => {
+export const logIn = async (
+  loginUrl: string,
+  userIdentity: string,
+  email: string,
+  password: string,
+): Promise<Partial<GlobalState>> => {
   try {
     const { data, status, statusText } = await railsAxios().post(
       loginUrl,
@@ -20,10 +25,12 @@ export const logIn = async (loginUrl: string, userIdentity: string, email: strin
       responseStatus: {
         code: status,
         message: statusText,
-      } /* TODO: define return types/methods for axios */,
+      },
     };
   /* TODO: add type for error below maybe AxiosError<any> */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
+    console.log('error', error);
     return {
       jwt: '',
       user: undefined,

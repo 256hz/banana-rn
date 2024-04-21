@@ -3,6 +3,7 @@ import {
   Text, TouchableOpacity, View,
 } from 'react-native';
 import * as colors from '@util/constants/colors';
+import { navigate, goBack } from '@util/navigationService';
 import styles from './LinkButton.styles';
 
 interface LinkButtonProps {
@@ -10,9 +11,8 @@ interface LinkButtonProps {
   textColor?: string;
   borderColor?: string;
   disabled?: boolean;
-  destination?: string;
+  destination?: string; // TODO: should be `type {Screen1 | Screen2 | etc.}`
   onPress?: (any) => void;
-  navigate?: (any) => void;
 }
 
 export default function LinkButton({
@@ -22,7 +22,6 @@ export default function LinkButton({
   borderColor = colors.BANANA_YELLOW,
   disabled = false,
   onPress = () => {},
-  navigate,
 }: LinkButtonProps) {
   const buttonFunction = destination && navigate
     ? () => navigate(destination)

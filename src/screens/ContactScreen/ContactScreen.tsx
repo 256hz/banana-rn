@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import {
   ScrollView,
@@ -6,6 +7,7 @@ import {
   View,
 } from 'react-native';
 import * as Linking from 'expo-linking';
+import { navigate, goBack } from '@util/navigationService';
 import {
   ContentHeader,
   Icon,
@@ -32,7 +34,7 @@ const contactList: Array<{
   {
     title: 'email',
     message: 'info@bananapp.org',
-    // TODO: FIXME: When the default iOS email app is uninstalled, this fails.
+    // TODO - FIXME: When the default iOS email app is uninstalled, this fails.
     link: 'mailto:info@bananapp.org',
     iconName: 'email',
   },
@@ -62,7 +64,8 @@ export default function ContactScreen(props) {
 
   return (
     <View style={styles.outerContainer}>
-      <NavBar {...props} />
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      { props.route.params && props.route.params.showNavBar ? <NavBar {...props} /> : null }
 
       <ContentHeader headerSize="large" title="Contact Us" />
 
@@ -115,8 +118,8 @@ export default function ContactScreen(props) {
           text="Back"
           onPress={
             props.backDestination
-              ? () => props.navigation.navigate(props.backDestination)
-              : () => props.navigation.goBack()
+              ? () => navigate(props.backDestination)
+              : () => goBack()
           }
         />
       </ScrollView>

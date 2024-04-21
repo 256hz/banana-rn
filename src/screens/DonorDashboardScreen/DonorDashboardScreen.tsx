@@ -1,18 +1,20 @@
 import React, { useEffect } from 'react';
-import { useIsFocused, DrawerActions } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 import {
   ScrollView, Text, View,
 } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import * as colors from '@util/constants/colors';
 import {
-  EmptyStateView, NavBar, Title,
+  EmptyStateView, NavBar, Title, Button, Icon,
 } from '@elements';
 import useGlobalStore from '@state';
 import Donation from '@library/Donations/Donation';
+import { navigate } from '@util/navigationService';
+import { ButtonStyle } from '@elements/Button';
+import { DEFAULT_ICON_SIZE } from '@util/constants/icons';
 import styles from './DonorDashboardScreen.styles';
 
-function DonorDashboardScreen({ navigation }) {
-  console.log('navigation', navigation);
+function DonorDashboardScreen() {
   const isFocused = useIsFocused();
 
   const getActiveDonationsFromDonor = useGlobalStore(state => state.getActiveDonationsFromDonor);
@@ -21,6 +23,12 @@ function DonorDashboardScreen({ navigation }) {
   const jwt = useGlobalStore(state => state.jwt);
   const user = useGlobalStore(state => state.user);
 
+  const buttonStyle: ButtonStyle = {
+    default: {
+      background: colors.WHITE_TRANSPARENT,
+      foreground: colors.NAVY_BLUE,
+    },
+  };
 
   const getActiveDonations = async () => {
     if (jwt && user) {
@@ -34,23 +42,9 @@ function DonorDashboardScreen({ navigation }) {
     }
   }, [ isFocused ]);
 
-  // const toggleDrawer = () => {
-  //   navigation.dispatch(DrawerActions.toggleDrawer());
-  // };
-
-  const toggleDrawer = () => {
-    navigation.toggleDrawer();
-    console.log('navigation', navigation);
-  };
-
   return (
     <View style={styles.outerContainer}>
-      <NavBar
-        navigate={navigation.navigate}
-        goBack={navigation.goBack}
-        toggleDrawer={toggleDrawer}
-        showBackButton={false}
-      />
+      <NavBar showBackButton={false} />
 
       <View style={styles.contentContainer}>
         <Title text="Donations" />
@@ -64,13 +58,14 @@ function DonorDashboardScreen({ navigation }) {
           <View>
             <Text style={styles.activeHeader}>ACTIVE</Text>
           </View>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('DonorDonationScreen')}
+        </View>
+        <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+          <Button
+            buttonStyle={buttonStyle}
+            onPress={() => navigate('DonorDonationScreen')}
           >
-            <View>
-              <Text style={styles.plus}>+</Text>
-            </View>
-          </TouchableOpacity>
+            {_ => <Icon size={DEFAULT_ICON_SIZE} color="blue" name="plus" />}
+          </Button>
         </View>
         {/* TODO: handle loading better */}
         {(!activeDonationsFromDonor || activeDonationsFromDonor.length < 1) && <Text>Loading...</Text>}

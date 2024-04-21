@@ -40,6 +40,7 @@ const User: IconImport = require('@assets/icons/ICON_USER.svg');
 const Vector: IconImport = require('@assets/icons/ICON_VECTOR.svg');
 const Walk: IconImport = require('@assets/icons/ICON_WALK.svg');
 const Website: IconImport = require('@assets/icons/ICON_WEBSITE.svg');
+const Plus: IconImport = require('@assets/icons/ICON_PLUS.svg');
 
 export const deprecatedIconMap: Record<DeprecatedIconName, IconName> = {
   'chevron-down': 'expand',
@@ -86,4 +87,5 @@ export const iconImports: Record<IconName, IconImport> = {
   vector: Vector,
   walk: Walk,
   website: Website,
+  plus: Plus,
 };
