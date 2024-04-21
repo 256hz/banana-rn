@@ -33,6 +33,8 @@ import ClientHistoryScreen from '../screens/ClientHistoryScreen';
 function donorOrClientDrawer() {
   const { USER_IDENTITY } = getEnv();
 
+  console.log('USER_IDENTITY', USER_IDENTITY);
+
   const DONOR_MENU = {
     'Scan QR Code': {
       component: QRCodeScannerScreen,
@@ -99,7 +101,6 @@ function DrawerNavigator() {
         swipeEnabled: jwt !== null,
       }}
       backBehavior="history"
-      // backBehavior='order' // TODO: or should i use this back behavior ...?
     >
       {/* Common screens TODO: verify that these are correct */}
       <Drawer.Screen name="LoginScreen" component={LoginScreen} />
@@ -107,8 +108,6 @@ function DrawerNavigator() {
       <Drawer.Screen name="LogoutScreen" component={LogoutScreen} />
       <Drawer.Screen name="MapScreen" component={MapScreen} />
       <Drawer.Screen name="ContactScreen" component={ContactScreen} />
-      {/* <Drawer.Screen name="RegistrationScreen" component={RegistrationScreen} />
-      <Drawer.Screen name="TermsScreen" component={TermsScreen} /> */}
 
       {/* Donor-specific screens */}
       {USER_IDENTITY === 'donor' && (

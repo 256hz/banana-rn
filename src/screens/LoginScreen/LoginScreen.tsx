@@ -54,6 +54,8 @@ export default function LoginScreen({ route }) {
         clearPasswordResetStage();
 
         navigate('Drawer', { screen: 'LoginSuccessScreen' });
+        console.log('calling navigation with drawer');
+        // NOTE: this seemed like it was getting double-called.. but now not so much??
       }
     };
     processLogin();

@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+// import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import railsAxios from './railsAxios';
 
 interface RegisterProps {
@@ -39,9 +39,10 @@ export default async ({
     }),
   );
 
-  response.data
-    ? await AsyncStorage.setItem('jwt', response.data.jwt)
-    : await AsyncStorage.removeItem('jwt');
+  // TODO: refactor to new syntax `useAsyncStorage`
+  // response.data
+  //   ? await AsyncStorage.setItem('jwt', response.data.jwt)
+  //   : await AsyncStorage.removeItem('jwt');
 
   return response.request.status || 'Error';
 };
