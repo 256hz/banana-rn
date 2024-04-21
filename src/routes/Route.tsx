@@ -24,6 +24,7 @@ import MenuDrawer from '../elements/MenuDrawer/MenuDrawer';
 import ClaimDetailsScreen from '../screens/ClaimDetailsScreen/ClaimDetailsScreen';
 import ClientClaimsScreen from '../screens/ClientClaimsScreen';
 import ClientHistoryScreen from '../screens/ClientHistoryScreen';
+import DeleteAccountScreen from '../screens/DeleteAccountScreen';
 
 const Drawer = createDrawerNavigator();
 const FullStack = createStackNavigator();
@@ -130,22 +131,6 @@ export function DonorOrClientDrawer() {
 							},
 						}}
 					/>
-					<Drawer.Screen
-						name="ClientHistoryScreen"
-						component={ClientHistoryScreen}
-						options={{
-							drawerLabel: 'History',
-							drawerLabelStyle: {
-								color: colors.WHITE,
-								textTransform: 'uppercase',
-								fontSize: 20,
-								marginLeft: 'auto',
-								marginRight: 5,
-								letterSpacing: 0.5,
-								marginBottom: 10,
-							},
-						}}
-					/>
 				</>
 			)}
 			<Drawer.Screen
@@ -153,6 +138,21 @@ export function DonorOrClientDrawer() {
 				component={ContactScreen}
 				options={{
 					drawerLabel: 'Contact Us',
+					drawerLabelStyle: {
+						color: colors.WHITE,
+						textTransform: 'uppercase',
+						marginLeft: 'auto',
+						marginRight: 5,
+						fontWeight: 'bold',
+						fontSize: 20,
+					},
+				}}
+			/>
+			<Drawer.Screen
+				name="DeleteAccountScreen"
+				component={DeleteAccountScreen}
+				options={{
+					drawerLabel: 'Delete Account',
 					drawerLabelStyle: {
 						color: colors.WHITE,
 						textTransform: 'uppercase',
@@ -197,6 +197,7 @@ export function FullStackNavigator() {
 					<FullStack.Screen name="Logout" component={LogoutScreen} />
 					<FullStack.Screen name="ClaimDetails" component={ClaimDetailsScreen} />
 					<FullStack.Screen name="DonationsDetailScreen" component={DonationsDetailScreen} />
+					<FullStack.Screen name="DeleteAccountScreen" component={DeleteAccountScreen} />
 				</FullStack.Group>
 			) : (
 				<FullStack.Group>
