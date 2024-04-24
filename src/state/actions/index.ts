@@ -13,3 +13,4 @@ export { register } from './register';
 export { scan } from './scan';
 export { updateAlert, clearAlert } from './alert';
 export { requestResetToken, submitResetToken, submitNewPassword } from './passwordReset';
+export { deleteData } from './deleteData';

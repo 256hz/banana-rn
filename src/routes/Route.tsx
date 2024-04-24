@@ -25,6 +25,7 @@ import ClaimDetailsScreen from '../screens/ClaimDetailsScreen/ClaimDetailsScreen
 import ClientClaimsScreen from '../screens/ClientClaimsScreen';
 import ClientHistoryScreen from '../screens/ClientHistoryScreen';
 import DeleteAccountScreen from '../screens/DeleteAccountScreen';
+import DeletedAccountScreen from '../screens/DeletedAccountScreen';
 
 const Drawer = createDrawerNavigator();
 const FullStack = createStackNavigator();
@@ -198,6 +199,7 @@ export function FullStackNavigator() {
 					<FullStack.Screen name="ClaimDetails" component={ClaimDetailsScreen} />
 					<FullStack.Screen name="DonationsDetailScreen" component={DonationsDetailScreen} />
 					<FullStack.Screen name="DeleteAccountScreen" component={DeleteAccountScreen} />
+					<FullStack.Screen name="DeletedAccountScreen" component={DeletedAccountScreen} />
 				</FullStack.Group>
 			) : (
 				<FullStack.Group>
