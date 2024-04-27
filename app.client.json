@@ -8,7 +8,7 @@
       "android",
       "web"
     ],
-    "version": "0.1.13",
+    "version": "1.1.16",
     "orientation": "portrait",
     "icon": "./assets/iconClient.png",
     "splash": {
@@ -24,7 +24,11 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.thebegoodproject.org.bananaapp-client"
+      "bundleIdentifier": "com.thebegoodproject.org.bananaapp-client",
+	  "infoPlist": {
+		"NSLocationWhenInUseUsageDescription": "Our app uses your location to find nearby donations, making it easier for you to locate and claim available food donations in your area.",
+		"NSLocationAlwaysUsageDescription": "Our app uses your location to continuously update nearby donations even when the app is not in use, ensuring you don't miss out on potential donations around you."
+	  }
     },
     "android": {
       "package": "com.thebegoodproject.org.bananaapp__client",
