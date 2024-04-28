@@ -31,7 +31,7 @@
 		},
 		"android": {
 			"package": "com.thebegoodproject.org.bananaapp__donor",
-			"versionCode": 2
+			"versionCode": 3
 		},
 		"userInterfaceStyle": "automatic",
 		"packagerOpts": {
