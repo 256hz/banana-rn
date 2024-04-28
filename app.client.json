@@ -1,65 +1,65 @@
 {
-  "expo": {
-    "name": "Banana App - Client",
-    "slug": "banana-app-client",
-    "privacy": "public",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
-    "version": "1.1.16",
-    "orientation": "portrait",
-    "icon": "./assets/iconClient.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#083A9B"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.thebegoodproject.org.bananaapp-client",
-	  "infoPlist": {
-		"NSLocationWhenInUseUsageDescription": "Our app uses your location to find nearby donations, making it easier for you to locate and claim available food donations in your area.",
-		"NSLocationAlwaysUsageDescription": "Our app uses your location to continuously update nearby donations even when the app is not in use, ensuring you don't miss out on potential donations around you."
-	  }
-    },
-    "android": {
-      "package": "com.thebegoodproject.org.bananaapp__client",
-      "versionCode": 4,
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyAnll5nIw3_HffbVG0-BogqpvzBv2CGj2Y"
-        }
-      }
-    },
-    "userInterfaceStyle": "automatic",
-    "packagerOpts": {
-      "config": "metro.config.js",
-      "sourceExts": [
-        "expo.ts",
-        "expo.tsx",
-        "expo.js",
-        "expo.jsx",
-        "ts",
-        "tsx",
-        "js",
-        "jsx",
-        "json",
-        "wasm",
-        "svg",
-        "md"
-      ]
-    },
+	"expo": {
+		"name": "Banana App - Client",
+		"slug": "banana-app-client",
+		"privacy": "public",
+		"platforms": [
+			"ios",
+			"android",
+			"web"
+		],
+		"version": "1.1.16",
+		"orientation": "portrait",
+		"icon": "./assets/iconClient.png",
+		"splash": {
+			"image": "./assets/splash.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#083A9B"
+		},
+		"updates": {
+			"fallbackToCacheTimeout": 0
+		},
+		"assetBundlePatterns": [
+			"**/*"
+		],
+		"ios": {
+			"supportsTablet": true,
+			"bundleIdentifier": "com.thebegoodproject.org.bananaapp-client",
+			"infoPlist": {
+				"NSLocationWhenInUseUsageDescription": "Our app uses your location to find nearby donations, making it easier for you to locate and claim available food donations in your area.",
+				"NSLocationAlwaysUsageDescription": "Our app uses your location to continuously update nearby donations even when the app is not in use, ensuring you don't miss out on potential donations around you."
+			}
+		},
+		"android": {
+			"package": "com.thebegoodproject.org.bananaapp__client",
+			"versionCode": 4,
+			"config": {
+				"googleMaps": {
+					"apiKey": "AIzaSyAnll5nIw3_HffbVG0-BogqpvzBv2CGj2Y"
+				}
+			}
+		},
+		"userInterfaceStyle": "automatic",
+		"packagerOpts": {
+			"config": "metro.config.js",
+			"sourceExts": [
+				"expo.ts",
+				"expo.tsx",
+				"expo.js",
+				"expo.jsx",
+				"ts",
+				"tsx",
+				"js",
+				"jsx",
+				"json",
+				"wasm",
+				"svg",
+				"md"
+			]
+		},
 		"description": "The Banana App provides donors (supermarkets, groceries, produce stands, restaurants) a time-sensitive platform to donate items that are considered not aesthetically-pleasing for market display or sale but still edible and in good condition. Items will be given directly to verified clients (low-income family, homeless individuals) upon successful application.",
 		"extra": {
 			"variant": "client"
 		}
-  }
+	}
 }
