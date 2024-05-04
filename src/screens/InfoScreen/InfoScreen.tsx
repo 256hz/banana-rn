@@ -1,7 +1,7 @@
 import {
 	LinkButton, SpacerInline, Title,
 } from '@elements';
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import { View } from 'react-native';
 import styles from './InfoScreen.styles';
 
@@ -11,6 +11,7 @@ type InfoScreenProps = {
 	nextScreenDestination?: string;
 	backDestination?: string;
 	showBackButton?: boolean;
+	children?: ReactNode;
 };
 
 const InfoScreen: FunctionComponent<InfoScreenProps> = ({

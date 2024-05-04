@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import { Text } from 'react-native';
 import styles from './Paragraph.styles';
 
@@ -6,6 +6,7 @@ interface ParagraphProps {
 	fontSize: number;
 	emphasized?: boolean;
 	textAlign?: 'auto' | 'left' | 'right' | 'center' | 'justify';
+	children?: ReactNode;
 }
 
 const Paragraph: FunctionComponent<ParagraphProps> = ({
