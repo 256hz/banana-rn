@@ -12,7 +12,7 @@ import claimStyles from '@util/claimStyles';
 import styles from './ClaimDetailsScreen.styles';
 
 
-function ClaimDetailsScreen() {
+const ClaimDetailsScreen = () => {
 	const { goBack } = useNavigation();
 	const route = useRoute();
 	const { donation } = route.params;
@@ -22,7 +22,7 @@ function ClaimDetailsScreen() {
 	// } else {
 	// 	claim = route.params.donation.claim;
 	// }
-	let claim = route.params.claim ? route.params.claim : route.params.donation.claim;
+	const claim = route.params.claim ? route.params.claim : route.params.donation.claim;
 	const { donor } = donation;
 
 	const claimBtnStyle: ButtonStyle = {
