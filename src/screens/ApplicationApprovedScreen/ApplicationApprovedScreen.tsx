@@ -22,15 +22,14 @@ const ApplicationApprovedScreen: FunctionComponent<ApplicationApprovedScreenProp
 				showBackButton={false}
 			>
 				<Paragraph fontSize={20}>
-        Welcome to the Banana App! We are so excited to have you join our
-        family.
+					Welcome to the Banana App! We are so excited to have you join our family.
 				</Paragraph>
 				<SpacerInline height={40} />
 				<Paragraph emphasized={true} fontSize={20}>
-        CLICK "START" TO BEGIN YOUR FIRST DONATION!
+					CLICK "START" TO BEGIN YOUR FIRST DONATION!
 				</Paragraph>
 			</InfoScreen>
-		) : <></>
+		) : <>This should not be showing</>
 	);
 };
 
