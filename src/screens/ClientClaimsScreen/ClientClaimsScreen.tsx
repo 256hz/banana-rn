@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
-// import { useIsFocused } from 'react-navigation-hooks';
 import { useIsFocused } from '@react-navigation/native';
 import Donation from '@library/DonationClientView/Donation';
 import useGlobal from '@state';
 import {
 	EmptyStateView, NavBar, SpacerInline, Title,
 } from '@elements';
+import { InitialState, Actions } from '@state/index.types';
 import styles from './ClientClaimsScreen.styles';
 
-function ClientClaimsScreen() {
+const useGlobalTyped = useGlobal as () => [InitialState, Actions];
+
+const ClientClaimsScreen = () => {
 	const isFocused = useIsFocused();
-	const [ state, actions ] = useGlobal() as any;
+	const [ state, actions ] = useGlobalTyped();
 
 	const [ claimedDonations, setClaimedDonations ] = useState(state.donationsOrClaims);
 	const [ loaded, setLoaded ] = useState(false);
@@ -26,6 +28,8 @@ function ClientClaimsScreen() {
 		}
 	};
 
+	// TODO: Check if isFocused is causing the getClaims() to be called multiple times
+	// When I was logging claimedDonations it indicated so.
 	useEffect(() => {
 		if (isFocused) {
 			getClaims();
@@ -47,7 +51,7 @@ function ClientClaimsScreen() {
 					? (
 						<ScrollView>
 							{
-								(claimedDonations as any).map(claimedDonation => (
+								claimedDonations?.map(claimedDonation => (
 									<View key={claimedDonation.id}>
 										<Donation
 											donation={claimedDonation}
@@ -69,6 +73,6 @@ function ClientClaimsScreen() {
 
 		</View>
 	);
-}
+};
 
 export default ClientClaimsScreen;
