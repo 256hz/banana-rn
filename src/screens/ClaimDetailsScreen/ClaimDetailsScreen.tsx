@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import {
 	Dimensions, ImageBackground, ScrollView, Text, View, Platform, Linking,
 } from 'react-native';
@@ -11,18 +11,49 @@ import { ButtonStyle } from '@elements/Button';
 import claimStyles from '@util/claimStyles';
 import styles from './ClaimDetailsScreen.styles';
 
+interface Donor {
+	address_city: string;
+	address_state: string;
+	address_street: string;
+	address_zip: string;
+	donor_name: string;
+	latitude: string;
+	longitude: string;
+}
+
+interface Claim {
+	client_name: string;
+	qr_code: string;
+	status: string; // Maybe make sure proper value ie 'active', 'claimed', 'closed'
+}
+
+// When a ClaimDetailsScreen is accessed for the first time, claim property is null.
+// Any other time the screen is accessed it follows the Claim interface.
+interface Donation {
+	category: string;
+	claim: null | Claim;
+	created_at: string;
+	distance: number;
+	donor: Donor;
+	donor_id: number;
+	food_name: string;
+	id: number;
+	pickup_instructions: string;
+	status: string;
+	total_amount: string;
+	updated_at: string;
+}
+
+interface RouteParams {
+	donation: Donation;
+}
+
 
 const ClaimDetailsScreen = () => {
 	const { goBack } = useNavigation();
-	const route = useRoute();
+	const route = useRoute<RouteProp<{ params: RouteParams }, 'params'>>();
 	const { donation } = route.params;
-	// let claim;
-	// if (route.params.claim) {
-	// 	claim = route.params.claim;
-	// } else {
-	// 	claim = route.params.donation.claim;
-	// }
-	const claim = route.params.claim ? route.params.claim : route.params.donation.claim;
+	const claim = donation.claim ? donation.claim : null;
 	const { donor } = donation;
 
 	const claimBtnStyle: ButtonStyle = {
@@ -70,7 +101,9 @@ const ClaimDetailsScreen = () => {
 						{donation.distance != null && (
 							<View style={claimStyles.itemWithIcon}>
 								<Icon name="distance" size={16} />
-								<Text style={typography.body4}>{donation.distance && `${donation.distance.toFixed(1)} mi`}</Text>
+								<Text style={typography.body4}>
+									{donation.distance && `${donation.distance.toFixed(1)} mi`}
+								</Text>
 							</View>
 						)}
 					</View>
@@ -92,13 +125,13 @@ const ClaimDetailsScreen = () => {
 						<View style={claimStyles.item}>
 							<Text style={typography.body4}>{donation.pickup_instructions}</Text>
 						</View>
-						{claim.status !== 'closed' && (
+						{claim && claim.status !== 'closed' && (
 							<View style={{ flexDirection: 'row', justifyContent: 'center' }}>
 								<TextButton text="Directions" buttonStyle={claimBtnStyle} onPress={() => openGPS()} />
 							</View>
 						)}
 					</View>
-					{claim.status !== 'closed' && (
+					{claim && claim.status !== 'closed' && (
 						<View>
 							<View style={claimStyles.title}>
 								<Text style={typography.h3}>QR Code</Text>
@@ -117,6 +150,6 @@ const ClaimDetailsScreen = () => {
 			</ScrollView>
 		</View>
 	);
-}
+};
 
 export default ClaimDetailsScreen;
