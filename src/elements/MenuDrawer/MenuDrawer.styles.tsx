@@ -45,7 +45,7 @@ export default StyleSheet.create({
 		marginLeft: 30,
 		marginRight: 30,
 		backgroundColor: colors.NAVY_BLUE,
-		marginTop: 300, // TODO: Find more dynamic styling option
+		marginTop: 250, // TODO: Find more dynamic styling option
 	},
 	labelText: {
 		color: colors.WHITE,

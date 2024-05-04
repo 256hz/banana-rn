@@ -109,6 +109,16 @@ function MenuDrawer() {
 				/>
 			</TouchableOpacity>
 			<TouchableOpacity
+				style={styles.menuItem}
+				onPress={async () => {
+					navigate('DeleteAccountScreen');
+				}}
+			>
+				<SubOption
+					text="Delete Data"
+				/>
+			</TouchableOpacity>
+			<TouchableOpacity
 				style={styles.logoutMenuItem}
 				onPress={async () => {
 					navigate('LogoutScreen');

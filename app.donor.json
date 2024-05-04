@@ -1,56 +1,59 @@
 {
-  "expo": {
-    "name": "Banana App - Donor",
-    "slug": "banana-app-donor",
-    "privacy": "public",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
-    "version": "0.1.13",
-    "orientation": "portrait",
-    "icon": "./assets/iconDonor.png",
-    "splash": {
-      "image": "./assets/donorSplash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#FFBC00"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.thebegoodproject.org.bananaapp"
-    },
-    "android": {
-      "package": "com.thebegoodproject.org.bananaapp__donor",
-      "versionCode": 2
-    },
-    "userInterfaceStyle": "automatic",
-    "packagerOpts": {
-      "config": "metro.config.js",
-      "sourceExts": [
-        "expo.ts",
-        "expo.tsx",
-        "expo.js",
-        "expo.jsx",
-        "ts",
-        "tsx",
-        "js",
-        "jsx",
-        "json",
-        "wasm",
-        "svg",
-        "md"
-      ]
-    },
-    "description": "The Banana App provides donors (supermarkets, groceries, produce stands, restaurants) a time-sensitive platform to donate items that are considered not aesthetically-pleasing for market display or sale but still edible and in good condition. Items will be given directly to verified clients (low-income family, homeless individuals) upon successful application.",
-	"extra": {
-		"variant": "donor"
-	}
+	"expo": {
+		"name": "Banana App - Donor",
+		"slug": "banana-app-donor",
+		"privacy": "public",
+		"platforms": [
+			"ios",
+			"android",
+			"web"
+		],
+		"version": "1.1.16",
+		"orientation": "portrait",
+		"icon": "./assets/iconDonor.png",
+		"splash": {
+			"image": "./assets/donorSplash.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#FFBC00"
+		},
+		"updates": {
+			"fallbackToCacheTimeout": 0
+		},
+		"assetBundlePatterns": [
+			"**/*"
+		],
+		"ios": {
+			"supportsTablet": true,
+			"bundleIdentifier": "com.thebegoodproject.org.bananaapp",
+			"infoPlist": {
+				"NSCameraUsageDescription": "Our app uses your camera to scan QR codes to facilitate transactions between donor and client users, enabling a swift and secure exchange of food that would otherwise go to waste."
+			}
+		},
+		"android": {
+			"package": "com.thebegoodproject.org.bananaapp__donor",
+			"versionCode": 3
+		},
+		"userInterfaceStyle": "automatic",
+		"packagerOpts": {
+			"config": "metro.config.js",
+			"sourceExts": [
+				"expo.ts",
+				"expo.tsx",
+				"expo.js",
+				"expo.jsx",
+				"ts",
+				"tsx",
+				"js",
+				"jsx",
+				"json",
+				"wasm",
+				"svg",
+				"md"
+			]
+		},
+		"description": "The Banana App provides donors (supermarkets, groceries, produce stands, restaurants) a time-sensitive platform to donate items that are considered not aesthetically-pleasing for market display or sale but still edible and in good condition. Items will be given directly to verified clients (low-income family, homeless individuals) upon successful application.",
+		"extra": {
+			"variant": "donor"
+		}
 	}
 }
