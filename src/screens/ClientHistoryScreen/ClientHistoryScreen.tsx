@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
-// import { useIsFocused } from 'react-navigation-hooks';
 import { useIsFocused } from '@react-navigation/native';
 import { Title, NavBar, EmptyStateView } from '@elements';
-
 import Donation from '@library/DonationClientView/Donation';
 import useGlobal from '@state';
-
+import {
+	InitialState, Actions, Donation as DonationType, Claim,
+} from '@state/index.types';
 import styles from './ClientHistoryScreen.styles';
 
-function ClientHistoryScreen() {
+const useGlobalTyped = useGlobal as () => [InitialState, Actions];
+
+const ClientHistoryScreen = () => {
 	const isFocused = useIsFocused();
-	const [ state, actions ] = useGlobal() as any;
-	const [ claims, setClaims ] = useState([]);
+	const [ , actions ] = useGlobalTyped();
+	const [ claims, setClaims ] = useState<DonationType[] | Claim[] >([]);
 	const [ loaded, setLoaded ] = useState(false);
 
+	// THINK ABOUT: Add spinner while data is fetching / !loaded
 	const getClaims = async () => {
 		const { getClaimHistoryForClient } = actions;
 		const data = await getClaimHistoryForClient();
@@ -24,6 +27,7 @@ function ClientHistoryScreen() {
 		}
 	};
 
+	// THINK ABOUT: Should !loaded by condition for running getClaims()?
 	useEffect(() => {
 		if (isFocused) {
 			getClaims();
@@ -49,16 +53,18 @@ function ClientHistoryScreen() {
 				{ !loaded && <Text>Loading...</Text> }
 				{(claims && claims.length > 0) ? (
 					<ScrollView>
-						{(claims as any).sort((a, b) => a.created_at > b.created_at).map(claim => (
-							<View key={claim.id}>
-								<Donation
-									donation={claim}
-									key={claim.id}
-									isHistory={true}
-									isClaim={true}
-								/>
-							</View>
-						))}
+						{claims
+							.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
+							.map(claim => (
+								<View key={'id' in claim ? claim.id : claim.food_name}>
+									<Donation
+										donation={claim}
+										key={claim.id}
+										isHistory={true}
+										isClaim={true}
+									/>
+								</View>
+							))}
 					</ScrollView>
 				) : (
 					<EmptyStateView lowerText="You don't have a history of claims." />
