@@ -30,7 +30,7 @@ import DeletedAccountScreen from '../screens/DeletedAccountScreen';
 const Drawer = createDrawerNavigator();
 const FullStack = createStackNavigator();
 
-export function DonorOrClientDrawer() {
+export const DonorOrClientDrawer = () => {
 	const { USER_IDENTITY } = getEnv();
 
 	return (
@@ -132,6 +132,23 @@ export function DonorOrClientDrawer() {
 							},
 						}}
 					/>
+					<Drawer.Screen
+						name="ClientHistoryScreen"
+						component={ClientHistoryScreen}
+						options={{
+							drawerLabel: 'History',
+							drawerLabelStyle: {
+								color: colors.WHITE,
+								textTransform: 'uppercase',
+								fontWeight: 'bold',
+								fontSize: 20,
+								marginLeft: 'auto',
+								marginRight: 5,
+								letterSpacing: 0.5,
+								marginBottom: 10,
+							},
+						}}
+					/>
 				</>
 			)}
 			<Drawer.Screen
@@ -181,9 +198,9 @@ export function DonorOrClientDrawer() {
 			/>
 		</Drawer.Navigator>
 	);
-}
+};
 
-export function FullStackNavigator() {
+export const FullStackNavigator = () => {
 	const [ state ] = useGlobal();
 	return (
 		<FullStack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
@@ -210,5 +227,5 @@ export function FullStackNavigator() {
 			<FullStack.Screen name="ContactScreen" component={ContactScreen} />
 		</FullStack.Navigator>
 	);
-}
+};
 
