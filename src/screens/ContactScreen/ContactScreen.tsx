@@ -5,18 +5,20 @@ import {
 	TouchableHighlight,
 	View,
 } from 'react-native';
-import { Linking } from 'expo';
+import * as Linking from 'expo-linking';
 import {
 	ContentHeader,
-	NavBar,
 	SpacerInline,
 	LinkButton,
 	Icon,
 } from '@elements';
 import { IconName } from '@elements/Icon';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import useGlobal from '@state';
+import { InitialState, Actions, RootStackParamList } from '@state/index.types';
 import styles, { ListItem } from './ContactScreen.styles';
+
+const useGlobalTyped = useGlobal as () => [InitialState, Actions];
 
 const contactList: Array<{
 	title: string;
@@ -52,12 +54,14 @@ const contactList: Array<{
 ];
 
 interface ContactScreenParams {
-	backDestination?: string;
+	backDestination?: keyof RootStackParamList;
 }
 
 export default ({ backDestination }: ContactScreenParams) => {
-	const { navigate, goBack } = useNavigation();
-	const [ state, { updateAlert } ] = useGlobal() as any;
+	const { navigate, goBack } = useNavigation<NavigationProp<RootStackParamList>>();
+	const [ , actions ] = useGlobalTyped();
+
+	const { updateAlert } = actions;
 
 	const openLink = async (url: string) => {
 		const supported = await Linking.canOpenURL(url);
@@ -66,6 +70,7 @@ export default ({ backDestination }: ContactScreenParams) => {
 			? await Linking.openURL(url)
 			: updateAlert({
 				title: 'Oops!',
+				type: 'bad url',
 				message: `There was an error connecting to ${url}-- please try again later.`,
 				dismissable: true,
 			});
@@ -73,7 +78,6 @@ export default ({ backDestination }: ContactScreenParams) => {
 
 	return (
 		<View style={styles.outerContainer}>
-			{/* <NavBar /> */}
 
 			<ContentHeader headerSize="large" title="Contact Us" />
 
