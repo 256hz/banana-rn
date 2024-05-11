@@ -7,23 +7,28 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import useGlobal from '@state';
+import { InitialState, Actions } from '@state/index.types';
 import getEnv from '../../util/environment';
 import MainOption from './MainOption/MainOption';
 import SubOption from './SubOption/SubOption';
 import styles from './MenuDrawer.styles';
 
-function MenuDrawer() {
-	const [ state, actions ] = useGlobal() as any;
+const useGlobalTyped = useGlobal as () => [InitialState, Actions];
+
+const MenuDrawer = () => {
+	const [ state ] = useGlobalTyped();
 	const { navigate } = useNavigation() as any;
 	const { USER_IDENTITY } = getEnv();
-	const { logOut } = actions;
-	const name = state.user.organization_name ? state.user.organization_name : state.user.first_name;
+	const userName = state.userIdentity === 'donor'
+		? state.user?.organization_name
+		: state.user?.first_name;
+	// const name = state.user?.organization_name ? state.user.organization_name : state.user.first_name;
 
 	return (
 		<ScrollView>
 			<View style={styles.drawerHeader}>
 				<Text style={{ ...styles.username, marginBottom: 0 }}>Hello,</Text>
-				<Text style={styles.username}>{name}</Text>
+				<Text style={styles.username}>{userName}</Text>
 			</View>
 			{ USER_IDENTITY === 'donor' && (
 				<>
@@ -131,6 +136,6 @@ function MenuDrawer() {
 			</TouchableOpacity>
 		</ScrollView>
 	);
-}
+};
 
 export default MenuDrawer;
