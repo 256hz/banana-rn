@@ -60,7 +60,8 @@ export interface Alert {
 	/**
 	 * Type of the alert.
 	 */
-	type: 'default'|'incomplete form'|'coming soon'|'cancel donation'|'donation cancelled'|'donation published';
+	type: 'default'|'incomplete form'|'coming soon'|'cancel donation'|'donation cancelled'|'donation published' |
+	'bad url';
 
 	/**
 	 * Message to the user.
@@ -98,6 +99,30 @@ export interface Location {
 	longitude: number;
 }
 
+export type RootStackParamList = {
+	Login: undefined;
+	Register: undefined;
+	TermsScreen: undefined;
+	ContactScreen: undefined;
+	LoginSuccess: undefined;
+	DashboardScreen: undefined;
+	DonorDashboardScreen: undefined;
+	DonationScreen: undefined;
+	QRCodeScannerScreen: undefined;
+	LogoutScreen: undefined;
+	DonationsDetailScreen: undefined;
+	DonorDonationScreen: undefined;
+	DonorHistoryScreen: undefined;
+	MapScreen: undefined;
+	MakeClaim: undefined;
+	ClaimDetails: undefined;
+	ClientClaimsScreen: undefined;
+	ClientHistoryScreen: undefined;
+	DeleteAccountScreen: undefined;
+	DeletedAccountScreen: undefined;
+	Drawer: undefined;
+};
+
 export interface Actions {
 	getActiveDonationsForClient: () => Promise<Donation[] | []>;
 	getClaimedDonationsForClient: () => Promise<Donation[] | Claim[] | []>;
@@ -114,6 +139,7 @@ export interface Actions {
 	submitResetToken: () => Promise<StatusCode>;
 	submitNewPassword: () => Promise<StatusCode>;
 	getTravelTimes: () => Promise<{status: StatusCode; times: object}>;
+	updateAlert: (alert: Alert) => void;
 }
 
 export type UseGlobalType = [ InitialState, Actions ];
