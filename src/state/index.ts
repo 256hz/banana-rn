@@ -1,7 +1,7 @@
 import React from 'react';
 import getEnv from '@util/environment';
 import useGlobalHook from 'use-global-hook';
-import { Actions, InitialState } from './index.types';
+import { Actions, InitialState, UseGlobalType } from './index.types';
 
 import * as actions from './actions';
 
@@ -13,7 +13,7 @@ const {
 } = getEnv();
 
 export const initialState: InitialState = {
-	userIdentity: USER_IDENTITY,
+	userIdentity: USER_IDENTITY as 'donor' | 'client',
 	apiBaseUrl: API_BASE_URL,
 	loginUrl: LOGIN_URL,
 	createUrl: CREATE_URL,
@@ -31,6 +31,8 @@ export const initialState: InitialState = {
 console.log('###ACTIONS FROM IMPORT: ', actions);
 const actionFunctions: Actions = actions as unknown as Actions;
 
-const useGlobal = useGlobalHook<InitialState, Actions>(React, initialState, actionFunctions);
+const useGlobalUntyped = useGlobalHook<InitialState, Actions>(React, initialState, actionFunctions);
+
+const useGlobal = (): UseGlobalType => useGlobalUntyped();
 
 export default useGlobal;
