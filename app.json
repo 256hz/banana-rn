@@ -43,7 +43,10 @@
         "wasm",
         "svg",
         "md"
-      ]
+      ],
+	  "plugins": [
+		"expo-font"
+	  ]
     },
     "description": ""
   }
