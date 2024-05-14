@@ -44,6 +44,13 @@ export default ({ config }) => {
 		},
 		plugins: [
 			'expo-font',
+			[
+				'expo-camera',
+				{
+					cameraPermission: 'Allow BANANA APP to access your camera',
+					recordAudioAndroid: true,
+				},
+			],
 		],
 	};
 };
