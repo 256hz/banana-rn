@@ -73,7 +73,7 @@ export default ({ backDestination }: ContactScreenParams) => {
 
 	return (
 		<View style={styles.outerContainer}>
-			<NavBar />
+			{/* <NavBar /> */}
 
 			<ContentHeader headerSize="large" title="Contact Us" />
 
