@@ -24,28 +24,34 @@ export interface SharedProps {
 }
 
 export interface Claim {
+	client_name: undefined;
+	canceled: boolean;
+	claimed: boolean;
 	client_id: number;
-	donation_id: number;
-	qr_code: string;
 	completed: boolean;
 	created_at: Date;
-	updated_at: Date;
+	donation_id: number;
+	qr_code: string;
+	status: string;
 	time_claimed: Date;
-	canceled: boolean;
+	updated_at: Date;
 }
 
 export interface Donation {
-	food_name: string;
-	measurement: string;
-	per_person: number;
-	total_servings: number;
+	category(category: string): import('react').SetStateAction<ImageData>;
+	canceled: boolean;
+	claim: Claim;
+	created_at: Date;
 	donor_id: number;
 	duration_minutes: number;
+	food_name: string;
 	image_url: string;
-	created_at: Date;
-	updated_at: Date;
-	canceled: boolean;
+	measurement: string;
+	per_person: number;
 	pickup_location: string;
+	status: string;
+	total_servings: number;
+	updated_at: Date;
 }
 
 /**
@@ -109,11 +115,12 @@ export interface Actions {
 	logOut: () => Promise<void>;
 	postDonation: () => Promise<StatusCode>;
 	register: () => Promise<StatusCode>;
-	scan: () => Promise<StatusCode>;
+	scan: (qrCode: string) => Promise<StatusCode>;
 	requestResetToken: () => Promise<StatusCode>;
 	submitResetToken: () => Promise<StatusCode>;
 	submitNewPassword: () => Promise<StatusCode>;
 	getTravelTimes: () => Promise<{status: StatusCode; times: object}>;
+	updateAlert: (alert: Alert) => void;
 }
 
 export type UseGlobalType = [ InitialState, Actions ];

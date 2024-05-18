@@ -32,19 +32,7 @@ export default ({ config }) => {
 		configVariant = donorConfig;
 	}
 
-	// FOR TROUBLESHOOTING PURPOSES: Console logs the app.json object that gets generated. 
-	// console.log({
-	// 	...config,
-	// 	...configVariant.expo,
-	// 	...dynamicConfig,
-	// 	extra: {
-	// 		...config.extra,
-	// 		...configVariant.expo.extra,
-	// 		...dynamicConfig.extra,
-	// 	},
-	// });
-
-	// Merge teh configurations
+	// Merge the configurations
 	return {
 		...config,
 		...configVariant.expo,
@@ -54,5 +42,15 @@ export default ({ config }) => {
 			...configVariant.expo.extra,
 			...dynamicConfig.extra,
 		},
+		plugins: [
+			'expo-font',
+			[
+				'expo-camera',
+				{
+					cameraPermission: 'Allow BANANA APP to access your camera',
+					recordAudioAndroid: true,
+				},
+			],
+		],
 	};
 };

@@ -30,7 +30,7 @@ export type ButtonProps = TouchableHighlightProps & {
 	outlined?: boolean;
 };
 
-export default ({
+export default function Button({
 	children,
 	style,
 	buttonStyle,
@@ -40,7 +40,7 @@ export default ({
 	onShowUnderlay = () => { },
 	onHideUnderlay = () => { },
 	...props
-}: ButtonProps) => {
+}: ButtonProps) {
 	const scheme: ColorScheme = useScheme();
 	// Whether or not the button is pressed/ active.
 	const [ pressed, setPressed ] = useState(false);
@@ -108,4 +108,4 @@ export default ({
 			</View>
 		</TouchableHighlight>
 	);
-};
+}
