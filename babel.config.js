@@ -2,7 +2,9 @@ module.exports = function (api) {
 	api.cache(true);
 	return {
 		presets: [
-			'module:metro-react-native-babel-preset',
+			[ 'module:metro-react-native-babel-preset', { runtime: 'automatic' } ],
+			'babel-preset-expo',
+			[ '@babel/preset-react', { runtime: 'automatic' } ],
 		],
 		plugins: [
 			[
@@ -28,6 +30,18 @@ module.exports = function (api) {
 				},
 			],
 			'react-native-reanimated/plugin',
+			[ '@babel/plugin-transform-private-methods', { loose: true } ],
+			[ '@babel/plugin-transform-class-properties', { loose: true } ],
+			[ '@babel/plugin-transform-private-property-in-object', { loose: true } ],
+		],
+		overrides: [
+			{
+				test: /\.jsx?$/,
+				plugins: [
+					[ '@babel/plugin-transform-react-jsx-self', false ],
+					[ '@babel/plugin-transform-react-jsx-source', false ],
+				],
+			},
 		],
 	};
 };
