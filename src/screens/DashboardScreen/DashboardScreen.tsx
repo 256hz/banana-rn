@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
-// import { useIsFocused, useNavigation } from 'react-navigation-hooks';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import Donation from '@library/DonationClientView/Donation';
 import useGlobal from '@state';
 import {
 	EmptyStateView, NavBar, SpacerInline, Title,
 } from '@elements';
+import { UseGlobalType, Donation as DonationType, Claim } from '@state/index.types';
+// import { SharedProps } from '@state/index.types';
 import styles from './DashboardScreen.styles';
 
 function DashboardScreen() {
 	const isFocused = useIsFocused();
-	const [ state, actions ] = useGlobal() as any;
+	const [ state, actions ] = useGlobal() as UseGlobalType;
 	const { navigate } = useNavigation();
-	const [ donations, setDonations ] = useState(state.donationsOrClaims);
+	const [ donations, setDonations ] = useState<DonationType[] | Claim[] | undefined>(state.donationsOrClaims);
 	const [ loaded, setLoaded ] = useState(false);
 
 	const getActiveDonationsForLocation = async () => {

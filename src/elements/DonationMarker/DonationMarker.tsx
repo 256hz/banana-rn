@@ -1,5 +1,5 @@
 import React from 'react';
-import { Location } from '@state/index.types';
+import { ILocation } from '@state/index.types';
 import { Marker } from 'react-native-maps';
 
 import { Icon } from '@elements/Icon';
@@ -8,7 +8,7 @@ import styles from './DonationMarker.styles';
 
 
 interface DonationMarkerProps{
-	coordinate: Location;
+	coordinate: ILocation;
 	onPress: () => void;
 	size: number;
 }

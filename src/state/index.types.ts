@@ -84,7 +84,7 @@ export interface Alert {
 	confirmFn?: () => void;
 }
 
-export interface InitialState {
+export interface IInitialState {
 	userIdentity: 'donor' | 'client';
 	apiBaseUrl: string;
 	loginUrl: string;
@@ -95,32 +95,32 @@ export interface InitialState {
 	donationsOrClaims?: Donation[] | Claim[];
 }
 
-export interface StatusCode {
+export interface IStatusCode {
 	code: 200 | 202 | 400 | 403 | 404 | 418 | 500;
 }
 
-export interface Location {
+export interface ILocation {
 	latitude: number;
 	longitude: number;
 }
 
-export interface Actions {
+export interface IActions {
 	getActiveDonationsForClient: () => Promise<Donation[] | []>;
 	getClaimedDonationsForClient: () => Promise<Donation[] | Claim[] | []>;
 	getClaimHistoryForClient: () => Promise<Donation[]| Claim[] | []>;
 	getDonations: () => Promise<Donation[] | []>;
 	getDonationHistory: () => Promise<Donation[] | []>;
 	getLocation: () => Promise<{ latitude: number; longitude: number }>;
-	logIn: () => Promise<StatusCode>;
+	logIn: () => Promise<IStatusCode>;
 	logOut: () => Promise<void>;
-	postDonation: () => Promise<StatusCode>;
-	register: () => Promise<StatusCode>;
-	scan: (qrCode: string) => Promise<StatusCode>;
-	requestResetToken: () => Promise<StatusCode>;
-	submitResetToken: () => Promise<StatusCode>;
-	submitNewPassword: () => Promise<StatusCode>;
-	getTravelTimes: () => Promise<{status: StatusCode; times: object}>;
+	postDonation: () => Promise<IStatusCode>;
+	register: () => Promise<IStatusCode>;
+	scan: (qrCode: string) => Promise<IStatusCode>;
+	requestResetToken: () => Promise<IStatusCode>;
+	submitResetToken: () => Promise<IStatusCode>;
+	submitNewPassword: () => Promise<IStatusCode>;
+	getTravelTimes: () => Promise<{status: IStatusCode; times: object}>;
 	updateAlert: (alert: Alert) => void;
 }
 
-export type UseGlobalType = [ InitialState, Actions ];
+export type UseGlobalType = [ IInitialState, IActions ];
