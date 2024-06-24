@@ -5,13 +5,13 @@ import { Icon } from '@elements';
 import typography from '@util/typography';
 import formatDate from '@util/formatDate';
 import { categoryImage } from '@util/donationCategory';
-import { Donation } from './Donation.type';
+import { IDonation } from '../../../declarations';
 import styles from './Donation.styles';
 
 interface ClientDonationProps {
 	isClaim: boolean;
 	isHistory: boolean;
-	donation: Donation;
+	donation: IDonation;
 }
 
 export default function ({ donation, isClaim, isHistory }: ClientDonationProps) {
@@ -20,12 +20,16 @@ export default function ({ donation, isClaim, isHistory }: ClientDonationProps) 
 	const icon = categoryImage(category);
 	const updatedAt = formatDate(updated_at);
 
+	const handlePress = () => {
+		if (!isClaim) {
+			navigate('MakeClaim', { donation, id });
+		} else {
+			navigate('ClaimDetailsScreen', { donation });
+		}
+	};
+
 	return (
-		<TouchableOpacity
-			onPress={() =>
-				!isClaim ? navigate('MakeClaim', { donation, id }) : navigate('ClaimDetailsScreen', { donation })
-			}
-		>
+		<TouchableOpacity onPress={handlePress}>
 			<View style={[styles.card, { backgroundColor: !isClaim || isHistory ? '#F0EEEE' : '#FFE145' }]}>
 				<View style={styles.categoryText}>
 					<Text style={typography.h4}>{category}</Text>
