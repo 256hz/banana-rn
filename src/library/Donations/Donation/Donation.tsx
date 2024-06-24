@@ -1,5 +1,4 @@
 import React from 'react';
-// import { useNavigation } from 'react-navigation-hooks';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import typography from '@util/typography';
