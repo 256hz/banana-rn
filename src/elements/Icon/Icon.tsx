@@ -1,19 +1,8 @@
 import React from 'react';
-import {
-	Image,
-	Platform,
-	View,
-} from 'react-native';
+import { Image, Platform, View } from 'react-native';
 import { NAVY_BLUE } from '@util/colors';
-import {
-	deprecatedIconMap,
-	iconImports,
-} from './icons';
-import {
-	DeprecatedIconName,
-	IconImport,
-	IconName,
-} from './Icon.types';
+import { deprecatedIconMap, iconImports } from './icons';
+import { DeprecatedIconName, IconImport, IconName } from './Icon.types';
 
 interface IconProps {
 	name: IconName | DeprecatedIconName;
@@ -21,15 +10,9 @@ interface IconProps {
 	color?: string;
 }
 
-function Icon({
-	name,
-	size,
-	color = NAVY_BLUE,
-}: IconProps) {
+function Icon({ name, size, color = NAVY_BLUE }: IconProps) {
 	const nameIsDeprecated = Object.keys(deprecatedIconMap).includes(name);
-	const validIconName = nameIsDeprecated
-		? (deprecatedIconMap[name] || '')
-		: name;
+	const validIconName = nameIsDeprecated ? deprecatedIconMap[name] || '' : name;
 
 	/**
 	 * Returns the required dimensions for the base icon (e.g. the hamburger
@@ -42,10 +25,10 @@ function Icon({
 
 		if (name.includes('menu')) {
 			// Operand = dimension of SVG divided by dimension of base icon
-			width *= (27 / 24.0);
-			height *= (23 / 24.0);
+			width *= 27 / 24.0;
+			height *= 23 / 24.0;
 		} else if (name.includes('bell')) {
-			height *= (26 / 24.0);
+			height *= 26 / 24.0;
 		}
 
 		return { width, height };
@@ -81,38 +64,21 @@ function Icon({
 	const IconSvg: IconImport = iconImports[validIconName];
 
 	return (
-		<View style={{
-			position: 'relative',
-			width: size,
-			height: size,
-			justifyContent: 'center',
-			alignItems: 'center',
-		}}
+		<View
+			style={{
+				position: 'relative',
+				width: size,
+				height: size,
+				justifyContent: 'center',
+				alignItems: 'center',
+			}}
 		>
-			{
-				Platform.OS === 'web'
-					? (
-						<Image
-							source={IconSvg}
-							style={[
-								getDimensions(),
-								getOffset(),
-							]}
-						/>
-					)
-					: (
-						// eslint-disable-next-line react/jsx-pascal-case
-						<IconSvg.default
-							style={[
-								getDimensions(),
-								getOffset(),
-							]}
-							width={size}
-							height={size}
-							fill={color}
-						/>
-					)
-			}
+			{Platform.OS === 'web' ? (
+				<Image source={IconSvg} style={[getDimensions(), getOffset()]} />
+			) : (
+				// eslint-disable-next-line react/jsx-pascal-case
+				<IconSvg.default style={[getDimensions(), getOffset()]} width={size} height={size} fill={color} />
+			)}
 		</View>
 	);
 }

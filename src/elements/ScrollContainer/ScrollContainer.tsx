@@ -9,10 +9,7 @@ interface ScrollContainerProps {
 	documentText: string;
 }
 
-export default function ScrollContainer({
-	onScrollToEnd = () => {},
-	documentText,
-}: ScrollContainerProps) {
+export default function ScrollContainer({ onScrollToEnd = () => {}, documentText }: ScrollContainerProps) {
 	return (
 		<EndOfScrollWrapper onScrollToEnd={onScrollToEnd} style={styles.documentContainer}>
 			<Text style={styles.documentText}>{documentText}</Text>
@@ -20,4 +17,3 @@ export default function ScrollContainer({
 		</EndOfScrollWrapper>
 	);
 }
-

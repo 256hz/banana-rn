@@ -6,22 +6,14 @@ import { useScheme } from '@util/colorSchemes';
 import Modal from '../Modal/Modal';
 import styles from './GeneralErrorModal.styles';
 
-
 interface GeneralErrorProps {
 	onDismiss: () => void;
 }
 
-const GeneralError: FunctionComponent<GeneralErrorProps> = ({
-	onDismiss,
-}) => {
+const GeneralError: FunctionComponent<GeneralErrorProps> = ({ onDismiss }) => {
 	const scheme = useScheme();
 	return (
-		<Modal
-			title="UH-OH!"
-			open={true}
-			onDismiss={() => onDismiss()}
-			style={{ position: 'absolute' }}
-		>
+		<Modal title="UH-OH!" open={true} onDismiss={() => onDismiss()} style={{ position: 'absolute' }}>
 			<View style={styles.container}>
 				<SpacerInline height={60} />
 				<Text style={styles.text}>Something went wrong.</Text>

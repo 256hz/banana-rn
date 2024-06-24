@@ -13,9 +13,7 @@ interface DropdownInputProps extends TextInputProps {
 }
 
 function DropdownInput(props: DropdownInputProps) {
-	const {
-		value, setValue, dropdownData, placeholder,
-	} = props;
+	const { value, setValue, dropdownData, placeholder } = props;
 
 	const formattedData: Item[] = dropdownData?.map(item => ({ label: item, value: item })) || [];
 

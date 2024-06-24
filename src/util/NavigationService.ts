@@ -11,20 +11,16 @@ function navigate(routeName, params?) {
 		CommonActions.navigate({
 			name: routeName,
 			params,
-		}),
+		})
 	);
 }
 
 function goBack() {
-	navigator.dispatch(
-		CommonActions.goBack(),
-	);
+	navigator.dispatch(CommonActions.goBack());
 }
 
 function toggleDrawer() {
-	navigator.dispatch(
-		DrawerActions.toggleDrawer(),
-	);
+	navigator.dispatch(DrawerActions.toggleDrawer());
 }
 
 export default {

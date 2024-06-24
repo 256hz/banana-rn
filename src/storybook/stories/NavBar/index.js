@@ -7,23 +7,29 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { Button, Icon, NavBar } from '../../../elements';
 import EmptyNavigator from '../Decorators/EmptyNavigator';
 
-
 const story = storiesOf('NavBar', module)
 	.addDecorator(EmptyNavigator)
-	.add('NavBar', () => (
-		<View>
-			<NavBar leftButton="back" />
-			<NavBar leftButton="qrCode" />
-			<NavBar
-				showSelector={true}
-				onList={() => { alert(' you clicked List!'); }}
-				onMap={() => { alert('you clicked Map'); }}
-				position="map"
-			/>
-		</View>
-	),
-	{
-		notes: 'https://github.com/FoodIsLifeBGP/banana-rn/wiki/NavBar-Introduction',
-	});
+	.add(
+		'NavBar',
+		() => (
+			<View>
+				<NavBar leftButton="back" />
+				<NavBar leftButton="qrCode" />
+				<NavBar
+					showSelector={true}
+					onList={() => {
+						alert(' you clicked List!');
+					}}
+					onMap={() => {
+						alert('you clicked Map');
+					}}
+					position="map"
+				/>
+			</View>
+		),
+		{
+			notes: 'https://github.com/FoodIsLifeBGP/banana-rn/wiki/NavBar-Introduction',
+		}
+	);
 
 export default story;

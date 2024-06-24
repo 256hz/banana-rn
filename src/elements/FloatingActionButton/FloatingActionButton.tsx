@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-	View,
-	Image,
-	TouchableOpacity,
-	Alert,
-} from 'react-native';
+import { View, Image, TouchableOpacity, Alert } from 'react-native';
 import { Icon } from '@elements/Icon';
 import { Button, ButtonStyle } from '@elements/Button';
 import * as colors from '@util/colors';
@@ -19,13 +14,7 @@ interface FloatingActionProps {
 	onPress?: (any) => void;
 }
 
-export default ({
-	iconName,
-	top = 525,
-	left = 273,
-	size = 28.5,
-	onPress = () => {},
-}: FloatingActionProps) => {
+export default function ({ iconName, top = 525, left = 273, size = 28.5, onPress = () => {} }: FloatingActionProps) {
 	const buttonFunction = onPress && (func => onPress(func));
 	const buttonStyle: ButtonStyle = {
 		default: {
@@ -38,12 +27,12 @@ export default ({
 		},
 	};
 	return (
-		<View style={[styles.floatingContainer, { top, left } ]}>
+		<View style={[styles.floatingContainer, { top, left }]}>
 			<View style={styles.ellipseContainer}>
 				<Button buttonStyle={buttonStyle} onPress={buttonFunction} style={styles.iconContainer}>
-					{foregroundColor => (<Icon name={iconName} size={size} color={foregroundColor} />)}
+					{foregroundColor => <Icon name={iconName} size={size} color={foregroundColor} />}
 				</Button>
 			</View>
 		</View>
 	);
-};
+}

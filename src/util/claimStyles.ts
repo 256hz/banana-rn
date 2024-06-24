@@ -1,9 +1,8 @@
 import { ImageStyle, TextStyle, ViewStyle } from 'react-native';
 import * as colors from '@util/colors';
 
-
 // The styles for MakeClaimScreen and ClaimDetails are nearly identical so we store them here for reuse
-const claimStyles: Record<string, TextStyle|ImageStyle|ViewStyle> = {
+const claimStyles: Record<string, TextStyle | ImageStyle | ViewStyle> = {
 	outerContainer: {
 		flex: 1,
 		justifyContent: 'space-between',

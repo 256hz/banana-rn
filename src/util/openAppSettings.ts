@@ -9,13 +9,12 @@ export default Platform.select({
 		await openURL('app-settings:');
 	},
 	android: async () => {
-		const packageName = Constants.appOwnership === 'standalone'
-			? Constants.expoConfig.android.packageName
-			: 'host.exp.exponent';
+		const packageName =
+			Constants.appOwnership === 'standalone' ? Constants.expoConfig.android.packageName : 'host.exp.exponent';
 		// await startActivityAsync(ACTION_APPLICATION_DETAILS_SETTINGS,
-			// {
-			// data: `package:${packageName}`,
-			// });
+		// {
+		// data: `package:${packageName}`,
+		// });
 		await Application.openSettingsAsync();
 	},
 	default: () => Promise.resolve(),

@@ -13,21 +13,32 @@ interface DonationProps {
 }
 
 export default async ({
-	id, donorId, jwt, name, sixtyMinuteLimit, totalServings, servingName, perPerson, pickupLocation,
+	id,
+	donorId,
+	jwt,
+	name,
+	sixtyMinuteLimit,
+	totalServings,
+	servingName,
+	perPerson,
+	pickupLocation,
 }: DonationProps) => {
-	const response = await railsAxios(jwt).post(`/donations/${id}/update`, JSON.stringify({
-		donation: {
-			donor_id: donorId,
-			food_name: name,
-			duration_minutes: sixtyMinuteLimit ? 60 : 30,
-			total_servings: totalServings,
-			measurement: servingName,
-			per_person: perPerson,
-			image_url: '',
-			pickup_location: pickupLocation,
-			canceled: false,
-		},
-	}));
+	const response = await railsAxios(jwt).post(
+		`/donations/${id}/update`,
+		JSON.stringify({
+			donation: {
+				donor_id: donorId,
+				food_name: name,
+				duration_minutes: sixtyMinuteLimit ? 60 : 30,
+				total_servings: totalServings,
+				measurement: servingName,
+				per_person: perPerson,
+				image_url: '',
+				pickup_location: pickupLocation,
+				canceled: false,
+			},
+		})
+	);
 
 	return response.request.status || 'Error';
 };

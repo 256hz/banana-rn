@@ -1,5 +1,5 @@
 export default {
-	itemName: {
+	food_name: {
 		presence: {
 			allowEmpty: false,
 		},
@@ -9,17 +9,17 @@ export default {
 			allowEmpty: false,
 		},
 	},
-	pickupAddress: {
+	pickup_location: {
 		presence: {
 			allowEmpty: false,
 		},
 	},
-	pickupInstructions: {
+	pickup_instructions: {
 		presence: {
 			allowEmpty: false,
 		},
 	},
-	totalAmount: {
+	total_amount: {
 		presence: {
 			allowEmpty: false,
 		},

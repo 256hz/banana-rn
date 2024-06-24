@@ -18,7 +18,7 @@ export default StyleSheet.create({
 		marginTop: -20,
 		flexDirection: 'column',
 		justifyContent: 'space-between',
-		height: vh - (vh / 3),
+		height: vh - vh / 3,
 	},
 	drawerHeader: {
 		backgroundColor: colors.BANANA_YELLOW,

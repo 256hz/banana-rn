@@ -7,11 +7,7 @@ interface EndOfScrollWrapperProps {
 	children: any;
 }
 
-export default function EndOfScrollWrapper({
-	onScrollToEnd,
-	style,
-	children,
-}: EndOfScrollWrapperProps) {
+export default function EndOfScrollWrapper({ onScrollToEnd, style, children }: EndOfScrollWrapperProps) {
 	const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
 		const paddingToBottom = 20;
 		return layoutMeasurement.height + contentOffset.y >= contentSize.height - paddingToBottom;

@@ -18,9 +18,9 @@ interface NavBarProps {
 	backDestination?: string;
 	showMenu?: boolean;
 	showBackButton?: boolean;
-	leftButton?: 'qrCode'|'back';
+	leftButton?: 'qrCode' | 'back';
 	showSelector?: boolean;
-	position?: 'map'|'list';
+	position?: 'map' | 'list';
 	onMap?: () => void;
 	onList?: () => void;
 	backButtonFn?: () => void;
@@ -36,7 +36,6 @@ function NavBar({
 	onMap,
 	onList,
 	backButtonFn,
-
 }: NavBarProps) {
 	const { navigate, goBack } = useNavigation();
 	const buttonStyle: ButtonStyle = {
@@ -45,11 +44,11 @@ function NavBar({
 			foreground: colors.NAVY_BLUE,
 		},
 	};
-	const [ state, { updateAlert } ] = useGlobal() as UseGlobalType;
+	const [state, { updateAlert }] = useGlobal() as UseGlobalType;
 
 	const handleQRCodePress = useCallback(() => {
 		navigate('QRCodeScannerScreen');
-	}, [ navigate ]);
+	}, [navigate]);
 
 	return (
 		<View style={styles.contentContainer}>
@@ -62,26 +61,23 @@ function NavBar({
 							buttonStyle={buttonStyle}
 							onPress={backButtonFn || (backDestination ? () => navigate(backDestination) : () => goBack())}
 						>
-							{foregroundColor => (<Icon size={NAVBAR_ICON_SIZE} color={foregroundColor} name="back" />)}
+							{foregroundColor => <Icon size={NAVBAR_ICON_SIZE} color={foregroundColor} name="back" />}
 						</Button>
 					)
 				}
-				{
-					leftButton === 'qrCode' && (
-						<Button
-							buttonStyle={buttonStyle}
-							onPress={handleQRCodePress}
-						>
-							{foregroundColor => <Icon size={NAVBAR_ICON_SIZE} color={foregroundColor} name="qrCode" />}
-						</Button>
-					)
-				}
+				{leftButton === 'qrCode' && (
+					<Button buttonStyle={buttonStyle} onPress={handleQRCodePress}>
+						{foregroundColor => <Icon size={NAVBAR_ICON_SIZE} color={foregroundColor} name="qrCode" />}
+					</Button>
+				)}
 			</View>
-			{
-				showSelector
-				&& position
-				&& <Selector position={position} onMap={onMap ? () => onMap() : undefined} onList={onList ? () => onList() : undefined} />
-			}
+			{showSelector && position && (
+				<Selector
+					position={position}
+					onMap={onMap ? () => onMap() : undefined}
+					onList={onList ? () => onList() : undefined}
+				/>
+			)}
 			<View style={styles.notiContainer}>
 				<Button
 					buttonStyle={buttonStyle}
@@ -97,7 +93,7 @@ function NavBar({
 				>
 					{foregroundColor => <Icon size={NAVBAR_ICON_SIZE} color={foregroundColor} name="bell" />}
 				</Button>
-				{showMenu && (<HamburgerPopupMenu />) }
+				{showMenu && <HamburgerPopupMenu />}
 			</View>
 		</View>
 	);
