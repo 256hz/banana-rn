@@ -2,7 +2,6 @@ import { StyleSheet } from 'react-native';
 import * as colors from '@util/colors';
 
 export default StyleSheet.create({
-
 	claimedDonation: {
 		backgroundColor: colors.NAVY_BLUE,
 		padding: 5,
@@ -24,6 +23,4 @@ export default StyleSheet.create({
 		color: colors.NAVY_BLUE,
 		fontSize: 11,
 	},
-
 });
-

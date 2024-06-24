@@ -4,32 +4,32 @@ import { useNavigation } from '@react-navigation/native';
 import {
 	KeyboardAvoidingView,
 	ScrollView,
-	Text, TouchableOpacity,
+	Text,
+	TouchableOpacity,
 	View,
-	Platform, TextInput, Keyboard,
+	Platform,
+	TextInput,
+	Keyboard,
 } from 'react-native';
 import { Divider } from 'react-native-paper';
-import {
-	FormTextInput,
-	LinkButton,
-	SpacerInline,
-	Title, Icon,
-} from '@elements';
+import { FormTextInput, LinkButton, SpacerInline, Title, Icon } from '@elements';
 import useGlobal from '@state';
 import { getStateList } from '@util/statesAbbr';
 import donorConstraints from '@util/constraints/donorRegistration';
 import validate from 'validate.js';
 import { DonorRegisterProps } from '@state/actions/register';
-import { Alert } from '@state/index.types';
+import { IAlert, UseGlobalType } from '@state/index.types';
 import styles from './RegistrationScreen.styles';
 
 function DonorRegistrationScreen() {
 	const { navigate, goBack } = useNavigation();
-	const [ _state, actions ] = useGlobal() as any;
+	const [_state, actions] = useGlobal() as UseGlobalType;
 	const { register, updateAlert } = actions;
-	const [ newDonor, setNewDonor ] = useState<DonorRegisterProps>({ state: 'WA' } as DonorRegisterProps);
-	const [ validationErrors, setValidationErrors ] = useState({} as any);
-	const [ termsOfService, setTermsOfService ] = useState(false);
+	const [newDonor, setNewDonor] = useState<DonorRegisterProps>({
+		state: 'WA',
+	} as DonorRegisterProps);
+	const [validationErrors, setValidationErrors] = useState({} as any);
+	const [termsOfService, setTermsOfService] = useState(false);
 	const stateList = getStateList();
 	const passwordRef = useRef<TextInput>(null);
 	const confirmPasswordRef = useRef<TextInput>(null);
@@ -64,7 +64,7 @@ function DonorRegistrationScreen() {
 						title: 'Error',
 						message: `This email address has already been used (Error code:${statusCode})`,
 						dismissable: true,
-					} as Alert);
+					} as IAlert);
 					break;
 				}
 				case 500: {
@@ -72,7 +72,7 @@ function DonorRegistrationScreen() {
 						title: 'Error',
 						message: `Network Issues (Error code:${statusCode})`,
 						dismissable: true,
-					} as Alert);
+					} as IAlert);
 					break;
 				}
 				default: {
@@ -80,7 +80,7 @@ function DonorRegistrationScreen() {
 						title: 'Error',
 						message: `Unknown Error (Error code:${statusCode})`,
 						dismissable: true,
-					} as Alert);
+					} as IAlert);
 				}
 			}
 		}
@@ -123,7 +123,6 @@ function DonorRegistrationScreen() {
 					onSubmitEditing={() => confirmPasswordRef?.current?.focus()}
 				/>
 
-
 				<FormTextInput
 					label="Confirm Password"
 					value={newDonor.retypedPassword}
@@ -135,9 +134,7 @@ function DonorRegistrationScreen() {
 					ref={confirmPasswordRef}
 					onSubmitEditing={() => firstNameRef?.current?.focus()}
 				/>
-				<Divider
-					style={{ marginVertical: 20 }}
-				/>
+				<Divider style={{ marginVertical: 20 }} />
 
 				<FormTextInput
 					label="First Name"
@@ -149,7 +146,6 @@ function DonorRegistrationScreen() {
 					ref={firstNameRef}
 					onSubmitEditing={() => lastNameRef?.current?.focus()}
 				/>
-
 
 				<FormTextInput
 					label="Last Name"
@@ -184,7 +180,7 @@ function DonorRegistrationScreen() {
 					onSubmitEditing={() => cityRef?.current?.focus()}
 				/>
 
-				<View style={[ styles.row, styles.input ]}>
+				<View style={[styles.row, styles.input]}>
 					<FormTextInput
 						label="City"
 						value={newDonor.city}
@@ -231,46 +227,28 @@ function DonorRegistrationScreen() {
 				<View style={styles.checkboxRow}>
 					<View style={styles.checkBox}>
 						<TouchableOpacity style={{ top: 3 }} onPress={toggleTermsOfService}>
-							<Icon
-								name={termsOfService ? 'checkboxOn' : 'checkboxOff'}
-								size={24}
-								color="none"
-							/>
+							<Icon name={termsOfService ? 'checkboxOn' : 'checkboxOff'} size={24} color="none" />
 						</TouchableOpacity>
 					</View>
 					<SpacerInline width={10} />
-					<Text
-						style={styles.text}
-						onPress={toggleTermsOfService}
-
-					>
+					<Text style={styles.text} onPress={toggleTermsOfService}>
 						{'I agree to the '}
 					</Text>
 					<View>
-						<TouchableOpacity onPress={() => (navigate('TermsScreen'))}>
-							<Text style={[ styles.text, styles.textBold ]}>Terms & Conditions</Text>
+						<TouchableOpacity onPress={() => navigate('TermsScreen')}>
+							<Text style={[styles.text, styles.textBold]}>Terms & Conditions</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
 
-				<View style={[ styles.row, { paddingHorizontal: '10%' } ]}>
-					<LinkButton
-						text="back"
-						onPress={() => goBack()}
-					/>
-					<LinkButton
-						disabled={!termsOfService}
-						text="Register"
-						onPress={registerPressHandler}
-					/>
+				<View style={[styles.row, { paddingHorizontal: '10%' }]}>
+					<LinkButton text="back" onPress={() => goBack()} />
+					<LinkButton disabled={!termsOfService} text="Register" onPress={registerPressHandler} />
 				</View>
 				<SpacerInline height={50} />
-
-
 			</ScrollView>
 		</KeyboardAvoidingView>
 	);
 }
 
 export default DonorRegistrationScreen;
-

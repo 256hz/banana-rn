@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import * as colors from '@util/colors';
 
 const iconSize = 70;
-const imageSize = iconSize * 0.90;
+const imageSize = iconSize * 0.9;
 
 export default StyleSheet.create({
 	container: {
@@ -45,7 +45,7 @@ export default StyleSheet.create({
 	icon: {
 		height: imageSize,
 		width: imageSize,
-		borderRadius: (imageSize / 2),
+		borderRadius: imageSize / 2,
 		borderColor: colors.NAVY_BLUE,
 		borderWidth: 2,
 		marginBottom: 15,

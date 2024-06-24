@@ -9,6 +9,5 @@ export default StyleSheet.create({
 	map: {
 		width,
 		height: MAP_HEIGHT,
-
 	},
 });

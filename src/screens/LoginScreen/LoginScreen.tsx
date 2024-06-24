@@ -1,48 +1,41 @@
-import React, {
-	useState, RefObject, createRef, useEffect,
-} from 'react';
+import React, { useState, RefObject, createRef, useEffect } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import {
-	ScrollView,
-	View,
-	Alert,
-	Text,
-	TextInput,
-	KeyboardAvoidingView,
-	Platform,
-} from 'react-native';
+import { ScrollView, View, Alert, Text, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useGlobal from '@state';
-import {
-	Title,
-	LinkButton,
-	FormTextInput,
-} from '@elements';
+import { Title, LinkButton, FormTextInput } from '@elements';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import type { RouteProp } from '@react-navigation/native';
+import { UseGlobalType } from '@state/index.types';
+import { RootStackParamList } from '../../../declarations';
 import styles from './LoginScreen.styles';
 import ResetPassword from './ResetPassword';
 import { PasswordResetStage } from './ResetPassword/ResetPassword';
 
+type LoginScreenRouteProp = RouteProp<RootStackParamList, 'Login'>;
 
-export default function () {
+export default function QRCodeScannerScreen() {
 	const { navigate } = useNavigation();
-	const [ state, actions ] = useGlobal() as any;
+	const [state, actions] = useGlobal() as UseGlobalType;
 	const { userIdentity } = state;
 	const { logIn } = actions;
 	const passwordInputRef: RefObject<TextInput> = createRef();
-	const route = useRoute();
-	const { email: initialEmail = '', password: initialPassword = '' } = route.params ?? {};
-	const [ email, setEmail ] = useState(initialEmail);
-	const [ password, setPassword ] = useState(initialPassword);
-	const clearEmailAndPassword = () => { setEmail(''); setPassword(''); };
+	const route = useRoute<LoginScreenRouteProp>();
+	const [email, setEmail] = useState(route.params?.email || '');
+	const [password, setPassword] = useState(route.params?.password || '');
+	const clearEmailAndPassword = () => {
+		setEmail('');
+		setPassword('');
+	};
 	const handleEmailInputSubmit = () => passwordInputRef.current?.focus();
-	const [ showModal, setShowModal ] = useState(false);
-	const [ passwordResetStage, setPasswordResetStage ] = useState<PasswordResetStage | undefined>(undefined);
+	const [showModal, setShowModal] = useState(false);
+	const [passwordResetStage, setPasswordResetStage] = useState<PasswordResetStage | undefined>(undefined);
 
 	useEffect(() => {
 		const retrievePasswordResetStage = async () => {
 			try {
-				const value = await AsyncStorage.getItem('PASSWORD RESET STAGE') as PasswordResetStage;
+				const value = (await AsyncStorage.getItem('PASSWORD RESET STAGE')) as PasswordResetStage;
 				if (value === PasswordResetStage.VERIFY) {
 					setPasswordResetStage(value);
 				}
@@ -51,6 +44,45 @@ export default function () {
 			}
 		};
 		retrievePasswordResetStage();
+
+		const autoAuthenticate = async () => {
+			try {
+				const secureStoreEmail = await SecureStore.getItemAsync('email', {
+					requireAuthentication: true,
+				});
+				const secureStorePassword = await SecureStore.getItemAsync('password', {
+					requireAuthentication: true,
+				});
+				if (secureStoreEmail && secureStorePassword) {
+					const statusCode = await logIn({
+						email: secureStoreEmail,
+						password: secureStorePassword,
+					});
+					switch (statusCode) {
+						case 202: {
+							navigate('Drawer');
+							return;
+						}
+						case 401:
+							Alert.alert('Incorrect email or password');
+							return;
+						case 404:
+							Alert.alert('Server not found - please try again');
+							return;
+						case 500:
+							Alert.alert('Network error - please try again');
+							return;
+						default:
+							Alert.alert(`Server replied with ${statusCode} status code`);
+					}
+				} else {
+					console.log('No credentials stored');
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		autoAuthenticate();
 	}, []);
 
 	const storePasswordResetStage = async (newStage: PasswordResetStage) => {
@@ -76,10 +108,17 @@ export default function () {
 				navigate('Drawer');
 				return;
 			}
-			case 401: Alert.alert('Incorrect email or password'); return;
-			case 404: Alert.alert('Server not found - please try again'); return;
-			case 500: Alert.alert('Network error - please try again'); return;
-			default: Alert.alert(`Server replied with ${statusCode} status code`);
+			case 401:
+				Alert.alert('Incorrect email or password');
+				return;
+			case 404:
+				Alert.alert('Server not found - please try again');
+				return;
+			case 500:
+				Alert.alert('Network error - please try again');
+				return;
+			default:
+				Alert.alert(`Server replied with ${statusCode} status code`);
 		}
 	};
 
@@ -98,9 +137,7 @@ export default function () {
 			</View>
 
 			<ScrollView style={styles.bodyContainer} contentContainerStyle={styles.bodyContentContainer}>
-				<View
-					style={styles.form}
-				>
+				<View style={styles.form}>
 					<FormTextInput
 						label="email"
 						placeholder="info@bananaapp.org"
@@ -111,7 +148,7 @@ export default function () {
 						autoCorrect={false}
 						enablesReturnKeyAutomatically={true}
 						autoCapitalize="none"
-						autoCompleteType="username"
+						autoComplete="username"
 						textContentType="username"
 						keyboardType="email-address"
 						returnKeyType="next"
@@ -126,19 +163,15 @@ export default function () {
 						ref={passwordInputRef}
 						onSubmitEditing={handleLogin}
 						enablesReturnKeyAutomatically={true}
-						autoCompleteType="password"
+						autoComplete="password"
 						returnKeyType="go"
 						blurOnSubmit={false}
 					/>
 
 					<View style={styles.forgotPassword}>
 						{/* View wrapper required to constrain clickable area of button */}
-						<TouchableWithoutFeedback
-							onPress={handleForgotPassword}
-						>
-							<Text style={styles.forgotPasswordText}>
-								Forgot Password?
-							</Text>
+						<TouchableWithoutFeedback onPress={handleForgotPassword}>
+							<Text style={styles.forgotPasswordText}>Forgot Password?</Text>
 						</TouchableWithoutFeedback>
 					</View>
 				</View>

@@ -37,7 +37,6 @@ export default StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		marginBottom: 40,
-
 	},
 	checkBox: {
 		backgroundColor: 'white',

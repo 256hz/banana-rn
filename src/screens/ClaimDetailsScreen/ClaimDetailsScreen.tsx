@@ -1,8 +1,6 @@
 import React from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import {
-	Dimensions, ImageBackground, ScrollView, Text, View, Platform, Linking,
-} from 'react-native';
+import { Dimensions, ImageBackground, ScrollView, Text, View, Platform, Linking } from 'react-native';
 import { Icon, SpacerInline, TextButton } from '@elements';
 import QRCode from 'react-native-qrcode-svg';
 import * as colors from '@util/colors';
@@ -10,7 +8,6 @@ import typography from '@util/typography';
 import { ButtonStyle } from '@elements/Button';
 import claimStyles from '@util/claimStyles';
 import styles from './ClaimDetailsScreen.styles';
-
 
 function ClaimDetailsScreen() {
 	const { goBack } = useNavigation();
@@ -22,7 +19,7 @@ function ClaimDetailsScreen() {
 	// } else {
 	// 	claim = route.params.donation.claim;
 	// }
-	let claim = route.params.claim ? route.params.claim : route.params.donation.claim;
+	const claim = route.params?.claim ? route.params.claim : route.params?.donation.claim;
 	const { donor } = donation;
 
 	const claimBtnStyle: ButtonStyle = {
@@ -46,18 +43,21 @@ function ClaimDetailsScreen() {
 		Linking.openURL(url);
 	};
 	return (
-
 		<View style={claimStyles.outerContainer}>
 			<ScrollView>
 				<View>
 					<ImageBackground source={require('@assets/images/bananas.jpg')} style={claimStyles.header}>
-						<Text onPress={() => goBack()} style={[ typography.h2, claimStyles.closeLnk ]}>X</Text>
+						<Text onPress={() => goBack()} style={[typography.h2, claimStyles.closeLnk]}>
+							X
+						</Text>
 					</ImageBackground>
 				</View>
 				<View style={claimStyles.mainContent}>
 					<View style={claimStyles.section}>
-						<View style={[ claimStyles.title, { flexDirection: 'row' } ]}>
-							<View><Text style={typography.h3}>{donation.food_name}</Text></View>
+						<View style={[claimStyles.title, { flexDirection: 'row' }]}>
+							<View>
+								<Text style={typography.h3}>{donation.food_name}</Text>
+							</View>
 							<SpacerInline width={10} />
 							<View style={styles.claimedDonation}>
 								<Text style={styles.claimedTag}>CLAIMED</Text>
@@ -82,9 +82,7 @@ function ClaimDetailsScreen() {
 							<Text style={typography.h4}>Address</Text>
 						</View>
 						<View style={claimStyles.item}>
-							<Text style={typography.body4}>
-								{address}
-							</Text>
+							<Text style={typography.body4}>{address}</Text>
 						</View>
 						<View style={claimStyles.smallTitle}>
 							<Text style={typography.h4}>Instructions</Text>

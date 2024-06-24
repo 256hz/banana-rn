@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
-import {
-	ImageBackground, ScrollView, Text, View,
-} from 'react-native';
+import { ImageBackground, ScrollView, Text, View } from 'react-native';
 import useGlobal from '@state';
 import { Icon, SpacerInline, TextButton } from '@elements';
 import * as colors from '@util/colors';
@@ -10,19 +8,28 @@ import typography from '@util/typography';
 import { ButtonStyle } from '@elements/Button';
 import claimStyles from '@util/claimStyles';
 import styles from './MakeClaimScreen.styles';
+import { UseGlobalType } from '@state/index.types';
 
 function MakeClaimScreen() {
 	const isFocused = useIsFocused();
 	const { navigate, goBack } = useNavigation();
-	const [ globalState, globalActions ] = useGlobal() as any;
+	const [globalState, globalActions] = useGlobal() as UseGlobalType;
 	const { claimDonation, getTravelTimes } = globalActions;
 	const { user } = globalState;
 	const route = useRoute();
 	const { donation } = route.params;
 	const { donor } = donation;
-	const pendingTravelTimes = { pedestrian: 'calculating..', publicTransport: 'calculating..', bicycle: 'calculating..' };
-	const unavailableTravelTimes = { pedestrian: 'not available', publicTransport: 'not available', bicycle: 'not available' };
-	const [ travelTimes, setTravelTimes ] = useState(pendingTravelTimes);
+	const pendingTravelTimes = {
+		pedestrian: 'calculating..',
+		publicTransport: 'calculating..',
+		bicycle: 'calculating..',
+	};
+	const unavailableTravelTimes = {
+		pedestrian: 'not available',
+		publicTransport: 'not available',
+		bicycle: 'not available',
+	};
+	const [travelTimes, setTravelTimes] = useState(pendingTravelTimes);
 
 	const cancelBtnStyle: ButtonStyle = {
 		default: {
@@ -66,15 +73,16 @@ function MakeClaimScreen() {
 		if (isFocused) {
 			fetchTravelTimes();
 		}
-	}, [ isFocused ]);
-
+	}, [isFocused]);
 
 	return (
 		<View style={claimStyles.outerContainer}>
 			<ScrollView>
 				<View>
 					<ImageBackground source={require('@assets/images/bananas.jpg')} style={claimStyles.header}>
-						<Text onPress={() => goBack()} style={[ typography.h2, claimStyles.closeLnk ]}>X</Text>
+						<Text onPress={() => goBack()} style={[typography.h2, claimStyles.closeLnk]}>
+							X
+						</Text>
 					</ImageBackground>
 				</View>
 				<View style={claimStyles.mainContent}>
@@ -99,7 +107,9 @@ function MakeClaimScreen() {
 							<Text style={typography.h4}>Address</Text>
 						</View>
 						<View style={claimStyles.item}>
-							<Text style={typography.body4}>{`${donor.address_street} ${donor.address_city}, ${donor.address_state}, ${donor.address_zip}`}</Text>
+							<Text
+								style={typography.body4}
+							>{`${donor.address_street} ${donor.address_city}, ${donor.address_state}, ${donor.address_zip}`}</Text>
 						</View>
 						<View style={claimStyles.smallTitle}>
 							<Text style={typography.h4}>Instructions</Text>
@@ -131,7 +141,7 @@ function MakeClaimScreen() {
 				</View>
 			</ScrollView>
 			<View style={styles.buttonPanel}>
-				<TextButton text="Cancel" buttonStyle={cancelBtnStyle} outlined={true} onPress={handleCancel} />
+				<TextButton text="Cancel" buttonStyle={cancelBtnStyle} outlined={false} onPress={handleCancel} />
 				<SpacerInline width={10} />
 				<TextButton text="Claim" buttonStyle={claimBtnStyle} onPress={handleClaim} />
 			</View>
