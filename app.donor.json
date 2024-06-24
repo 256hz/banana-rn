@@ -3,11 +3,7 @@
 		"name": "Banana App - Donor",
 		"slug": "banana-app-donor",
 		"privacy": "public",
-		"platforms": [
-			"ios",
-			"android",
-			"web"
-		],
+		"platforms": ["ios", "android", "web"],
 		"version": "1.1.16",
 		"orientation": "portrait",
 		"icon": "./assets/iconDonor.png",
@@ -19,9 +15,7 @@
 		"updates": {
 			"fallbackToCacheTimeout": 0
 		},
-		"assetBundlePatterns": [
-			"**/*"
-		],
+		"assetBundlePatterns": ["**/*"],
 		"ios": {
 			"supportsTablet": true,
 			"bundleIdentifier": "com.thebegoodproject.org.bananaapp",

@@ -35,13 +35,13 @@
 
 In `app.json` under root directory, you could see setting below:
 
-``` json
+```json
 "extra": {
 			"variant": "donor"
 		}
 ```
 
-Change it to 
+Change it to
 
 ```json
 "extra": {
@@ -55,7 +55,7 @@ to visit client side.
 
 #### Basic structure of a component
 
-We would use an example of  `Title` as example:
+We would use an example of `Title` as example:
 
 A component should have 3 files. In example of `Title`, a directory called `Title` should be placed under `src->elements` and has structure as below:
 
@@ -70,7 +70,7 @@ Title
 
   ```tsx
   import Title from './Title';
-  
+
   export { Title };
   ```
 
@@ -79,7 +79,7 @@ Title
   ```tsx
   import { StyleSheet } from 'react-native';
   import * as colors from '@util/colors';
-  
+
   export default StyleSheet.create({
   	text: {
   		fontFamily: 'open-sans-bold',
@@ -96,7 +96,7 @@ Title
   import React from 'react';
   import { View, Text } from 'react-native';
   import styles from './Title.styles';
-  
+
   export default ({ text }: { text: string }) => (
   	<View>
   		<Text style={styles.text}>{text.toUpperCase()}</Text>
@@ -108,53 +108,40 @@ Title
 
   ```tsx
   import React from 'react';
-  import {
-  	StyleProp, Text, TextStyle,
-  	View,
-  } from 'react-native';
+  import { StyleProp, Text, TextStyle, View } from 'react-native';
   import styles from './ClaimingProgressBar.styles';
-  
+
   // DEFINE INTERFACE HERE
-  
+
   interface ClaimingProgressBarProps {
-	/** Width for ClaimingProgressBar. */
-	width?: number | string;
+  	/** Width for ClaimingProgressBar. */
+  	width?: number | string;
 
-	/** Number of donations has been picked up. */
-	pickedUp: number;
+  	/** Number of donations has been picked up. */
+  	pickedUp: number;
 
-	/** Number of donations has been reserved. */
-	reserved: number;
+  	/** Number of donations has been reserved. */
+  	reserved: number;
 
-	/** Number of donations remaining. */
-	left: number;
+  	/** Number of donations remaining. */
+  	left: number;
 
-	/** Style of ClaimingProgressBar. */
-	style?: StyleProp<TextStyle>;
+  	/** Style of ClaimingProgressBar. */
+  	style?: StyleProp<TextStyle>;
   }
 
   /**
    * Data visualization that shows the total number of picked-up, reserved, and available
    * servings within a single donation.
    */
-  export default ({
-  	width = '100%',
-  	pickedUp,
-  	reserved,
-  	left,
-  	style,
-  }: ClaimingProgressBarProps) => {
+  export default ({ width = '100%', pickedUp, reserved, left, style }: ClaimingProgressBarProps) => {
   	const num2Str = (num, places) => String(num).padStart(places, '0');
   	const total = pickedUp + reserved + left;
-  	return (
-  		<View style={[ styles.claimProgressBar, { width }, style ]}>
-  		  /*implementation logic*/
-  		</View>
-  	);
+  	return <View style={[styles.claimProgressBar, { width }, style]}>/*implementation logic*/</View>;
   };
   ```
 
-***It's recommended to build a skeleton of a component and add that component to `index.ts` under `elements`, so you can more easily use it within screens to test and debug it.***
+**_It's recommended to build a skeleton of a component and add that component to `index.ts` under `elements`, so you can more easily use it within screens to test and debug it._**
 
 #### Add component to element module and use it
 
@@ -184,13 +171,11 @@ import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 import { View, Alert, TextInput } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import useGlobal from '@state';
-import {
-	Title,
-} from '@elements';
+import { Title } from '@elements';
 
 export default () => {
 	const { navigate } = useNavigation();
-	const [ state, actions ] = useGlobal() as any;
+	const [state, actions] =  useGlobal() as UseGlobalType;
 	const { userIdentity } = state;
 	return (
 		<View style={styles.outerContainer}>
@@ -199,7 +184,6 @@ export default () => {
 		</View>
 	);
 };
-
 ```
 
 ### How to Create a PR and Use PR Templates

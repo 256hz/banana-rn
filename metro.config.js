@@ -11,23 +11,27 @@ const customResolver = {
 };
 
 const getDefaultExpoConfig = async () => {
-	const { resolver: { sourceExts, assetExts } } = await getDefaultConfig(__dirname);
+	const {
+		resolver: { sourceExts, assetExts },
+	} = await getDefaultConfig(__dirname);
 
 	return {
 		transformer: {
 			babelTransformerPath: require.resolve('react-native-svg-transformer'),
-			assetPlugins: [ 'expo-asset/tools/hashAssetFiles' ],
+			assetPlugins: ['expo-asset/tools/hashAssetFiles'],
 		},
 		resolver: {
 			assetExts: assetExts.filter(ext => ext !== 'svg'),
-			sourceExts: [ ...sourceExts, 'svg' ],
+			sourceExts: [...sourceExts, 'svg'],
 			extraNodeModules: customResolver,
 		},
+		watchFolders: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'assets')],
 	};
 };
 
-// Merge the default React Native Metro configuration  with the default Expo
+// Merge the default React Native Metro configuration with the default Expo
 module.exports = (async () => {
 	const customConfig = await getDefaultExpoConfig();
-	return mergeConfig(getDefaultConfig(__dirname), customConfig);
+	const defaultConfig = await getDefaultConfig(__dirname);
+	return mergeConfig(defaultConfig, customConfig);
 })();

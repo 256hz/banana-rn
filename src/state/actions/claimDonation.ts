@@ -1,6 +1,5 @@
 import railsAxios from '@util/railsAxios';
 
-
 const claimDonation = async (_store, donationId: number, clientId: number) => {
 	const endpoint = `/donations/${donationId}/claim`;
 	const { jwt } = _store.state;

@@ -4,22 +4,21 @@ on: [pull_request]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Install NPM packages
-      run: npm i
-    - name: Lint
-      run: |
-        npm i eslint
-        npm run lint
-    - name: Typechecking
-      run: |
-        npm i typescript
-        npm run typechecking
-    - name: Tests
-      run: |
-        npm i jest jest-expo
-        npm test
+      - uses: actions/checkout@v1
+      - name: Install NPM packages
+        run: npm i
+      - name: Lint
+        run: |
+          npm i eslint
+          npm run lint
+      - name: Typechecking
+        run: |
+          npm i typescript
+          npm run typechecking
+      - name: Tests
+        run: |
+          npm i jest jest-expo
+          npm test

@@ -18,7 +18,9 @@ export const getLocation = async store => {
 					latitude: 47.609175,
 					longitude: -122.325849,
 				};
-				await store.setState({ user: { ...store.state.user, coords: dummyLocation } });
+				await store.setState({
+					user: { ...store.state.user, coords: dummyLocation },
+				});
 				return dummyLocation;
 			}
 		}
