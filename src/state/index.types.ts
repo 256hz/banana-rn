@@ -1,17 +1,11 @@
-export interface DonorState {
-	organization_name: string;
-	business_license: string;
-}
+import { IClaim, IDonation, NewDonation } from '../../declarations';
 
-export interface ClientState {
-	transportation_method: string;
-	ethnicity: string;
-	gender: string;
-}
-
-export interface SharedProps {
+export interface IUser {
 	email: string;
 	password: string;
+	first_name: string;
+	last_name: string;
+	id: number;
 	address_street: string;
 	address_city: string;
 	address_state: string;
@@ -22,56 +16,36 @@ export interface SharedProps {
 		longitude?: number;
 	};
 }
-
-export interface Claim {
-	client_name: undefined;
-	canceled: boolean;
-	claimed: boolean;
-	client_id: number;
-	completed: boolean;
-	created_at: Date;
-	donation_id: number;
-	qr_code: string;
-	status: string;
-	time_claimed: Date;
-	updated_at: Date;
+export interface IDonorState extends IUser {
+	organization_name: string;
+	pickup_instructions: string;
+	business_license: string;
 }
 
-export interface Donation {
-	category(category: string): import('react').SetStateAction<ImageData>;
-	canceled: boolean;
-	claim: Claim;
-	created_at: Date;
-	donor_id: number;
-	duration_minutes: number;
-	food_name: string;
-	image_url: string;
-	measurement: string;
-	per_person: number;
-	pickup_location: string;
-	status: string;
-	total_servings: number;
-	updated_at: Date;
+export interface IClientState extends IUser {
+	transportation_method: string;
+	ethnicity: string;
+	gender: string;
 }
 
 /**
  * An alert to be displayed to the user.
  */
-export interface Alert {
+export interface IAlert {
 	/**
 	 * Title of the alert.
 	 */
-	title: string;
+	title?: string;
 
 	/**
 	 * Type of the alert.
 	 */
-	type: 'default'|'incomplete form'|'coming soon'|'cancel donation'|'donation cancelled'|'donation published';
+	type: 'default' | 'incomplete form' | 'coming soon' | 'cancel donation' | 'donation cancelled' | 'donation published';
 
 	/**
 	 * Message to the user.
 	 */
-	message: string;
+	message?: string;
 
 	/**
 	 * Whether the alert can be casually dismissed by the user
@@ -89,15 +63,13 @@ export interface IInitialState {
 	apiBaseUrl: string;
 	loginUrl: string;
 	createUrl: string;
-	alert?: Alert;
+	alert?: IAlert;
 	jwt?: string;
-	user?: DonorState | ClientState | SharedProps;
-	donationsOrClaims?: Donation[] | Claim[];
+	user?: IDonorState | IClientState;
+	donationsOrClaims: IDonation[] | IClaim[];
 }
 
-export interface IStatusCode {
-	code: 200 | 202 | 400 | 403 | 404 | 418 | 500;
-}
+export type StatusCode = 200 | 201 | 202 | 400 | 401 | 403 | 404 | 418 | 500;
 
 export interface ILocation {
 	latitude: number;
@@ -105,22 +77,25 @@ export interface ILocation {
 }
 
 export interface IActions {
-	getActiveDonationsForClient: () => Promise<Donation[] | []>;
-	getClaimedDonationsForClient: () => Promise<Donation[] | Claim[] | []>;
-	getClaimHistoryForClient: () => Promise<Donation[]| Claim[] | []>;
-	getDonations: () => Promise<Donation[] | []>;
-	getDonationHistory: () => Promise<Donation[] | []>;
+	cancelDonation: (donationId: number) => Promise<StatusCode>;
+	claimDonations: () => Promise<StatusCode>;
+	clearAlert: () => void;
+	getActiveDonationsForClient: () => Promise<IDonation[]>;
+	getClaimedDonationsForClient: () => Promise<IDonation[] | IClaim[]>;
+	getClaimHistoryForClient: () => Promise<IDonation[] | IClaim[]>;
+	getDonationHistory: () => Promise<IDonation[]>;
+	getDonations: () => Promise<IDonation[]>;
 	getLocation: () => Promise<{ latitude: number; longitude: number }>;
-	logIn: () => Promise<IStatusCode>;
+	getTravelTimes: () => Promise<{ status: StatusCode; times: object }>;
+	logIn: (options: { email: string; password: string }) => Promise<StatusCode>;
 	logOut: () => Promise<void>;
-	postDonation: () => Promise<IStatusCode>;
-	register: () => Promise<IStatusCode>;
-	scan: (qrCode: string) => Promise<IStatusCode>;
-	requestResetToken: () => Promise<IStatusCode>;
-	submitResetToken: () => Promise<IStatusCode>;
-	submitNewPassword: () => Promise<IStatusCode>;
-	getTravelTimes: () => Promise<{status: IStatusCode; times: object}>;
-	updateAlert: (alert: Alert) => void;
+	postDonation: (donation: NewDonation) => Promise<StatusCode>;
+	register: () => Promise<StatusCode>;
+	requestResetToken: () => Promise<StatusCode>;
+	scan: (qrCode: string) => Promise<StatusCode>;
+	submitNewPassword: () => Promise<StatusCode>;
+	submitResetToken: () => Promise<StatusCode>;
+	updateAlert: (alert: IAlert) => void;
 }
 
-export type UseGlobalType = [ IInitialState, IActions ];
+export type UseGlobalType = [IInitialState, IActions];
