@@ -4,31 +4,32 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import useGlobal from '@state';
 import * as colors from '@util/colors';
+import { RootStackParamList } from '../../declarations';
 import getEnv from '../util/environment';
-import MakeClaimScreen from '../screens/MakeClaimScreen/MakeClaimScreen';
-import LoginScreen from '../screens/LoginScreen';
-import DashboardScreen from '../screens/DashboardScreen';
-import DonorDashboardScreen from '../screens/DonorDashboardScreen';
-import RegistrationScreen from '../screens/RegistrationScreen';
-import TermsScreen from '../screens/TermsScreen';
-import ContactScreen from '../screens/ContactScreen';
-import LoginSuccessScreen from '../screens/LoginSuccessScreen';
-import DonationScreen from '../screens/DashboardScreen/DonationScreen';
-import QRCodeScannerScreen from '../screens/QRCodeScannerScreen/QRCodeScannerScreen';
-import LogoutScreen from '../screens/LogoutScreen';
-import DonationsDetailScreen from '../screens/DonationsDetailScreen/DonationsDetailScreen';
-import DonorDonationScreen from '../screens/DonorDashboardScreen/DonorDonationScreen';
-import DonorHistoryScreen from '../screens/DonorHistoryScreen/DonorHistoryScreen';
-import MapScreen from '../screens/MapScreen/MapScreen';
 import MenuDrawer from '../elements/MenuDrawer/MenuDrawer';
+
 import ClaimDetailsScreen from '../screens/ClaimDetailsScreen/ClaimDetailsScreen';
 import ClientClaimsScreen from '../screens/ClientClaimsScreen';
 import ClientHistoryScreen from '../screens/ClientHistoryScreen';
+import ContactScreen from '../screens/ContactScreen';
+import DashboardScreen from '../screens/DashboardScreen';
 import DeleteAccountScreen from '../screens/DeleteAccountScreen';
 import DeletedAccountScreen from '../screens/DeletedAccountScreen';
+import DonationScreen from '../screens/DashboardScreen/DonationScreen';
+import DonationsDetailScreen from '../screens/DonationsDetailScreen/DonationsDetailScreen';
+import DonorDashboardScreen from '../screens/DonorDashboardScreen';
+import DonorHistoryScreen from '../screens/DonorHistoryScreen/DonorHistoryScreen';
+import LoginScreen from '../screens/LoginScreen';
+import LoginSuccessScreen from '../screens/LoginSuccessScreen';
+import LogoutScreen from '../screens/LogoutScreen';
+import MakeClaimScreen from '../screens/MakeClaimScreen/MakeClaimScreen';
+import MapScreen from '../screens/MapScreen/MapScreen';
+import QRCodeScannerScreen from '../screens/QRCodeScannerScreen/QRCodeScannerScreen';
+import RegistrationScreen from '../screens/RegistrationScreen';
+import TermsScreen from '../screens/TermsScreen';
 
 const Drawer = createDrawerNavigator();
-const FullStack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
 export function DonorOrClientDrawer() {
 	const { USER_IDENTITY } = getEnv();
@@ -36,7 +37,7 @@ export function DonorOrClientDrawer() {
 	return (
 		<Drawer.Navigator
 			initialRouteName="LoginSuccess"
-			drawerContent={MenuDrawer}
+			drawerContent={() => <MenuDrawer />}
 			screenOptions={{
 				headerShown: false,
 				drawerPosition: 'right',
@@ -132,6 +133,23 @@ export function DonorOrClientDrawer() {
 							},
 						}}
 					/>
+					<Drawer.Screen
+						name="ClientHistoryScreen"
+						component={ClientHistoryScreen}
+						options={{
+							drawerLabel: 'History',
+							drawerLabelStyle: {
+								color: colors.WHITE,
+								textTransform: 'uppercase',
+								fontWeight: 'bold',
+								fontSize: 20,
+								marginLeft: 'auto',
+								marginRight: 5,
+								letterSpacing: 0.5,
+								marginBottom: 10,
+							},
+						}}
+					/>
 				</>
 			)}
 			<Drawer.Screen
@@ -184,31 +202,30 @@ export function DonorOrClientDrawer() {
 }
 
 export function FullStackNavigator() {
-	const [ state ] = useGlobal();
+	const [state] = useGlobal();
 	return (
-		<FullStack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
-			<FullStack.Screen name="Login" component={LoginScreen} />
+		<Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+			<Stack.Screen name="Login" component={LoginScreen} />
 			{state.jwt ? (
-				<FullStack.Group>
-					<FullStack.Screen name="Drawer" component={DonorOrClientDrawer} />
-					<FullStack.Screen name="DonorDonation" component={DonorDonationScreen} />
-					<FullStack.Screen name="DonationScreen" component={DonationScreen} />
-					<FullStack.Screen name="MapScreen" component={MapScreen} />
-					<FullStack.Screen name="MakeClaim" component={MakeClaimScreen} />
-					<FullStack.Screen name="Logout" component={LogoutScreen} />
-					<FullStack.Screen name="ClaimDetails" component={ClaimDetailsScreen} />
-					<FullStack.Screen name="DonationsDetailScreen" component={DonationsDetailScreen} />
-					<FullStack.Screen name="DeleteAccountScreen" component={DeleteAccountScreen} />
-					<FullStack.Screen name="DeletedAccountScreen" component={DeletedAccountScreen} />
-				</FullStack.Group>
+				<Stack.Group>
+					<Stack.Screen name="Drawer" component={DonorOrClientDrawer} />
+					<Stack.Screen name="DonationScreen" component={DonationScreen} />
+					<Stack.Screen name="MapScreen" component={MapScreen} />
+					<Stack.Screen name="MakeClaim" component={MakeClaimScreen} />
+					<Stack.Screen name="ClaimDetailsScreen" component={ClaimDetailsScreen} />
+					<Stack.Screen name="ClientHistoryScreen" component={ClientHistoryScreen} />
+					<Stack.Screen name="DonationsDetailScreen" component={DonationsDetailScreen} />
+					<Stack.Screen name="DeleteAccountScreen" component={DeleteAccountScreen} />
+					<Stack.Screen name="DeletedAccountScreen" component={DeletedAccountScreen} />
+				</Stack.Group>
 			) : (
-				<FullStack.Group>
-					<FullStack.Screen name="Register" component={RegistrationScreen} />
-					<FullStack.Screen name="TermsScreen" component={TermsScreen} />
-				</FullStack.Group>
+				<Stack.Group>
+					<Stack.Screen name="Logout" component={LogoutScreen} />
+					<Stack.Screen name="Register" component={RegistrationScreen} />
+					<Stack.Screen name="TermsScreen" component={TermsScreen} />
+				</Stack.Group>
 			)}
-			<FullStack.Screen name="ContactScreen" component={ContactScreen} />
-		</FullStack.Navigator>
+			<Stack.Screen name="ContactScreen" component={ContactScreen} />
+		</Stack.Navigator>
 	);
 }
-
