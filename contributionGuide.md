@@ -175,7 +175,7 @@ import { Title } from '@elements';
 
 export default () => {
 	const { navigate } = useNavigation();
-	const [state, actions] =  useGlobal() as UseGlobalType;
+	const [state, actions] = useGlobal() as UseGlobalType;
 	const { userIdentity } = state;
 	return (
 		<View style={styles.outerContainer}>

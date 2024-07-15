@@ -17,11 +17,7 @@ function DropdownInput(props: DropdownInputProps) {
 
 	const formattedData: Item[] = dropdownData?.map(item => ({ label: item, value: item })) || [];
 
-	const placeholderObj = {
-		label: placeholder || '',
-		value: null,
-		color: colors.NAVY_BLUE,
-	};
+	const placeholderObj = placeholder ? { label: placeholder, value: null, color: colors.NAVY_BLUE } : {};
 
 	return (
 		<RNPickerSelect
@@ -38,7 +34,11 @@ function DropdownInput(props: DropdownInputProps) {
 			}}
 			placeholder={placeholderObj}
 			value={value}
-			onValueChange={v => setValue && setValue(v.toString())}
+			onValueChange={v => {
+				if (v !== null && setValue) {
+					setValue(v.toString());
+				}
+			}}
 			items={formattedData}
 			// Icon={<Icon color={colors.NAVY_BLUE} name="dropdown" size={18} />}
 		/>
