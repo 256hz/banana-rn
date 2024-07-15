@@ -24,7 +24,7 @@ export default function ({ donation, isClaim, isHistory }: ClientDonationProps) 
 		if (!isClaim) {
 			navigate('MakeClaim', { donation, id });
 		} else {
-			navigate('ClaimDetailsScreen', { donation });
+			navigate('ClaimDetailsScreen', { donation, id });
 		}
 	};
 
