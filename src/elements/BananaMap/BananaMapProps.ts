@@ -3,7 +3,7 @@ import { IDonation } from '../../../declarations';
 import { Region } from 'react-native-maps';
 
 export interface BananaMapProps {
-	donations: IDonation;
+	donations: IDonation[];
 	markerSize: number;
 	clientLocation: ILocation;
 	mapRegion: Region;
