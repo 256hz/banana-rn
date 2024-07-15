@@ -4,7 +4,7 @@
 		"slug": "banana-app",
 		"privacy": "public",
 		"platforms": ["ios", "android", "web"],
-		"owner": "brendan903",
+		"owner": "The Be Good Project",
 		"version": "0.1.0-alpha",
 		"orientation": "portrait",
 		"icon": "./assets/icon.png",
