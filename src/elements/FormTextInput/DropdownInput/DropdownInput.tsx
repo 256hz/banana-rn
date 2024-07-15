@@ -1,7 +1,6 @@
 import React from 'react';
-import { TextInputProps, View, Text } from 'react-native';
+import { TextInputProps } from 'react-native';
 import RNPickerSelect, { Item } from 'react-native-picker-select';
-import { Icon } from '@elements/Icon';
 import * as colors from '@util/colors';
 import defaultStyle from './DropdownInput.styles';
 
