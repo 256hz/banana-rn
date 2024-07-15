@@ -1,4 +1,5 @@
-import { IClaim, IDonation, NewDonation } from '../../declarations';
+// index.types.ts
+import { IDonation, NewDonation } from '../../declarations';
 
 export interface IUser {
 	email: string;
@@ -16,6 +17,7 @@ export interface IUser {
 		longitude?: number;
 	};
 }
+
 export interface IDonorState extends IUser {
 	organization_name: string;
 	pickup_instructions: string;
@@ -58,6 +60,10 @@ export interface IAlert {
 	confirmFn?: () => void;
 }
 
+export interface IClaim extends IDonation {
+	// additional properties specific to IClaim
+}
+
 export interface IInitialState {
 	userIdentity: 'donor' | 'client';
 	apiBaseUrl: string;
@@ -66,7 +72,8 @@ export interface IInitialState {
 	alert?: IAlert;
 	jwt?: string;
 	user?: IDonorState | IClientState;
-	donationsOrClaims: IDonation[] | IClaim[];
+	donationsOrClaims: (IDonation | IClaim)[];
+	claimHistory?: IClaim[];
 }
 
 export type StatusCode = 200 | 201 | 202 | 400 | 401 | 403 | 404 | 418 | 500;
@@ -82,7 +89,7 @@ export interface IActions {
 	clearAlert: () => void;
 	getActiveDonationsForClient: () => Promise<IDonation[]>;
 	getClaimedDonationsForClient: () => Promise<IDonation[] | IClaim[]>;
-	getClaimHistoryForClient: () => Promise<IDonation[] | IClaim[]>;
+	getClaimHistoryForClient: () => Promise<IDonation[] | IClaim[]>; // Ensure this method is included
 	getDonationHistory: () => Promise<IDonation[]>;
 	getDonations: () => Promise<IDonation[]>;
 	getLocation: () => Promise<{ latitude: number; longitude: number }>;

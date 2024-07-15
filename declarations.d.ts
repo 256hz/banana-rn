@@ -11,15 +11,11 @@ declare module '*.svg' {
 /**
  * Adds a type to the '@react-native/metro-config' file
  */
-
-/**
- * Adds a type to SVG imports on mobile.
- */
 declare module '@react-native/metro-config';
 
 // This ensures Typescript is happy when using the navigate function
 export type RootStackParamList = {
-	ClaimDetailsScreen: { donation: IClaim };
+	ClaimDetailsScreen: { donation?: IDonation; claim?: IClaim; id: number };
 	ClientClaimsScreen: undefined;
 	ClientHistoryScreen: undefined;
 	ContactScreen: { backDestination: string };
@@ -51,22 +47,28 @@ declare global {
 }
 
 export interface IDonor {
-	created_at: Date;
-	email: string;
 	id: number;
 	name: string;
+	email: string;
 	phone: string;
+	address_street: string;
+	address_city: string;
+	address_state: string;
+	address_zip: string;
+	latitude?: number;
+	longitude?: number;
+	donor_name: string;
+	created_at: Date;
 	updated_at: Date;
 }
 
 export interface IDonation {
 	category: string;
-	claim: IClaim;
+	claim?: IClaim;
 	created_at: Date;
 	distance: number;
 	donor_id: number;
 	donor: IDonor;
-	duration_minutes: number;
 	food_name: string;
 	id: number;
 	image_url: string;
@@ -85,16 +87,23 @@ export type NewDonation = Pick<
 	'food_name' | 'category' | 'total_amount' | 'pickup_location' | 'pickup_instructions'
 >;
 
-export interface IClaim {
+export interface IClaim extends IDonation {
+	// id: number;
+	// created_at: Date;
+	// updated_at: Date;
 	canceled: boolean;
 	claimed: boolean;
 	client_id: number;
-	client_name: undefined;
+	client_name?: string;
 	completed: boolean;
-	created_at: Date;
 	donation_id: number;
+	// donation?: IDonation; // If needed, reference to the donation
 	qr_code: string;
-	status: string;
+	// status: string;
 	time_claimed: Date;
-	updated_at: Date;
+}
+
+export interface IClaimHistory {
+	claim: IClaim;
+	donation: IDonation;
 }
