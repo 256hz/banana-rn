@@ -46,11 +46,11 @@ function MakeClaimScreen() {
 	};
 
 	const handleClaim = async () => {
-		const response = await claimDonation(donation.id, user.id);
+		const response = await claimDonation(donation.id, user?.id);
 		if (response.status !== 202) {
 			console.log('Handle this error better');
 		} else {
-			navigate('ClaimDetails', { claim: response.claim, donation });
+			navigate('ClaimDetailsScreen', { claim: response.claim, donation });
 		}
 	};
 
