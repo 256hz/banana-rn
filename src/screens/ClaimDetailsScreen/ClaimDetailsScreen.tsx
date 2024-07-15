@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { Dimensions, ImageBackground, ScrollView, Text, View, Platform, Linking } from 'react-native';
 import { Icon, SpacerInline, TextButton } from '@elements';
 import QRCode from 'react-native-qrcode-svg';
@@ -8,19 +8,33 @@ import typography from '@util/typography';
 import { ButtonStyle } from '@elements/Button';
 import claimStyles from '@util/claimStyles';
 import styles from './ClaimDetailsScreen.styles';
+import { RootStackParamList } from '../../../declarations';
+
+type ClaimDetailsScreenRouteProp = RouteProp<RootStackParamList, 'ClaimDetailsScreen'>;
 
 function ClaimDetailsScreen() {
 	const { goBack } = useNavigation();
-	const route = useRoute();
+	const route = useRoute<ClaimDetailsScreenRouteProp>();
 	const { donation } = route.params;
-	// let claim;
-	// if (route.params.claim) {
-	// 	claim = route.params.claim;
-	// } else {
-	// 	claim = route.params.donation.claim;
-	// }
-	const claim = route.params?.claim ? route.params.claim : route.params?.donation.claim;
+	const claim = route.params?.claim ? route.params.claim : route.params?.donation?.claim;
+
+	if (!donation) {
+		return (
+			<View style={claimStyles.outerContainer}>
+				<Text>Error: Donation data is missing.</Text>
+			</View>
+		);
+	}
+
 	const { donor } = donation;
+
+	if (!donor) {
+		return (
+			<View style={claimStyles.outerContainer}>
+				<Text>Error: Donor data is missing.</Text>
+			</View>
+		);
+	}
 
 	const claimBtnStyle: ButtonStyle = {
 		default: {
@@ -40,8 +54,9 @@ function ClaimDetailsScreen() {
 			android: `geo:0,0?q=${address}`,
 			default: `geo:0,0?q=${address}`,
 		});
-		Linking.openURL(url);
+		Linking.openURL(url as string);
 	};
+
 	return (
 		<View style={claimStyles.outerContainer}>
 			<ScrollView>
@@ -90,13 +105,13 @@ function ClaimDetailsScreen() {
 						<View style={claimStyles.item}>
 							<Text style={typography.body4}>{donation.pickup_instructions}</Text>
 						</View>
-						{claim.status !== 'closed' && (
+						{claim?.status !== 'closed' && (
 							<View style={{ flexDirection: 'row', justifyContent: 'center' }}>
 								<TextButton text="Directions" buttonStyle={claimBtnStyle} onPress={() => openGPS()} />
 							</View>
 						)}
 					</View>
-					{claim.status !== 'closed' && (
+					{claim?.status !== 'closed' && (
 						<View>
 							<View style={claimStyles.title}>
 								<Text style={typography.h3}>QR Code</Text>
@@ -104,7 +119,7 @@ function ClaimDetailsScreen() {
 							<View style={styles.qrContainer}>
 								<QRCode
 									backgroundColor={colors.BANANA_YELLOW}
-									value={claim.qr_code}
+									value={claim?.qr_code}
 									size={Math.min(screenWidth, screenHeight) / 2}
 								/>
 								<Text style={styles.qrText}>PLEASE PRESENT THIS TO YOUR DONOR</Text>
