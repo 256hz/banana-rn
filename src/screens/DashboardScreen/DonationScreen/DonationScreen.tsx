@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, KeyboardAvoidingView, ScrollView, Platform, Text, Image } from 'react-native';
@@ -15,7 +14,7 @@ function DonationScreen() {
 	const [state, actions] = useGlobal() as UseGlobalType;
 	const { updateAlert } = actions;
 	const { user } = state;
-	const foodCategories: Array<string> = ['Bread', 'Dairy', 'Hot Meal', 'Produce', 'Protein', 'Others'];
+	const foodCategories: Array<string> = ['Bread', 'Dairy', 'Hot Meal', 'Produce', 'Protein', 'Other'];
 	const emptyDonation: NewDonation = {
 		pickup_location: `${user?.address_street} ${user?.address_city}, ${user?.address_state} ${user?.address_zip}`,
 		category: foodCategories[3],

@@ -16,6 +16,7 @@ function DashboardScreen() {
 	const [loaded, setLoaded] = useState(false);
 
 	const getActiveDonationsForLocation = async () => {
+		setLoaded(false);
 		const { getActiveDonationsForClient, getLocation } = actions;
 		await getLocation();
 		const data = await getActiveDonationsForClient();
@@ -23,13 +24,14 @@ function DashboardScreen() {
 			setDonations(data);
 			setLoaded(true);
 		}
+		setLoaded(true);
 	};
 
 	useEffect(() => {
 		if (isFocused) {
 			getActiveDonationsForLocation();
 		}
-	}, [isFocused]);
+	}, [isFocused, actions]);
 
 	return (
 		<View style={styles.outerContainer}>
