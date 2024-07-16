@@ -19,7 +19,7 @@ import { ClientRegisterProps } from '@state/actions/register';
 import { IAlert, UseGlobalType, StatusCode } from '@state/index.types';
 import styles from './RegistrationScreen.styles';
 
-interface ValidateError {
+export interface ValidateError {
 	[key: string]: string[];
 }
 

@@ -20,15 +20,17 @@ import validate from 'validate.js';
 import { DonorRegisterProps } from '@state/actions/register';
 import { IAlert, UseGlobalType } from '@state/index.types';
 import styles from './RegistrationScreen.styles';
+import { ValidateError } from './ClientRegistrationScreen';
 
 function DonorRegistrationScreen() {
 	const { navigate, goBack } = useNavigation();
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [_state, actions] = useGlobal() as UseGlobalType;
 	const { register, updateAlert } = actions;
 	const [newDonor, setNewDonor] = useState<DonorRegisterProps>({
 		state: 'WA',
 	} as DonorRegisterProps);
-	const [validationErrors, setValidationErrors] = useState({} as any);
+	const [validationErrors, setValidationErrors] = useState<ValidateError>({});
 	const [termsOfService, setTermsOfService] = useState(false);
 	const stateList = getStateList();
 	const passwordRef = useRef<TextInput>(null);
