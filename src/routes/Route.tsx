@@ -226,6 +226,7 @@ export function FullStackNavigator() {
 				</Stack.Group>
 			)}
 			<Stack.Screen name="ContactScreen" component={ContactScreen} />
+			<Stack.Screen name="LoginSuccessScreen" component={LoginSuccessScreen} />
 		</Stack.Navigator>
 	);
 }
