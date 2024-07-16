@@ -1,21 +1,21 @@
-import React from 'react';
-import { ScrollView } from 'react-native';
+import React, { ReactNode } from 'react';
+import { ScrollView, NativeScrollEvent, NativeSyntheticEvent, ViewStyle } from 'react-native';
 
 interface EndOfScrollWrapperProps {
-	onScrollToEnd: Function;
-	style: any;
-	children: any;
+	onScrollToEnd: () => void;
+	style?: ViewStyle;
+	children: ReactNode;
 }
 
 export default function EndOfScrollWrapper({ onScrollToEnd, style, children }: EndOfScrollWrapperProps) {
-	const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
+	const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }: NativeScrollEvent) => {
 		const paddingToBottom = 20;
 		return layoutMeasurement.height + contentOffset.y >= contentSize.height - paddingToBottom;
 	};
 
 	return (
 		<ScrollView
-			onScroll={({ nativeEvent }) => {
+			onScroll={({ nativeEvent }: NativeSyntheticEvent<NativeScrollEvent>) => {
 				if (isCloseToBottom(nativeEvent)) {
 					onScrollToEnd();
 				}

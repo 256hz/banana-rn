@@ -12,7 +12,7 @@ interface CheckboxProps {
 	/**
 	 * Callback to set the checked variable.
 	 */
-	setChecked: Function;
+	setChecked: (checked: boolean) => void;
 
 	/**
 	 * The square dimensions of the checkbox.
@@ -27,7 +27,7 @@ interface CheckboxProps {
 	/**
 	 * Callback for when a user presses on the checkbox.
 	 */
-	onPress?: Function;
+	onPress?: () => void;
 }
 
 export default function Checkbox({

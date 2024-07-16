@@ -1,6 +1,4 @@
-/* eslint-disable no-tabs */
 import React, { useRef, useState } from 'react';
-// import { useNavigation } from 'react-navigation-hooks';
 import { useNavigation } from '@react-navigation/native';
 import {
 	ScrollView,
@@ -18,17 +16,27 @@ import { Title, LinkButton, FormTextInput, SpacerInline, Icon } from '@elements'
 import validate from 'validate.js';
 import clientConstraints from '@util/constraints/clientRegistration';
 import { ClientRegisterProps } from '@state/actions/register';
-import { IAlert } from '@state/index.types';
+import { IAlert, UseGlobalType, StatusCode } from '@state/index.types';
 import styles from './RegistrationScreen.styles';
 
-export default function () {
+interface ValidateError {
+	[key: string]: string[];
+}
+
+export default function RegistrationScreen() {
 	const { navigate, goBack } = useNavigation();
 	const [state, actions] = useGlobal() as UseGlobalType;
 	const { register, updateAlert } = actions;
 
 	const [termsOfService, setTermsOfService] = useState(false);
-	const [validateError, setValidateError] = useState({} as any);
-	const [newClient, setNewClient] = useState<ClientRegisterProps>({} as ClientRegisterProps);
+	const [validateError, setValidateError] = useState<ValidateError>({});
+	const [newClient, setNewClient] = useState<ClientRegisterProps>({
+		email: '',
+		password: '',
+		retypedPassword: '',
+		firstName: '',
+		lastName: '',
+	});
 
 	const passwordRef = useRef<TextInput>(null);
 	const confirmPasswordRef = useRef<TextInput>(null);
@@ -49,7 +57,7 @@ export default function () {
 		if (validateResults) {
 			setValidateError(validateResults);
 		} else {
-			const statusCode = await register(newClient);
+			const statusCode: StatusCode = await register(newClient);
 			switch (statusCode) {
 				case 201: {
 					navigate('LoginSuccessScreen');
@@ -86,7 +94,7 @@ export default function () {
 	return (
 		<KeyboardAvoidingView
 			style={styles.keyboardAvoidContainer}
-			behavior={Platform.OS === 'ios' ? 'padding' : 'height'} // Android and iOS both interact with this prop differently
+			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 			enabled={true}
 			keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
 		>
@@ -100,8 +108,7 @@ export default function () {
 					setValue={v => setNewClient({ ...newClient, email: v })}
 					style={styles.input}
 					placeholder="info@bananaapp.org"
-					error={validateError.email}
-					errorMessage={validateError.email}
+					errorMessage={validateError.email?.[0]}
 					autoFocus={true}
 					onSubmitEditing={() => passwordRef?.current?.focus()}
 					autoCapitalize="none"
@@ -113,8 +120,7 @@ export default function () {
 					setValue={v => setNewClient({ ...newClient, password: v })}
 					type="password"
 					style={styles.input}
-					error={validateError.password}
-					errorMessage={validateError.password}
+					errorMessage={validateError.password?.[0]}
 					ref={passwordRef}
 					onSubmitEditing={() => confirmPasswordRef?.current?.focus()}
 				/>
@@ -125,8 +131,7 @@ export default function () {
 					setValue={v => setNewClient({ ...newClient, retypedPassword: v })}
 					style={styles.input}
 					type="password"
-					error={validateError.retypedPassword}
-					errorMessage={validateError.retypedPassword}
+					errorMessage={validateError.retypedPassword?.[0]}
 					ref={confirmPasswordRef}
 					onSubmitEditing={() => firstNameRef?.current?.focus()}
 				/>
@@ -138,8 +143,7 @@ export default function () {
 					value={newClient.firstName}
 					setValue={v => setNewClient({ ...newClient, firstName: v })}
 					style={styles.input}
-					error={validateError.firstName}
-					errorMessage={validateError.firstName}
+					errorMessage={validateError.firstName?.[0]}
 					ref={firstNameRef}
 					onSubmitEditing={() => lastNameRef?.current?.focus()}
 				/>
@@ -149,8 +153,7 @@ export default function () {
 					value={newClient.lastName}
 					setValue={v => setNewClient({ ...newClient, lastName: v })}
 					style={styles.input}
-					error={validateError.lastName}
-					errorMessage={validateError.lastName}
+					errorMessage={validateError.lastName?.[0]}
 					ref={lastNameRef}
 				/>
 

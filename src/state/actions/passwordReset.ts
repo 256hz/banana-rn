@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { IStore } from '@state/index.types';
 import railsAxios from '@util/railsAxios';
 
 interface ResetPasswordPropsBase {
@@ -10,7 +12,7 @@ interface ResetPasswordPropsBase {
 export type RequestResetTokenProps = ResetPasswordPropsBase;
 
 export const requestResetToken = async (
-	store,
+	store: IStore,
 	{ onComplete, input, setIsSubmitting, setError }: RequestResetTokenProps
 ) => {
 	const { userIdentity } = store.state;
@@ -22,7 +24,7 @@ export const requestResetToken = async (
 		onComplete();
 	} catch (e: any) {
 		setIsSubmitting(false);
-		setError(e.response ? e.response.data.message : "We're sorry, but there was an error.  Please try again.");
+		setError(e.response ? e.response.data.message : "We're sorry, but there was an error. Please try again.");
 	}
 };
 
@@ -31,7 +33,7 @@ export interface SubmitResetTokenProps extends ResetPasswordPropsBase {
 }
 
 export const submitResetToken = async (
-	store,
+	store: IStore,
 	{ onComplete, input, setIsSubmitting, setError, setToken }: SubmitResetTokenProps
 ) => {
 	const { userIdentity } = store.state;
@@ -43,7 +45,7 @@ export const submitResetToken = async (
 		onComplete();
 	} catch (e: any) {
 		setIsSubmitting(false);
-		setError(e.response ? e.response.data.message : "We're sorry, but there was an error.  Please try again.");
+		setError(e.response ? e.response.data.message : "We're sorry, but there was an error. Please try again.");
 	}
 };
 
@@ -52,7 +54,7 @@ export interface SubmitNewPasswordProps extends ResetPasswordPropsBase {
 }
 
 export const submitNewPassword = async (
-	store,
+	store: IStore,
 	{ input, token, setIsSubmitting, onComplete, setError }: SubmitNewPasswordProps
 ) => {
 	const { userIdentity } = store.state;
@@ -64,6 +66,6 @@ export const submitNewPassword = async (
 		onComplete();
 	} catch (e: any) {
 		setIsSubmitting(false);
-		setError(e.response ? e.response.data.message : "We're sorry, but there was an error.  Please try again.");
+		setError(e.response ? e.response.data.message : "We're sorry, but there was an error. Please try again.");
 	}
 };

@@ -1,5 +1,6 @@
 // index.types.ts
 import { IDonation, NewDonation } from '../../declarations';
+import { ClientRegisterProps, DonorRegisterProps } from './actions/register';
 
 export interface IUser {
 	email: string;
@@ -76,11 +77,23 @@ export interface IInitialState {
 	claimHistory?: IClaim[];
 }
 
-export type StatusCode = 200 | 201 | 202 | 400 | 401 | 403 | 404 | 418 | 500;
+export type StatusCode = 200 | 201 | 202 | 400 | 401 | 403 | 404 | 409 | 418 | 500;
 
 export interface ILocation {
 	latitude: number;
 	longitude: number;
+}
+
+export interface IStore {
+	state: {
+		createUrl: string;
+		userIdentity: 'donor' | 'client';
+		jwt: string;
+		user: IClientState | IDonorState;
+		// Include other state properties as needed
+	};
+	setState: (newState: Partial<IStore['state']>) => Promise<void>;
+	// Include other store methods as needed
 }
 
 export interface IActions {
@@ -97,7 +110,7 @@ export interface IActions {
 	logIn: (options: { email: string; password: string }) => Promise<StatusCode>;
 	logOut: () => Promise<void>;
 	postDonation: (donation: NewDonation) => Promise<StatusCode>;
-	register: () => Promise<StatusCode>;
+	register: (user: ClientRegisterProps | DonorRegisterProps, store?: IStore) => Promise<StatusCode>;
 	requestResetToken: () => Promise<StatusCode>;
 	scan: (qrCode: string) => Promise<StatusCode>;
 	submitNewPassword: () => Promise<StatusCode>;

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/indent */
+/* eslint-disable no-confusing-arrow */
 import { Platform } from 'react-native';
 import * as colors from './colors';
 

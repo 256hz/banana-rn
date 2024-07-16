@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-props-no-spreading */
-
 import React, { forwardRef, RefObject, Ref, useState } from 'react';
 import { View, TextInput, Text, StyleProp, TextStyle, TextInputProps } from 'react-native';
 import { InputLabel } from '@elements/FormTextInput/InputLabel';
@@ -151,7 +150,7 @@ function FormTextInput(
 
 			<View>
 				<Input
-					style={errorMessage && styles.inputError}
+					style={errorMessage ? styles.inputError : {}}
 					forwardedRef={ref}
 					value={passedValue}
 					setValue={setValue}
@@ -162,7 +161,7 @@ function FormTextInput(
 
 				{errorMessage && (
 					<View style={styles.errorMessage}>
-						<Text style={styles.errorMessageText}>{errorMessage || ''}</Text>
+						<Text style={styles.errorMessageText}>{errorMessage}</Text>
 					</View>
 				)}
 			</View>
