@@ -23,8 +23,12 @@ export default function Button({
 	outlined = false,
 	disabled = false,
 	activeOpacity = 0.8,
-	onShowUnderlay = () => {},
-	onHideUnderlay = () => {},
+	onShowUnderlay = () => {
+		/* no-op */
+	},
+	onHideUnderlay = () => {
+		/* no-op */
+	},
 	...props
 }: ButtonProps): JSX.Element {
 	const scheme: ColorScheme = useScheme();
