@@ -30,6 +30,8 @@ interface FormTextInputProps extends BasicTextInputProps {
 	/** Label for the input. */
 	label: string;
 
+	error?: boolean;
+
 	/** User-facing message associated with an error. */
 	errorMessage?: string;
 
