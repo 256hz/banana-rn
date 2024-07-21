@@ -1,4 +1,4 @@
-/* eslint-disable no-tabs */
+// DonationRegistrationScreen.tsx
 import React, { useRef, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import {
@@ -19,6 +19,7 @@ import donorConstraints from '@util/constraints/donorRegistration';
 import validate from 'validate.js';
 import { DonorRegisterProps } from '@state/actions/register';
 import { IAlert, UseGlobalType } from '@state/index.types';
+import { formatErrorMessage } from '@util/formatErrorMessage';
 import styles from './RegistrationScreen.styles';
 import { ValidateError } from './ClientRegistrationScreen';
 
@@ -107,7 +108,7 @@ function DonorRegistrationScreen() {
 					style={styles.input}
 					placeholder="info@bananaapp.org"
 					error={!!validationErrors.email}
-					errorMessage={validationErrors.email}
+					errorMessage={formatErrorMessage(validationErrors.email)}
 					autoFocus={true}
 					onSubmitEditing={() => passwordRef?.current?.focus()}
 					autoCapitalize="none"
@@ -120,7 +121,7 @@ function DonorRegistrationScreen() {
 					type="password"
 					style={styles.input}
 					error={!!validationErrors.password}
-					errorMessage={validationErrors.password}
+					errorMessage={formatErrorMessage(validationErrors.password)}
 					ref={passwordRef}
 					onSubmitEditing={() => confirmPasswordRef?.current?.focus()}
 				/>
@@ -132,7 +133,7 @@ function DonorRegistrationScreen() {
 					style={styles.input}
 					type="password"
 					error={!!validationErrors.retypedPassword}
-					errorMessage={validationErrors.retypedPassword}
+					errorMessage={formatErrorMessage(validationErrors.retypedPassword)}
 					ref={confirmPasswordRef}
 					onSubmitEditing={() => firstNameRef?.current?.focus()}
 				/>
@@ -144,7 +145,7 @@ function DonorRegistrationScreen() {
 					setValue={s => setNewDonor({ ...newDonor, firstName: s })}
 					style={styles.input}
 					error={!!validationErrors.firstName}
-					errorMessage={validationErrors.firstName}
+					errorMessage={formatErrorMessage(validationErrors.firstName)}
 					ref={firstNameRef}
 					onSubmitEditing={() => lastNameRef?.current?.focus()}
 				/>
@@ -155,7 +156,7 @@ function DonorRegistrationScreen() {
 					setValue={s => setNewDonor({ ...newDonor, lastName: s })}
 					style={styles.input}
 					error={!!validationErrors.lastName}
-					errorMessage={validationErrors.lastName}
+					errorMessage={formatErrorMessage(validationErrors.lastName)}
 					ref={lastNameRef}
 					onSubmitEditing={() => bizNameRef?.current?.focus()}
 				/>
@@ -166,7 +167,7 @@ function DonorRegistrationScreen() {
 					setValue={s => setNewDonor({ ...newDonor, businessName: s })}
 					style={styles.input}
 					error={!!validationErrors.businessName}
-					errorMessage={validationErrors.businessName}
+					errorMessage={formatErrorMessage(validationErrors.businessName)}
 					ref={bizNameRef}
 					onSubmitEditing={() => bizAddressRef?.current?.focus()}
 				/>
@@ -177,7 +178,7 @@ function DonorRegistrationScreen() {
 					setValue={s => setNewDonor({ ...newDonor, businessAddress: s })}
 					style={styles.input}
 					error={!!validationErrors.businessAddress}
-					errorMessage={validationErrors.businessAddress}
+					errorMessage={formatErrorMessage(validationErrors.businessAddress)}
 					ref={bizAddressRef}
 					onSubmitEditing={() => cityRef?.current?.focus()}
 				/>
@@ -190,7 +191,7 @@ function DonorRegistrationScreen() {
 						style={{ width: '40%' }}
 						autoCapitalize="words"
 						error={!!validationErrors.city}
-						errorMessage={validationErrors.city}
+						errorMessage={formatErrorMessage(validationErrors.city)}
 						ref={cityRef}
 						onSubmitEditing={() => zipRef?.current?.focus()}
 					/>
@@ -202,7 +203,7 @@ function DonorRegistrationScreen() {
 						setValue={s => setNewDonor({ ...newDonor, state: s })}
 						style={{ width: '20%' }}
 						error={!!validationErrors.state}
-						errorMessage={validationErrors.state}
+						errorMessage={formatErrorMessage(validationErrors.state)}
 					/>
 					<FormTextInput
 						label="Zip"
@@ -211,7 +212,7 @@ function DonorRegistrationScreen() {
 						style={{ width: '30%' }}
 						autoCapitalize="words"
 						error={!!validationErrors.zip}
-						errorMessage={validationErrors.zip}
+						errorMessage={formatErrorMessage(validationErrors.zip)}
 						ref={zipRef}
 						onSubmitEditing={() => pickUpRef?.current?.focus()}
 					/>
@@ -222,7 +223,7 @@ function DonorRegistrationScreen() {
 					setValue={s => setNewDonor({ ...newDonor, pickupInstructions: s })}
 					placeholder="Directions on where to pick up item"
 					error={!!validationErrors.pickupInstructions}
-					errorMessage={validationErrors.pickupInstructions}
+					errorMessage={formatErrorMessage(validationErrors.pickupInstructions)}
 					ref={pickUpRef}
 				/>
 
