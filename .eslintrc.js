@@ -80,7 +80,7 @@ module.exports = {
 				forbid: ['>', '}'],
 			},
 		],
-		'react/jsx-props-no-spreading': 'warn',
+		'react/jsx-props-no-spreading': 'off',
 		'react/prop-types': 'off',
 		'react/require-default-props': 'off',
 		'react/function-component-definition': [
