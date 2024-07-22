@@ -102,7 +102,7 @@ export interface IActions {
 	clearAlert: () => void;
 	getActiveDonationsForClient: () => Promise<IDonation[]>;
 	getClaimedDonationsForClient: () => Promise<IDonation[] | IClaim[]>;
-	getClaimHistoryForClient: () => Promise<IDonation[] | IClaim[]>; // Ensure this method is included
+	getClaimHistoryForClient: () => Promise<IDonation[] | IClaim[]>;
 	getDonationHistory: () => Promise<IDonation[]>;
 	getDonations: () => Promise<IDonation[]>;
 	getLocation: () => Promise<{ latitude: number; longitude: number }>;
