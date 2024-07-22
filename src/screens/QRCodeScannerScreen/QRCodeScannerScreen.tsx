@@ -132,7 +132,7 @@ export default function QRCodeScannerScreen() {
 		if (matches && matches.length > 0) {
 			const match = matches[0];
 			scan(data).then(res => {
-				if (res.code === 202) {
+				if (res === 202) {
 					// Ensure match is treated and structured as Donation
 					const donation = match as IDonation;
 					setClaimedDonation({
