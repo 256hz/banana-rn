@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Dimensions, View } from 'react-native';
-// import { useIsFocused, useNavigation } from 'react-navigation-hooks';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import useGlobal from '@state';
 import { BananaMap, NavBar } from '@elements';
@@ -13,11 +12,13 @@ function MapScreen() {
 	const { navigate } = useNavigation();
 	const [donations, setDonations] = useState<IDonation[]>([]);
 	const { width, height } = Dimensions.get('window');
-	const { latitude, longitude } = state.user?.coords;
+	const userCoords = state.user?.coords;
+	const latitude = userCoords?.latitude ?? 47.6062; // Default latitude for Seattle
+	const longitude = userCoords?.longitude ?? -122.3321; // Default longitude for Seattle
 	const ASPECT_RATIO = width / height;
 	const LATITUDE_DELTA = 0.05;
 
-	// in case of virtual device, the position of client would be center of seattle.
+	// In case of virtual device, the position of client would be center of Seattle.
 	const [location] = useState({
 		latitude,
 		longitude,
@@ -32,11 +33,13 @@ function MapScreen() {
 			setDonations(data);
 		}
 	};
+
 	useEffect(() => {
 		if (isFocused) {
 			getDonationsFromAPI();
 		}
 	}, [isFocused]);
+
 	return (
 		<View>
 			<NavBar
