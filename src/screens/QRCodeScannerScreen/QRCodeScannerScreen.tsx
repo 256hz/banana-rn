@@ -9,7 +9,8 @@ import { Modal, TextButton, Icon, LinkButton } from '@elements';
 import { ButtonStyle } from '@elements/Button';
 import { categoryImage } from '@util/donationCategory';
 import openAppSettings from '@util/openAppSettings';
-import { Claim, Donation, UseGlobalType } from '@state/index.types';
+import { IClaim, UseGlobalType } from '@state/index.types';
+import { IDonation } from '../../../declarations';
 import BarCodeMask from './BarCodeMask';
 import styles from './QRCodeScannerScreen.styles';
 
@@ -119,25 +120,25 @@ export default function QRCodeScannerScreen() {
 		setHasCameraPermission(status === 'granted');
 	};
 
-	function isDonation(item: Donation | Claim): item is Donation {
-		return (item as Donation).donor_id !== undefined;
+	function isDonation(item: IDonation | IClaim): item is IDonation {
+		return (item as IDonation).donor_id !== undefined;
 	}
 
 	const handleBarCodeScanned = ({ data }) => {
 		// eslint-disable-next-line max-len
 		const matches = state.donationsOrClaims?.filter(
-			d => isDonation(d) && d.status === 'claimed' && d.claim.qr_code === data && d.claim.client_name !== undefined
+			d => isDonation(d) && d.status === 'claimed' && d.claim?.qr_code === data && d.claim?.client_name !== undefined
 		);
 		if (matches && matches.length > 0) {
 			const match = matches[0];
 			scan(data).then(res => {
 				if (res.code === 202) {
 					// Ensure match is treated and structured as Donation
-					const donation = match as Donation;
+					const donation = match as IDonation;
 					setClaimedDonation({
 						food_name: donation.food_name,
 						claim: {
-							client_name: donation.claim.client_name as unknown as string,
+							client_name: donation.claim?.client_name as unknown as string,
 						},
 					});
 					setIcon(categoryImage(donation.category.toString()));
