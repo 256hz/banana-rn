@@ -26,7 +26,7 @@ const deleteData = async (_store, userType: string, userId: number) => {
 
 	try {
 		const response = await railsAxios(jwt).patch(endpoint, payload);
-		return { status: response.request.status }
+		return { status: response.request.status };
 	} catch (error) {
 		console.error('error');
 		return 500;

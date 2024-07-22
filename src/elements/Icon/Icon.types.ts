@@ -14,12 +14,7 @@ export type IconImport = ImageURISource & {
 	default: React.FC<SvgProps>;
 };
 
-export type DeprecatedIconName =
-	| 'chevron-down'
-	| 'chevron-left'
-	| 'image'
-	| 'lock'
-	| 'unlock';
+export type DeprecatedIconName = 'chevron-down' | 'chevron-left' | 'image' | 'lock' | 'unlock';
 
 export type IconName =
 	| 'arrowDown'

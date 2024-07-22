@@ -1,12 +1,9 @@
 import React from 'react';
-import {
-	Text,
-	View,
-} from 'react-native';
+import { Text, View } from 'react-native';
 import useGlobal from '@state';
 import { TextButton } from '@elements/Button/TextButton';
 import { Modal } from '@elements/Modal';
-import { Alert } from '@state/index.types';
+import { IAlert, UseGlobalType } from '@state/index.types';
 import { useScheme } from '@util/colorSchemes';
 import typography from '@util/typography';
 import styles from './CancelDonationModal.styles';
@@ -17,17 +14,12 @@ interface CancelDonationModalProps {
 	okay?: () => void;
 }
 
-export default ({
-	onYes = () => {},
-	onNo = () => {},
-	okay = () => {},
-
-}: CancelDonationModalProps) => {
-	const [ globalState, globalActions ] = useGlobal() as any;
-	const { alert: alertObj }: { alert: Alert } = globalState;
+export default function ({ onYes = () => {}, onNo = () => {}, okay = () => {} }: CancelDonationModalProps) {
+	const [globalState, globalActions] = useGlobal() as UseGlobalType;
+	const { alert: alertObj }: { alert: IAlert } = globalState;
 	const { clearAlert } = globalActions;
 	const scheme = useScheme();
-	const [ state, { updateAlert } ] = useGlobal() as any;
+	const [state, { updateAlert }] = useGlobal();
 
 	const handleNo = () => {
 		clearAlert();
@@ -69,9 +61,7 @@ export default ({
 			>
 				<View style={styles.body}>
 					<View style={styles.textContainer}>
-						<Text style={typography.body1}>
-							{alertObj?.message || 'Uh oh, an unknown error occurred!'}
-						</Text>
+						<Text style={typography.body1}>{alertObj?.message || 'Uh oh, an unknown error occurred!'}</Text>
 					</View>
 
 					<TextButton
@@ -101,9 +91,7 @@ export default ({
 			>
 				<View style={styles.body}>
 					<View style={styles.textContainer}>
-						<Text style={typography.body1}>
-							{alertObj?.message || 'This donation will be cancelled.'}
-						</Text>
+						<Text style={typography.body1}>{alertObj?.message || 'This donation will be cancelled.'}</Text>
 					</View>
 					<View style={styles.buttonWrapper}>
 						<View style={styles.leftButton}>
@@ -175,4 +163,4 @@ export default ({
 		);
 	}
 	return null;
-};
+}

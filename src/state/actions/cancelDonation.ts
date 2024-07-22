@@ -1,6 +1,5 @@
 import railsAxios from '@util/railsAxios';
 
-
 const cancelDonation = async (_store, donationId: number) => {
 	const endpoint = `/donations/${donationId}/update`;
 	const { jwt } = _store.state;

@@ -1,7 +1,6 @@
 import { Platform, StyleSheet, Dimensions } from 'react-native';
 import * as colors from '@util/colors';
 
-
 export default StyleSheet.create({
 	text: {
 		color: colors.NAVY_BLUE,
@@ -19,5 +18,4 @@ export default StyleSheet.create({
 	smallMarginLeft: {
 		marginLeft: 10,
 	},
-
 });

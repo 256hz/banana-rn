@@ -1,6 +1,5 @@
 import railsAxios from '@util/railsAxios';
-import { NewDonation } from '@screens/DashboardScreen/DonationScreen/DonationScreen.type';
-
+import { NewDonation } from '../../../declarations';
 
 const postDonation = async (_store, donation: NewDonation) => {
 	const endpoint = '/donations/create';
@@ -8,11 +7,8 @@ const postDonation = async (_store, donation: NewDonation) => {
 	const payload = {
 		donation: {
 			donor_id: user.id,
-			category: donation.category,
-			food_name: donation.itemName,
-			pickup_instructions: donation.pickupInstructions,
 			status: 'active',
-			total_amount: donation.totalAmount,
+			...donation,
 		},
 	};
 	try {

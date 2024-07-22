@@ -1,4 +1,5 @@
 import railsAxios from '@util/railsAxios';
+import axios from 'axios';
 
 export interface DonorRegisterProps {
 	email: string;
@@ -12,8 +13,6 @@ export interface DonorRegisterProps {
 	state: string;
 	zip: string;
 	pickupInstructions: string;
-	// license: string
-	// licenseVerificationImage: any
 }
 
 export interface ClientRegisterProps {
@@ -22,22 +21,14 @@ export interface ClientRegisterProps {
 	retypedPassword: string;
 	firstName: string;
 	lastName: string;
-	// street: string;
-	// city: string;
-	// state: string;
-	// zip: string;
-	// transportationMethod: string;
-	// ethnicity: string;
-	// gender: string;
 }
 
 export const registerDonor = async (store, donor: DonorRegisterProps) => {
 	const { createUrl, userIdentity } = store.state;
-	const {
-		email, password, firstName, lastName, businessName, businessAddress, city, state, zip, pickupInstructions,
-	} = donor;
+	const { email, password, firstName, lastName, businessName, businessAddress, city, state, zip, pickupInstructions } =
+		donor;
 	try {
-		const response = await railsAxios().post(createUrl, JSON.stringify({
+		const response = await railsAxios().post(createUrl, {
 			[userIdentity]: {
 				email,
 				password,
@@ -50,7 +41,7 @@ export const registerDonor = async (store, donor: DonorRegisterProps) => {
 				address_zip: zip,
 				pickup_instructions: pickupInstructions,
 			},
-		}));
+		});
 
 		await store.setState({
 			jwt: response.data?.jwt || '',
@@ -62,24 +53,27 @@ export const registerDonor = async (store, donor: DonorRegisterProps) => {
 			jwt: '',
 			user: {},
 		});
-		return error.response.status;
+		if (axios.isAxiosError(error)) {
+			return error.response?.status || 500; // Return 500 if status is not available
+		} else {
+			console.error('Unexpected error:', error);
+			throw error; // Re-throw the error if it's not an Axios error
+		}
 	}
 };
 
 export const registerClient = async (store, client: ClientRegisterProps) => {
 	const { createUrl, userIdentity } = store.state;
-	const {
-		email, password, firstName, lastName,
-	} = client;
+	const { email, password, firstName, lastName } = client;
 	try {
-		const response = await railsAxios().post(createUrl, JSON.stringify({
+		const response = await railsAxios().post(createUrl, {
 			[userIdentity]: {
 				email,
 				password,
 				first_name: firstName,
 				last_name: lastName,
 			},
-		}));
+		});
 		await store.setState({
 			jwt: response.data?.jwt || '',
 			user: response.data?.client || {},
@@ -90,15 +84,18 @@ export const registerClient = async (store, client: ClientRegisterProps) => {
 			jwt: '',
 			user: {},
 		});
-		return error.response.status;
+		if (axios.isAxiosError(error)) {
+			return error.response?.status || 500; // Return 500 if status is not available
+		} else {
+			console.error('Unexpected error:', error);
+			throw error; // Re-throw the error if it's not an Axios error
+		}
 	}
 };
 
 const register = (store, user) => {
 	const { userIdentity } = store.state;
-	return userIdentity === 'donor'
-		? registerDonor(store, user)
-		: registerClient(store, user);
+	return userIdentity === 'donor' ? registerDonor(store, user) : registerClient(store, user);
 };
 
 export { register };

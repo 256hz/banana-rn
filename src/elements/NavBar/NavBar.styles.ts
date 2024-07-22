@@ -20,7 +20,6 @@ export default StyleSheet.create({
 		alignItems: 'center',
 		borderBottomWidth: 2,
 		borderColor: colors.NAVY_BLUE,
-
 	},
 	backContainer: {
 		flexDirection: 'row',
@@ -61,5 +60,4 @@ export default StyleSheet.create({
 	selectorSelected: {
 		backgroundColor: colors.NAVY_BLUE,
 	},
-
 });

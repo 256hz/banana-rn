@@ -8,7 +8,12 @@ function HamburgerPopupMenu() {
 	const navigation = useNavigation();
 
 	return (
-		<TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
+		<TouchableOpacity
+			onPress={() => {
+				console.log(navigation);
+				navigation.dispatch(DrawerActions.toggleDrawer());
+			}}
+		>
 			<Icon name="menu" size={NAVBAR_ICON_SIZE} />
 		</TouchableOpacity>
 	);

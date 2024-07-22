@@ -10,11 +10,12 @@ import styles from './MainOption.styles';
 export function MainOption({ icon, text }) {
 	let menuStyle = {};
 
-	const DrawerIcon = (name: IconName) => Icon({
-		name,
-		size: 24,
-		color: colors.WHITE,
-	});
+	const DrawerIcon = (name: IconName) =>
+		Icon({
+			name,
+			size: 24,
+			color: colors.WHITE,
+		});
 
 	if (text === 'Log Out' || text === 'Scan QR Code') {
 		menuStyle = {
@@ -27,14 +28,12 @@ export function MainOption({ icon, text }) {
 
 	return (
 		<View style={menuStyle}>
-			<View>
-				{DrawerIcon(icon)}
-			</View>
+			<View>{DrawerIcon(icon)}</View>
 			<View>
 				<Text style={styles.optionText}>{text}</Text>
 			</View>
 		</View>
 	);
-};
+}
 
 export default MainOption;

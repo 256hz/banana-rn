@@ -8,7 +8,7 @@ export enum PasswordResetStage {
 	REQUEST_LINK = 'REQUEST_LINK',
 	VERIFY = 'VERIFY',
 	RESET = 'RESET',
-	SUCCESS = 'SUCCESS'
+	SUCCESS = 'SUCCESS',
 }
 
 interface ResetPasswordProps {
@@ -20,10 +20,14 @@ interface ResetPasswordProps {
 }
 
 export const ResetPassword: FunctionComponent<ResetPasswordProps> = ({
-	onDismiss, initialStage, onSuccess, onRequest, onBack,
+	onDismiss,
+	initialStage,
+	onSuccess,
+	onRequest,
+	onBack,
 }) => {
-	const [ stage, setStage ] = useState(initialStage || PasswordResetStage.REQUEST_LINK);
-	const [ token, setToken ] = useState('');
+	const [stage, setStage] = useState(initialStage || PasswordResetStage.REQUEST_LINK);
+	const [token, setToken] = useState('');
 
 	const handleComplete = () => {
 		switch (stage) {
@@ -68,30 +72,13 @@ export const ResetPassword: FunctionComponent<ResetPasswordProps> = ({
 			style={{ position: 'absolute' }}
 		>
 			<View>
-				{stage === PasswordResetStage.REQUEST_LINK
-				&& (
-					<ResetForm
-						onComplete={handleComplete}
-					/>
+				{stage === PasswordResetStage.REQUEST_LINK && <ResetForm onComplete={handleComplete} />}
+				{stage === PasswordResetStage.VERIFY && (
+					<CodeForm onComplete={handleComplete} setToken={setToken} onBack={handleBack} />
 				)}
-				{stage === PasswordResetStage.VERIFY
-				&& (
-					<CodeForm
-						onComplete={handleComplete}
-						setToken={setToken}
-						onBack={handleBack}
-					/>
-				)}
-				{stage === PasswordResetStage.RESET
-				&& (
-					<NewPasswordForm
-						onComplete={handleComplete}
-						token={token}
-					/>
-				)}
-				{stage === PasswordResetStage.SUCCESS
-				&& (
-					<Text style={styles.text}>Your password has been successfully reset.  Please login.</Text>
+				{stage === PasswordResetStage.RESET && <NewPasswordForm onComplete={handleComplete} token={token} />}
+				{stage === PasswordResetStage.SUCCESS && (
+					<Text style={styles.text}>Your password has been successfully reset. Please login.</Text>
 				)}
 			</View>
 		</Modal>

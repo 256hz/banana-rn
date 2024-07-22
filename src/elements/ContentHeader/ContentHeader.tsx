@@ -1,12 +1,5 @@
-
 import React from 'react';
-import {
-	Text,
-	View,
-	StyleProp,
-	ViewStyle,
-	TextStyle,
-} from 'react-native';
+import { Text, View, StyleProp, ViewStyle, TextStyle } from 'react-native';
 import styles from './ContentHeader.styles';
 
 export type HeaderSize = 'small' | 'large';
@@ -19,25 +12,14 @@ interface ContentHeaderProps {
 	headerSize?: HeaderSize;
 }
 
-export default ({
-	title,
-	style,
-	textStyle,
-	headerSize = 'small',
-}: ContentHeaderProps) => {
-	const sizedContainerStyle = headerSize === 'small'
-		? styles.smallHeaderContainer
-		: styles.largeHeaderContainer;
+export default function ({ title, style, textStyle, headerSize = 'small' }: ContentHeaderProps) {
+	const sizedContainerStyle = headerSize === 'small' ? styles.smallHeaderContainer : styles.largeHeaderContainer;
 
-	const sizedTextStyle = headerSize === 'small'
-		? styles.smallHeaderText
-		: styles.largeHeaderText;
+	const sizedTextStyle = headerSize === 'small' ? styles.smallHeaderText : styles.largeHeaderText;
 
 	return (
 		<View style={[styles.headerContainer, sizedContainerStyle, style]}>
-			<Text style={[sizedTextStyle, textStyle]}>
-				{title}
-			</Text>
+			<Text style={[sizedTextStyle, textStyle]}>{title}</Text>
 		</View>
 	);
-};
+}

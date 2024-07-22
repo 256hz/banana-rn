@@ -1,7 +1,6 @@
 import React from 'react';
-import { TextInputProps, View, Text } from 'react-native';
+import { TextInputProps } from 'react-native';
 import RNPickerSelect, { Item } from 'react-native-picker-select';
-import { Icon } from '@elements/Icon';
 import * as colors from '@util/colors';
 import defaultStyle from './DropdownInput.styles';
 
@@ -13,17 +12,11 @@ interface DropdownInputProps extends TextInputProps {
 }
 
 function DropdownInput(props: DropdownInputProps) {
-	const {
-		value, setValue, dropdownData, placeholder,
-	} = props;
+	const { value, setValue, dropdownData, placeholder } = props;
 
 	const formattedData: Item[] = dropdownData?.map(item => ({ label: item, value: item })) || [];
 
-	const placeholderObj = {
-		label: placeholder || '',
-		value: null,
-		color: colors.NAVY_BLUE,
-	};
+	const placeholderObj = placeholder ? { label: placeholder, value: null, color: colors.NAVY_BLUE } : {};
 
 	return (
 		<RNPickerSelect
@@ -40,7 +33,11 @@ function DropdownInput(props: DropdownInputProps) {
 			}}
 			placeholder={placeholderObj}
 			value={value}
-			onValueChange={v => setValue && setValue(v.toString())}
+			onValueChange={v => {
+				if (v !== null && setValue) {
+					setValue(v.toString());
+				}
+			}}
 			items={formattedData}
 			// Icon={<Icon color={colors.NAVY_BLUE} name="dropdown" size={18} />}
 		/>

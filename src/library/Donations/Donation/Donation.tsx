@@ -1,39 +1,33 @@
 import React from 'react';
-// import { useNavigation } from 'react-navigation-hooks';
 import { useNavigation } from '@react-navigation/native';
-import {
-	View,
-	Text,
-	TouchableOpacity,
-	Image,
-} from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import typography from '@util/typography';
 import { categoryImage } from '@util/donationCategory';
 import formatDate from '@util/formatDate';
 import { Icon } from '@elements';
-import { Donation } from './Donation.type';
+import { IDonation } from '../../../../declarations';
 import styles from './Donation.styles';
 
-export default ({ donation, isHistory }: Donation) => {
+interface IDonationComponentProps {
+	donation: IDonation;
+}
+
+export default function ({ donation }: IDonationComponentProps) {
 	const { navigate } = useNavigation();
-	const {
-		food_name,
-		id,
-		total_amount,
-		category,
-		updated_at,
-	} = donation;
+	const { isHistory, food_name, total_amount, category, updated_at } = donation;
 
 	const icon = categoryImage(category);
 	const updatedAt = formatDate(updated_at);
 	return (
-		<TouchableOpacity
-			onPress={() => navigate('DonationsDetailScreen', { donation, id, edit: true })}
-		>
+		<TouchableOpacity onPress={() => navigate('DonationsDetailScreen', { donation })}>
 			<View style={styles.infoContainer}>
-				<View style={{
-					flexDirection: 'column', alignItems: 'center', width: 100, justifyContent: 'center',
-				}}
+				<View
+					style={{
+						flexDirection: 'column',
+						alignItems: 'center',
+						width: 100,
+						justifyContent: 'center',
+					}}
 				>
 					<Text style={typography.h5}>{category}</Text>
 					<Image source={icon} style={styles.icon} />
@@ -48,10 +42,12 @@ export default ({ donation, isHistory }: Donation) => {
 								<Icon name="time" color="blue" size={20} />
 								<Text style={{ ...typography.h5, marginLeft: 5 }}>{updatedAt}</Text>
 							</View>
-						) : <Text style={typography.h5}>{`about ${total_amount}`}</Text>}
+						) : (
+							<Text style={typography.h5}>{`about ${total_amount}`}</Text>
+						)}
 					</View>
 				</View>
 			</View>
 		</TouchableOpacity>
 	);
-};
+}

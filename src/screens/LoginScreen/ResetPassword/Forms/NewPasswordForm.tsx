@@ -1,9 +1,5 @@
-import React, {
-	useState, RefObject, createRef, FunctionComponent,
-} from 'react';
-import {
-	View, Text, TextInput,
-} from 'react-native';
+import React, { useState, RefObject, createRef, FunctionComponent } from 'react';
+import { View, Text, TextInput } from 'react-native';
 import { FormTextInput, LinkButton, SpacerInline } from '@elements';
 import useGlobal from '@state';
 import styles from '../ResetPassword.styles';
@@ -13,17 +9,15 @@ interface NewPasswordFormProps {
 	token: string;
 }
 
-const NewPasswordForm: FunctionComponent<NewPasswordFormProps> = ({
-	onComplete, token,
-}) => {
-	const [ isSubmitting, setIsSubmitting ] = useState(false);
-	const [ formData, setFormData ] = useState({
+const NewPasswordForm: FunctionComponent<NewPasswordFormProps> = ({ onComplete, token }) => {
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [formData, setFormData] = useState({
 		password: '',
 		confirmPassword: '',
 	});
-	const [ error, setError ] = useState('');
+	const [error, setError] = useState('');
 	const passwordInputRef: RefObject<TextInput> = createRef();
-	const [ , actions ] = useGlobal() as any;
+	const [, actions] = useGlobal() as UseGlobalType;
 	const { submitNewPassword } = actions;
 
 	const isPasswordValid = () => {
@@ -39,7 +33,11 @@ const NewPasswordForm: FunctionComponent<NewPasswordFormProps> = ({
 	};
 
 	const submitPasswordProps = {
-		input: formData.password, token, setIsSubmitting, onComplete, setError,
+		input: formData.password,
+		token,
+		setIsSubmitting,
+		onComplete,
+		setError,
 	};
 
 	const handleSubmit = () => {
@@ -53,9 +51,7 @@ const NewPasswordForm: FunctionComponent<NewPasswordFormProps> = ({
 	return (
 		<View>
 			<SpacerInline height={20} />
-			<Text style={styles.text}>
-				Enter a new password:
-			</Text>
+			<Text style={styles.text}>Enter a new password:</Text>
 			<Text style={styles.smallText}>(at least 8 characters)</Text>
 			<SpacerInline height={20} />
 			<FormTextInput
@@ -67,7 +63,7 @@ const NewPasswordForm: FunctionComponent<NewPasswordFormProps> = ({
 					setFormData({ ...formData, password: text });
 				}}
 				ref={passwordInputRef}
-				autoCompleteType="password"
+				autoComplete="password"
 				blurOnSubmit={false}
 			/>
 			<SpacerInline height={20} />
@@ -80,7 +76,7 @@ const NewPasswordForm: FunctionComponent<NewPasswordFormProps> = ({
 					setFormData({ ...formData, confirmPassword: text });
 				}}
 				ref={passwordInputRef}
-				autoCompleteType="password"
+				autoComplete="password"
 				blurOnSubmit={false}
 			/>
 			<Text style={styles.errors}>{error || null}</Text>

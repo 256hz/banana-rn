@@ -1,20 +1,15 @@
 import React from 'react';
-import {
-	Text,
-	View,
-} from 'react-native';
+import { Text, View } from 'react-native';
 import useGlobal from '@state';
 import { TextButton } from '@elements/Button/TextButton';
 import { Modal } from '@elements/Modal';
-import { Alert } from '@state/index.types';
+import { UseGlobalType } from '@state/index.types';
 import { useScheme } from '@util/colorSchemes';
 import typography from '@util/typography';
 import styles from './TheAlertModal.styles';
 
-export default () => {
-	const [ globalState, globalActions ] = useGlobal() as any;
-	const { alert }: { alert: Alert } = globalState;
-	const { clearAlert } = globalActions;
+export default function () {
+	const [{ alert }, { clearAlert }] = useGlobal() as UseGlobalType;
 
 	const scheme = useScheme();
 
@@ -23,7 +18,7 @@ export default () => {
 	};
 
 	const handleDismiss = () => {
-		if (alert.dismissable) {
+		if (alert?.dismissable) {
 			clearAlert();
 		}
 	};
@@ -37,9 +32,7 @@ export default () => {
 		>
 			<View style={styles.body}>
 				<View style={styles.textContainer}>
-					<Text style={typography.body1}>
-						{alert?.message || 'Uh oh, an unknown error occurred!'}
-					</Text>
+					<Text style={typography.body1}>{alert?.message || 'Uh oh, an unknown error occurred!'}</Text>
 				</View>
 
 				<TextButton
@@ -57,4 +50,4 @@ export default () => {
 			</View>
 		</Modal>
 	);
-};
+}

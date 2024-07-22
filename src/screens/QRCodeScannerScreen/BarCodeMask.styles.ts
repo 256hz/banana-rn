@@ -11,7 +11,7 @@ const windowSquare = 300;
 */
 const scaler = windowSquare / (windowSquare / 50);
 const widthMinusWindow = (width - windowSquare) / 2;
-const heightMinusWindow = ((height - windowSquare) / 2) - scaler;
+const heightMinusWindow = (height - windowSquare) / 2 - scaler;
 
 export default StyleSheet.create({
 	background: {

@@ -4,7 +4,6 @@ import * as colors from '@util/colors';
 
 const iconSize = 90;
 
-
 export default StyleSheet.create({
 	outerContainer: {
 		flex: 1,
@@ -72,7 +71,6 @@ export default StyleSheet.create({
 		flex: 1,
 		justifyContent: 'space-between',
 		flexDirection: 'row',
-
 	},
 
 	textBold: {
@@ -128,7 +126,4 @@ export default StyleSheet.create({
 		alignSelf: 'flex-start',
 		alignItems: 'center',
 	},
-
-
 });
-

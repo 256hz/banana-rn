@@ -1,47 +1,52 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import {
-	View,
-	KeyboardAvoidingView, ScrollView, Platform, Text, Image,
-} from 'react-native';
+import { View, KeyboardAvoidingView, ScrollView, Platform, Text, Image } from 'react-native';
 import useGlobal from '@state';
-import {
-	NavBar,
-	SpacerInline,
-	FormTextInput,
-	LinkButton,
-} from '@elements';
+import { NavBar, SpacerInline, FormTextInput, LinkButton } from '@elements';
 import validate from 'validate.js';
-import { NewDonation } from '@screens/DashboardScreen/DonationScreen/DonationScreen.type';
+import { NewDonation } from '../../../../declarations';
 import donationConstraints from '@util/constraints/donation';
 import { categoryImage } from '@util/donationCategory';
 import styles from './DonationScreen.styles';
+import { UseGlobalType } from '@state/index.types';
 
 function DonationScreen() {
-	const [ state, actions ] = useGlobal() as any;
+	const [state, actions] = useGlobal() as UseGlobalType;
 	const { updateAlert } = actions;
 	const { user } = state;
-	const foodCategories: Array<string> = [ 'Bread', 'Dairy', 'Hot Meal', 'Produce', 'Protein', 'Others' ];
+	const foodCategories: Array<string> = ['Bread', 'Dairy', 'Hot Meal', 'Produce', 'Protein', 'Other'];
 	const emptyDonation: NewDonation = {
-		pickupAddress: `${user?.address_street} ${user?.address_city}, ${user?.address_state} ${user?.address_zip}`,
+		pickup_location: `${user?.address_street} ${user?.address_city}, ${user?.address_state} ${user?.address_zip}`,
 		category: foodCategories[3],
-		itemName: '',
-		pickupInstructions: user?.pickup_instructions,
-		totalAmount: '',
+		food_name: '',
+		pickup_instructions: '',
+		total_amount: '',
 	};
 
-	const [ newDonation, setNewDonation ] = useState<NewDonation>(emptyDonation);
-	const [ validateError, setValidateError ] = useState({} as any);
+	const [newDonation, setNewDonation] = useState<NewDonation>(emptyDonation);
+	const [validateError, setValidateError] = useState<Partial<NewDonation>>({});
 	const { postDonation } = actions;
 
 	const { navigate, goBack } = useNavigation();
 
-	const hasUnsavedChanges = Boolean(newDonation.itemName || newDonation.totalAmount || newDonation.pickupInstructions !== user.pickup_instructions);
+	const hasUnsavedChanges = Boolean(
+		newDonation.food_name ||
+			newDonation.total_amount ||
+			newDonation.pickup_instructions !== newDonation.pickup_instructions
+	);
 	const preventBack = () => {
-		updateAlert({ type: 'incomplete form', dismissable: false, confirmFn: () => goBack() });
+		updateAlert({
+			title: '',
+			message: '',
+			type: 'incomplete form',
+			dismissable: false,
+			confirmFn: () => goBack(),
+		});
 	};
 	const validateInputs = async () => {
+		console.log(newDonation);
 		const validateResults = validate(newDonation, donationConstraints);
+		console.log(validateResults);
 		if (validateResults) {
 			setValidateError(validateResults);
 		} else {
@@ -65,12 +70,8 @@ function DonationScreen() {
 			enabled={true}
 			keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
 		>
-			<NavBar
-				showBackButton={true}
-				backButtonFn={hasUnsavedChanges ? preventBack : undefined}
-			/>
+			<NavBar showBackButton={true} backButtonFn={hasUnsavedChanges ? preventBack : undefined} />
 			<ScrollView style={styles.scrollContainer}>
-
 				<View style={styles.imageInputContainer}>
 					<Image source={categoryImage(newDonation.category)} style={styles.icon} />
 				</View>
@@ -78,11 +79,10 @@ function DonationScreen() {
 				<SpacerInline height={20} />
 				<FormTextInput
 					label="Item Name"
-					value={newDonation.itemName}
-					setValue={s => setNewDonation({ ...newDonation, itemName: s })}
+					value={newDonation.food_name}
+					setValue={s => setNewDonation({ ...newDonation, food_name: s })}
 					style={styles.input}
-					error={validateError.itemName}
-					errorMessage={validateError.itemName}
+					errorMessage={validateError.food_name}
 					autoFocus={true}
 				/>
 
@@ -93,42 +93,32 @@ function DonationScreen() {
 					defaultValue={foodCategories[2]}
 					value={newDonation.category}
 					type="dropdown"
-					error={validateError.category}
 					errorMessage={validateError.category}
 				/>
 
 				<FormTextInput
 					label="Total Amount"
-					value={newDonation.totalAmount}
-					setValue={s => setNewDonation({ ...newDonation, totalAmount: s })}
+					value={newDonation.total_amount}
+					setValue={s => setNewDonation({ ...newDonation, total_amount: s })}
 					style={styles.input}
-					error={validateError.totalAmount}
-					errorMessage={validateError.totalAmount}
+					errorMessage={validateError.total_amount}
 				/>
 
 				<View>
-					<Text style={styles.pickupAddressLabel}>
-						PICKUP ADDRESS
-					</Text>
-					<Text style={styles.pickupAddressStyle}>
-						{newDonation.pickupAddress}
-					</Text>
+					<Text style={styles.pickupAddressLabel}>PICKUP ADDRESS</Text>
+					<Text style={styles.pickupAddressStyle}>{newDonation.pickup_location}</Text>
 				</View>
 
 				<FormTextInput
 					label="Pickup Instructions"
-					value={newDonation.pickupInstructions}
-					setValue={s => setNewDonation({ ...newDonation, pickupInstructions: s })}
+					value={newDonation.pickup_instructions}
+					setValue={s => setNewDonation({ ...newDonation, pickup_instructions: s })}
 					style={styles.input}
-					error={validateError.pickupInstructions}
-					errorMessage={validateError.pickupInstructions}
+					errorMessage={validateError.pickup_instructions}
 				/>
 
 				<View style={styles.button}>
-					<LinkButton
-						text="Publish"
-						onPress={validateInputs}
-					/>
+					<LinkButton text="Publish" onPress={validateInputs} />
 				</View>
 			</ScrollView>
 		</KeyboardAvoidingView>

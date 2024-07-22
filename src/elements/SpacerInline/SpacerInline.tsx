@@ -6,4 +6,6 @@ interface Spacer {
 	width?: number | string;
 }
 
-export default ({ height, width }: Spacer) => <View style={{ height, width }} />;
+export default function ({ height, width }: Spacer) {
+	return <View style={{ height, width }} />;
+}
