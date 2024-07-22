@@ -5,7 +5,7 @@ import { DARK_GRAY_TRANSPARENT, WHITE } from '@util/colors';
 import styles from './Button.styles';
 import { ButtonStyle } from './index';
 
-export type ButtonProps = TouchableHighlightProps & {
+export type ButtonProps = Omit<TouchableHighlightProps, 'children'> & {
 	/** Render function that results in elements to be wrapped by the button. */
 	children: (foregroundColor: string) => ReactNode;
 
