@@ -58,6 +58,7 @@ export default ({ config }) => {
 		},
 		plugins: [
 			'expo-font',
+			'expo-secure-store',
 			[
 				'expo-camera',
 				{
