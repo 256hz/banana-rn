@@ -6,7 +6,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { Icon } from '@elements';
 import styles from './BarCodeMask.styles';
 
-export default () => {
+export default function () {
 	const { goBack } = useNavigation();
 	return (
 		<>
@@ -24,13 +24,9 @@ export default () => {
 				</TouchableWithoutFeedback>
 			</View>
 			<View style={styles.textContainer}>
-				<Text style={styles.text}>
-						Align QR code
-				</Text>
-				<Text style={styles.text}>
-					within frame to scan
-				</Text>
+				<Text style={styles.text}>Align QR code</Text>
+				<Text style={styles.text}>within frame to scan</Text>
 			</View>
 		</>
 	);
-};
+}

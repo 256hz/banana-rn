@@ -1,12 +1,9 @@
 import React from 'react';
-import {
-	Text,
-	View,
-} from 'react-native';
+import { Text, View } from 'react-native';
 import useGlobal from '@state';
 import { Modal } from '@elements/Modal';
 import { TextButton } from '@elements/Button/TextButton';
-import { Alert } from '@state/index.types';
+import { IAlert, UseGlobalType } from '@state/index.types';
 import { useScheme } from '@util/colorSchemes';
 import typography from '@util/typography';
 import styles from './IncompleteFormAlert.styles';
@@ -16,12 +13,9 @@ interface IncompleteFormAlertProps {
 	onNo?: () => void;
 }
 
-export default ({
-	onYes = () => {},
-	onNo = () => {},
-}: IncompleteFormAlertProps) => {
-	const [ globalState, globalActions ] = useGlobal() as any;
-	const { alert: alertObj }: { alert: Alert } = globalState;
+export default function ({ onYes = () => {}, onNo = () => {} }: IncompleteFormAlertProps) {
+	const [globalState, globalActions] = useGlobal() as UseGlobalType;
+	const { alert: alertObj }: { alert: IAlert } = globalState;
 	const { clearAlert } = globalActions;
 	const scheme = useScheme();
 
@@ -59,9 +53,7 @@ export default ({
 			>
 				<View style={styles.body}>
 					<View style={styles.textContainer}>
-						<Text style={typography.body1}>
-							{alertObj?.message || 'Uh oh, an unknown error occurred!'}
-						</Text>
+						<Text style={typography.body1}>{alertObj?.message || 'Uh oh, an unknown error occurred!'}</Text>
 					</View>
 
 					<TextButton
@@ -131,4 +123,4 @@ export default ({
 		);
 	}
 	return null;
-};
+}

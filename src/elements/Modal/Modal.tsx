@@ -1,11 +1,8 @@
 import React from 'react';
-import {
-	View, Text, TouchableOpacity, StyleProp, ViewStyle,
-} from 'react-native';
+import { View, Text, TouchableOpacity, StyleProp, ViewStyle } from 'react-native';
 import { ColorPaletteName, useScheme } from '@util/colorSchemes';
 import { ScrollView } from 'react-native-gesture-handler';
 import styles, { DEFAULT_TOP_OFFSET } from './Modal.styles';
-
 
 interface ModalProps {
 	/** Title text shown in the header. */
@@ -24,13 +21,13 @@ interface ModalProps {
 	palette?: ColorPaletteName; //
 
 	/** Callback for when the user taps outside of the modal container. */
-	onDismiss: Function; //
+	onDismiss: () => void;
 
 	/** Body content of the modal. */
 	children: JSX.Element | Array<JSX.Element>;
 }
 
-export default ({
+export default function ({
 	title,
 	open,
 	style = {},
@@ -38,7 +35,7 @@ export default ({
 	palette = 'secondary',
 	onDismiss,
 	children,
-}: ModalProps) => {
+}: ModalProps) {
 	const scheme = useScheme();
 	const colorPalette = scheme[palette];
 
@@ -52,42 +49,18 @@ export default ({
 	if (!open) return null;
 
 	return (
-		<View style={[
-			style,
-			styles.wrapper,
-		]}
-		>
-			<TouchableOpacity
-				style={styles.underlay}
-				onPress={handleUnderlayPress}
-			/>
+		<View style={[style, styles.wrapper]}>
+			<TouchableOpacity style={styles.underlay} onPress={handleUnderlayPress} />
 
-			<View style={[
-				styles.container,
-				{ top },
-			]}
-			>
-				<View style={[
-					styles.header,
-					{ backgroundColor: colorPalette.background },
-				]}
-				>
-					<Text
-						style={[
-							styles.title,
-							{ color: colorPalette.foreground },
-						]}
-					>
-						{title.toUpperCase()}
-					</Text>
+			<View style={[styles.container, { top }]}>
+				<View style={[styles.header, { backgroundColor: colorPalette.background }]}>
+					<Text style={[styles.title, { color: colorPalette.foreground }]}>{title.toUpperCase()}</Text>
 				</View>
 
 				<View style={styles.body}>
-					<ScrollView contentContainerStyle={styles.bodyContent}>
-						{children}
-					</ScrollView>
+					<ScrollView contentContainerStyle={styles.bodyContent}>{children}</ScrollView>
 				</View>
 			</View>
 		</View>
 	);
-};
+}

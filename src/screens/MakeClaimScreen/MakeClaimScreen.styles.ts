@@ -10,7 +10,4 @@ export default StyleSheet.create({
 		alignItems: 'center',
 		padding: 10,
 	},
-
-
 });
-

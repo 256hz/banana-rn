@@ -1,4 +1,4 @@
-import { Platform, StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import Constants from 'expo-constants';
 import * as colors from '@util/colors';
 
@@ -13,15 +13,13 @@ export default StyleSheet.create({
 	},
 	contentContainer: {
 		backgroundColor: colors.LIGHT_GRAY,
-		height: 56 + Constants.statusBarHeight,
+		height: Constants.statusBarHeight,
 		width: screenWidth,
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		paddingTop: Constants.statusBarHeight,
 		borderBottomWidth: 2,
 		borderColor: colors.NAVY_BLUE,
-
 	},
 	backContainer: {
 		flexDirection: 'row',
@@ -62,5 +60,4 @@ export default StyleSheet.create({
 	selectorSelected: {
 		backgroundColor: colors.NAVY_BLUE,
 	},
-
 });

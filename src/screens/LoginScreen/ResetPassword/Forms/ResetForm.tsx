@@ -8,13 +8,11 @@ interface ResetFormProps {
 	onComplete: () => void;
 }
 
-const ResetForm: FunctionComponent<ResetFormProps> = ({
-	onComplete,
-}) => {
-	const [ isSubmitting, setIsSubmitting ] = useState(false);
-	const [ formData, setFormData ] = useState('');
-	const [ error, setError ] = useState('');
-	const [ , actions ] = useGlobal() as any;
+const ResetForm: FunctionComponent<ResetFormProps> = ({ onComplete }) => {
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [formData, setFormData] = useState('');
+	const [error, setError] = useState('');
+	const [, actions] = useGlobal() as UseGlobalType;
 	const { requestResetToken } = actions;
 
 	const isValidEmail = () => {
@@ -26,7 +24,10 @@ const ResetForm: FunctionComponent<ResetFormProps> = ({
 	};
 
 	const requestResetProps = {
-		input: formData, setIsSubmitting, onComplete, setError,
+		input: formData,
+		setIsSubmitting,
+		onComplete,
+		setError,
 	};
 	const handleSubmit = () => {
 		if (isValidEmail() && !isSubmitting) {
@@ -54,7 +55,7 @@ const ResetForm: FunctionComponent<ResetFormProps> = ({
 				autoCorrect={false}
 				enablesReturnKeyAutomatically={true}
 				autoCapitalize="none"
-				autoCompleteType="username"
+				autoComplete="username"
 				textContentType="username"
 				keyboardType="email-address"
 				returnKeyType="next"

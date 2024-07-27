@@ -30,5 +30,4 @@ export default StyleSheet.create({
 	selectorSelected: {
 		backgroundColor: colors.NAVY_BLUE,
 	},
-
 });

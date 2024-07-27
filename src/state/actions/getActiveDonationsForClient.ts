@@ -1,7 +1,7 @@
 import railsAxios from '@util/railsAxios';
-import { Donation } from '@state/index.types';
+import { IDonation } from '../../../declarations';
 
-export const getActiveDonationsForClient = async (store): Promise<Donation[] | []> => {
+export const getActiveDonationsForClient = async (store): Promise<IDonation[] | []> => {
 	const { jwt, user } = store.state;
 	if (!user.coords) {
 		return [];

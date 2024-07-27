@@ -1,26 +1,33 @@
 {
-	"eslint.validate": [
-		{
-			"language": "javascript",
-			"autoFix": false
-		},
-		{
-			"language": "javascriptreact",
-			"autoFix": false
-		},
-		{
-			"language": "typescript",
-			"autoFix": false
-		},
-		{
-			"language": "typescriptreact",
-			"autoFix": false
-		}
-	],
-	"cSpell.words": [
-		"dismissable",
-		"ethnicities",
-	],
+	"eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+	"cSpell.words": ["dismissable", "ethnicities"],
 	"editor.insertSpaces": false,
 	"editor.detectIndentation": false,
+	"editor.tabSize": 2,
+	"editor.formatOnSave": true,
+	"eslint.format.enable": true,
+	"files.eol": "\n",
+	"prettier.printWidth": 120,
+	"editor.codeActionsOnSave": {
+		"source.fixAll": "always",
+		"source.fixAll.eslint": "always"
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true
+	},
+	"[javascriptreact]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true
+	},
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true
+	},
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"prettier.requireConfig": true
 }

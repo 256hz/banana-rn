@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import * as ImagePicker from 'expo-image-picker';
 
 type ImageSourcingMethod = 'camera' | 'cameraRoll';
@@ -24,7 +25,7 @@ const IMAGE_SOURCE_METHODS: Record<ImageSourcingMethod, ImageSourcingConfig> = {
 const IMAGE_OPTIONS: ImagePicker.ImagePickerOptions = {
 	mediaTypes: ImagePicker.MediaTypeOptions.Images,
 	allowsEditing: true,
-	aspect: [ 16, 9 ],
+	aspect: [16, 9],
 	quality: 1,
 };
 
@@ -54,10 +55,10 @@ export async function sourceImage(imageSource: ImageSourcingMethod): Promise<Ima
 
 	try {
 		pickedImage = await getImageFromSource(IMAGE_SOURCE_METHODS[imageSource]);
-	} catch (err) {
-		console.log(err.message);
+	} catch (err: Error | unknown) {
+		console.log(err);
 		// TODO: display alert with error message
 	}
 
-	return pickedImage?.cancelled ? null : pickedImage;
+	return pickedImage?.canceled ? null : pickedImage;
 }

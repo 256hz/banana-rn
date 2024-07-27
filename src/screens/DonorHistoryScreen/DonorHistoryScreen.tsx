@@ -1,53 +1,52 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
-// import { useIsFocused } from 'react-navigation-hooks';
 import { useIsFocused } from '@react-navigation/native';
 
 import { Title, NavBar, EmptyStateView } from '@elements';
 
 import Donation from '@library/Donations/Donation/Donation';
+
+import { IDonation } from '../../../declarations';
 import useGlobal from '@state';
 
-
 import styles from './DonorHistoryScreen.styles';
+import { UseGlobalType } from '@state/index.types';
 
-const DonorHistoryScreen = () => {
+function DonorHistoryScreen() {
 	const isFocused = useIsFocused();
-	const [ state, actions ] = useGlobal() as any;
-	const [ donations, setDonations ] = useState([]);
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [state, actions] = useGlobal() as UseGlobalType;
+	const [donations, setDonations] = useState<IDonation[]>([]);
 	const { getDonationHistory } = actions;
 
 	useEffect(() => {
 		if (isFocused) {
 			getDonationHistory().then(data => setDonations(data));
 		}
-	}, [ isFocused ]);
+	}, [isFocused]);
 
 	return (
 		<View style={styles.outerContainer}>
-			<NavBar showBackButton={false} />
+			<NavBar showBackButton={true} />
 
 			<View style={styles.contentContainer}>
 				<Title text="Donations" />
-				<View style={{
-					flexDirection: 'row',
-					justifyContent: 'space-between',
-					alignItems: 'center',
-				}}
+				<View
+					style={{
+						flexDirection: 'row',
+						justifyContent: 'space-between',
+						alignItems: 'center',
+					}}
 				>
 					<View>
 						<Text style={styles.activeHeader}>History</Text>
 					</View>
 				</View>
-				{(donations && donations.length > 0) ? (
+				{donations && donations.length > 0 ? (
 					<ScrollView>
-						{(donations as any).map(donation => (
+						{donations.map(donation => (
 							<View key={donation.id}>
-								<Donation
-									donation={donation}
-									key={donation.id}
-									isHistory={true}
-								/>
+								<Donation donation={donation} key={donation.id} isHistory={true} />
 							</View>
 						))}
 					</ScrollView>
@@ -57,6 +56,6 @@ const DonorHistoryScreen = () => {
 			</View>
 		</View>
 	);
-};
+}
 
 export default DonorHistoryScreen;

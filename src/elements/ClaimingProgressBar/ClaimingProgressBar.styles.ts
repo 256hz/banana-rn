@@ -4,7 +4,6 @@ import * as colors from '@util/colors';
 const screenHeight = Math.round(Dimensions.get('window').height);
 const screenWidth = Math.round(Dimensions.get('window').width);
 export default StyleSheet.create({
-
 	textBold: {
 		fontWeight: 'bold',
 	},

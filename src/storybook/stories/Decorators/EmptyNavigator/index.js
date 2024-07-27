@@ -8,4 +8,3 @@ const reactNavigationDecorator = story => {
 };
 
 export default reactNavigationDecorator;
-

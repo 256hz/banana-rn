@@ -1,18 +1,16 @@
 import donorConfig from './app.donor.json';
 import clientConfig from './app.client.json';
-
+import 'dotenv/config';
 
 export default ({ config }) => {
-	require('dotenv').config();
-
 	const dynamicConfig = {
 		extra: {
 			ipAddress: process.env.EXPO_IP_ADDRESS,
-			variant: process.env.EXPO_PUBLIC_APP_VARIANT ? process.env.EXPO_PUBLIC_APP_VARIANT : 'donor',
-			storybook: process.env.EXPO_STORYBOOK ? process.env.EXPO_STORYBOOK === 'true' : false,
-			useDefaultLocation: process.env.EXPO_USE_DEFAULT_LOCATION
-				? process.env.EXPO_USE_DEFAULT_LOCATION === 'true' : false,
+			variant: process.env.EXPO_PUBLIC_APP_VARIANT || 'donor',
+			storybook: process.env.EXPO_STORYBOOK === 'true',
+			useDefaultLocation: process.env.EXPO_USE_DEFAULT_LOCATION === 'true',
 			productionBuild: process.env.ENVIRONMENT_MODE === 'production',
+			googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
 		},
 	};
 
@@ -32,19 +30,7 @@ export default ({ config }) => {
 		configVariant = donorConfig;
 	}
 
-	// FOR TROUBLESHOOTING PURPOSES: Console logs the app.json object that gets generated. 
-	// console.log({
-	// 	...config,
-	// 	...configVariant.expo,
-	// 	...dynamicConfig,
-	// 	extra: {
-	// 		...config.extra,
-	// 		...configVariant.expo.extra,
-	// 		...dynamicConfig.extra,
-	// 	},
-	// });
-
-	// Merge teh configurations
+	// Merge the configurations
 	return {
 		...config,
 		...configVariant.expo,
@@ -54,5 +40,31 @@ export default ({ config }) => {
 			...configVariant.expo.extra,
 			...dynamicConfig.extra,
 		},
+		ios: {
+			...config.ios,
+			...configVariant.expo.ios,
+			config: {
+				googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
+			},
+		},
+		android: {
+			...config.android,
+			...configVariant.expo.android,
+			config: {
+				googleMaps: {
+					apiKey: process.env.GOOGLE_MAPS_API_KEY,
+				},
+			},
+		},
+		plugins: [
+			'expo-font',
+			[
+				'expo-camera',
+				{
+					cameraPermission: 'Allow BANANA APP to access your camera',
+					recordAudioAndroid: true,
+				},
+			],
+		],
 	};
 };

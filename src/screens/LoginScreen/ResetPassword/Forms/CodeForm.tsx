@@ -10,17 +10,19 @@ interface CodeFormProps {
 	onBack: () => void;
 }
 
-const CodeForm: FunctionComponent<CodeFormProps> = ({
-	onComplete, setToken, onBack,
-}) => {
-	const [ isSubmitting, setIsSubmitting ] = useState(false);
-	const [ formData, setFormData ] = useState('');
-	const [ error, setError ] = useState('');
-	const [ , actions ] = useGlobal() as any;
+const CodeForm: FunctionComponent<CodeFormProps> = ({ onComplete, setToken, onBack }) => {
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [formData, setFormData] = useState('');
+	const [error, setError] = useState('');
+	const [, actions] = useGlobal() as UseGlobalType;
 	const { submitResetToken } = actions;
 
 	const submitTokenProps = {
-		input: formData, setIsSubmitting, onComplete, setError, setToken,
+		input: formData,
+		setIsSubmitting,
+		onComplete,
+		setError,
+		setToken,
 	};
 
 	const handleSubmit = async () => {

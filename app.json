@@ -1,50 +1,55 @@
 {
-  "expo": {
-    "name": "The Banana App",
-    "slug": "banana-app",
-    "privacy": "public",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
-	"owner": "brendan903",
-    "version": "0.1.0-alpha",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#083A9B"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.thebegoodproject.org.bananaapp"
-    },
-    "userInterfaceStyle": "automatic",
-    "packagerOpts": {
-      "config": "metro.config.js",
-      "sourceExts": [
-        "expo.ts",
-        "expo.tsx",
-        "expo.js",
-        "expo.jsx",
-        "ts",
-        "tsx",
-        "js",
-        "jsx",
-        "json",
-        "wasm",
-        "svg",
-        "md"
-      ]
-    },
-    "description": ""
-  }
+	"expo": {
+		"name": "The Banana App",
+		"slug": "banana-app",
+		"privacy": "public",
+		"platforms": ["ios", "android", "web"],
+		"owner": "The Be Good Project",
+		"version": "0.1.0-alpha",
+		"orientation": "portrait",
+		"icon": "./assets/icon.png",
+		"splash": {
+			"image": "./assets/splash.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#083A9B"
+		},
+		"updates": {
+			"fallbackToCacheTimeout": 0
+		},
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"supportsTablet": true,
+			"bundleIdentifier": "com.thebegoodproject.org.bananaapp"
+		},
+		"userInterfaceStyle": "automatic",
+		"packagerOpts": {
+			"config": "metro.config.js",
+			"sourceExts": [
+				"expo.ts",
+				"expo.tsx",
+				"expo.js",
+				"expo.jsx",
+				"ts",
+				"tsx",
+				"js",
+				"jsx",
+				"json",
+				"wasm",
+				"svg",
+				"md"
+			]
+		},
+		"description": "",
+		"plugins": [
+			[
+				"expo-secure-store",
+				{
+					"faceIDPermission": "Allow $(PRODUCT_NAME) to access your Face ID biometric data."
+				}
+			]
+		],
+		"extra": {
+			"useDefaultLocation": true
+		}
+	}
 }

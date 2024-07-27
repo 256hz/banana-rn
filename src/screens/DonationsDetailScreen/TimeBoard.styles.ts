@@ -2,7 +2,6 @@ import { Dimensions, StyleSheet } from 'react-native';
 import platformShadow from '@util/platformShadow';
 import * as colors from '@util/colors';
 
-
 export default StyleSheet.create({
 	outerContainer: {
 		flex: 1,
@@ -11,7 +10,6 @@ export default StyleSheet.create({
 		flexDirection: 'row',
 		width: 250,
 		paddingHorizontal: 40,
-
 	},
 	flexCenterContainer: {
 		flex: 1,
@@ -33,7 +31,4 @@ export default StyleSheet.create({
 		marginTop: 6,
 		marginLeft: 6,
 	},
-
-
 });
-
