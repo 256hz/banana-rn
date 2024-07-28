@@ -34,7 +34,6 @@ export default ({ config }) => {
 	return {
 		...config,
 		...configVariant.expo,
-		...dynamicConfig,
 		extra: {
 			...config.extra,
 			...configVariant.expo.extra,
@@ -57,6 +56,7 @@ export default ({ config }) => {
 			},
 		},
 		plugins: [
+			...config.plugins,
 			'expo-font',
 			'expo-secure-store',
 			[
