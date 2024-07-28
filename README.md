@@ -28,6 +28,7 @@ Banana App is an open-source, not-for-profit project of The Be Good Foundation. 
     - [Adding New Icons](#adding-new-icons)
     - ['Animated' Icons](#'animated'-icons)
   - [SVGs](#svgs)
+- [App Builds - 2024](#builds)
 - [Deployment](#deployment)
   - [Apple App Store](#apple-app-store)
   - [Google Play](#google-play)
@@ -355,6 +356,10 @@ if (Platform.os === 'web') {
 }
 ```
 
+# Builds
+
+To run a local build (not throught the CI/CD process), follow the expo docs on how to [Create your first build](https://docs.expo.dev/build/setup/)
+
 # Deployment
 
 ## **Apple App Store**
@@ -394,7 +399,7 @@ expo start --config app.client.json ||  expo start --config app.donor.json
 5. Create your desired build of the app to upload:
 
 ```
-expo build:ios --config app.client.json
+eas build --platform ios --config app.client.json
 ```
 
 OR
