@@ -5,6 +5,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        variant: [client, donor]
+        platform: [android, ios]
+
     steps:
       - name: 🏗 Setup repo
         uses: actions/checkout@v3
@@ -24,5 +29,8 @@ jobs:
       - name: 📦 Install dependencies
         run: npm install
 
+      - name: Set environment variables
+        run: echo "EXPO_PUBLIC_APP_VARIANT=${{ matrix.variant }}" >> $GITHUB_ENV
+
       - name: 🚀 Build app
-        run: eas build --non-interactive
+        run: eas build --platform ${{ matrix.variant }} --non-interactive
