@@ -8,7 +8,8 @@ jobs:
     strategy:
       matrix:
         variant: [client, donor]
-        platform: [ios]
+        platform: [ios, android]
+        profile: [development, preview, production]
 
     steps:
       - name: 🏗 Setup repo
@@ -30,7 +31,9 @@ jobs:
         run: npm install
 
       - name: Set environment variables
-        run: echo "EXPO_PUBLIC_APP_VARIANT=${{ matrix.variant }}" >> $GITHUB_ENV
+        run: |
+          echo "EXPO_PUBLIC_APP_VARIANT=${{ matrix.variant }}" >> $GITHUB_ENV
+          echo "EAS_BUILD_PROFILE=${{ matrix.profile }}" >> $GITHUB_ENV
 
       - name: 🚀 Build app
-        run: eas build --platform ios --non-interactive
+        run: eas build --platform ${{ matrix.platform }} --profile ${{ matrix.profile }} --non-interactive
