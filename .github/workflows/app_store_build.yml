@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         variant: [client, donor]
-        platform: [android, ios]
+        platform: [ios]
 
     steps:
       - name: 🏗 Setup repo
