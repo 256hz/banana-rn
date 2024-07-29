@@ -11,14 +11,17 @@ export default ({ config }) => {
 			useDefaultLocation: process.env.EXPO_USE_DEFAULT_LOCATION === 'true',
 			productionBuild: process.env.ENVIRONMENT_MODE === 'production',
 			googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
+			eas: {
+				projectId: process.env.EAS_PROJECT_ID,
+			},
 		},
 	};
 
 	if (process.env.ENVIRONMENT_MODE === 'production') {
 		if (process.env.EXPO_PUBLIC_APP_VARIANT === 'client') {
-			dynamicConfig.extra.eas = { projectId: process.env.CLIENT_APP_ID };
+			dynamicConfig.extra.eas = { projectId: process.env.CLIENT_APP_ID || process.env.EAS_PROJECT_ID };
 		} else {
-			dynamicConfig.extra.eas = { projectId: process.env.DONOR_APP_ID };
+			dynamicConfig.extra.eas = { projectId: process.env.DONOR_APP_ID || process.env.EAS_PROJECT_ID };
 		}
 	}
 
