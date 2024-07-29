@@ -34,6 +34,7 @@ jobs:
         run: |
           echo "EXPO_PUBLIC_APP_VARIANT=${{ matrix.variant }}" >> $GITHUB_ENV
           echo "EAS_BUILD_PROFILE=${{ matrix.profile }}" >> $GITHUB_ENV
+          echo "EAS_PROJECT_ID=${{ secrets.EAS_PROJECT_ID }}" >> $GITHUB_ENV
 
       - name: 🚀 Build app
         run: eas build --platform ${{ matrix.platform }} --profile ${{ matrix.profile }} --non-interactive
