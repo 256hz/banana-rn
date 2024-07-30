@@ -9,7 +9,7 @@ jobs:
       matrix:
         variant: [client, donor]
         platform: [ios]
-        profile: [production]
+        profile: [production-client, production-donor]
 
     steps:
       - name: 🏗 Setup repo
