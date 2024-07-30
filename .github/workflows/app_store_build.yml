@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         variant: [client, donor]
-        platform: [ios]
+        platform: [ios] # Include android if needed
 
     steps:
       - name: 🏗 Setup repo
@@ -32,10 +32,14 @@ jobs:
       - name: Set environment variables
         run: |
           echo "EXPO_PUBLIC_APP_VARIANT=${{ matrix.variant }}" >> $GITHUB_ENV
-          if [ "${{ matrix.variant }}" == "client" ]; then echo "EAS_BUILD_PROFILE=client-production" >> $GITHUB_ENV; fi
-          if [ "${{ matrix.variant }}" == "donor" ]; then echo "EAS_BUILD_PROFILE=donor-production" >> $GITHUB_ENV
-          if [ "${{ matrix.variant }}" == "client" ]; then echo "EAS_PROJECT_ID=${{ secrets.CLIENT_APP_ID }}" >> $GITHUB_ENV; fi
-          if [ "${{ matrix.variant }}" == "donor" ]; then echo "EAS_PROJECT_ID=${{ secrets.DONOR_APP_ID }}" >> $GITHUB_ENV
+          if [ "${{ matrix.variant }}" == "client" ]; then
+            echo "EAS_BUILD_PROFILE=client-production" >> $GITHUB_ENV
+            echo "EAS_PROJECT_ID=${{ secrets.CLIENT_APP_ID }}" >> $GITHUB_ENV
+          fi
+          if [ "${{ matrix.variant }}" == "donor" ]; then
+            echo "EAS_BUILD_PROFILE=donor-production" >> $GITHUB_ENV
+            echo "EAS_PROJECT_ID=${{ secrets.DONOR_APP_ID }}" >> $GITHUB_ENV
+          fi
 
       - name: 🚀 Build app
         run: eas build --platform ${{ matrix.platform }} --profile ${{ env.EAS_BUILD_PROFILE }} --non-interactive
