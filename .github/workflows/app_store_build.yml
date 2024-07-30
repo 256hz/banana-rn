@@ -9,6 +9,7 @@ jobs:
       matrix:
         variant: [client, donor]
         platform: [ios]
+        profile: [client-production, donor-production]
 
     steps:
       - name: 🏗 Setup repo
@@ -34,7 +35,8 @@ jobs:
           echo "EXPO_PUBLIC_APP_VARIANT=${{ matrix.variant }}" >> $GITHUB_ENV
           if [ "${{ matrix.variant }}" == "client" ]; then echo "EAS_BUILD_PROFILE=client-production" >> $GITHUB_ENV; fi
           if [ "${{ matrix.variant }}" == "donor" ]; then echo "EAS_BUILD_PROFILE=donor-production" >> $GITHUB_ENV; fi
-          echo "EAS_PROJECT_ID=${{ secrets.EAS_PROJECT_ID }}" >> $GITHUB_ENV
+          if [ "${{ matrix.variant }}" == "client" ]; then echo "EAS_PROJECT_ID=${{ secrets.CLIENT_APP_ID }}" >> $GITHUB_ENV; fi
+          if [ "${{ matrix.variant }}" == "donor" ]; then echo "EAS_PROJECT_ID=${{ secrets.DONOR_APP_ID }}" >> $GITHUB_ENV
 
       - name: 🚀 Build app
         run: eas build --platform ${{ matrix.platform }} --profile ${{ env.EAS_BUILD_PROFILE }} --non-interactive
