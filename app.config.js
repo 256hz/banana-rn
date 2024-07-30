@@ -12,26 +12,13 @@ export default ({ config }) => {
 			productionBuild: process.env.ENVIRONMENT_MODE === 'production',
 			googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
 			eas: {
-				projectId: process.env.EAS_PROJECT_ID,
+				projectId:
+					process.env.EXPO_PUBLIC_APP_VARIANT === 'client' ? process.env.CLIENT_APP_ID : process.env.DONOR_APP_ID,
 			},
 		},
 	};
 
-	if (process.env.ENVIRONMENT_MODE === 'production') {
-		if (process.env.EXPO_PUBLIC_APP_VARIANT === 'client') {
-			dynamicConfig.extra.eas.projectId = process.env.CLIENT_APP_ID;
-		} else {
-			dynamicConfig.extra.eas.projectId = process.env.DONOR_APP_ID;
-		}
-	}
-
-	let configVariant;
-
-	if (process.env.EXPO_PUBLIC_APP_VARIANT === 'client') {
-		configVariant = clientConfig;
-	} else {
-		configVariant = donorConfig;
-	}
+	let configVariant = process.env.EXPO_PUBLIC_APP_VARIANT === 'client' ? clientConfig : donorConfig;
 
 	// Merge the configurations
 	return {
