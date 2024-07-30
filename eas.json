@@ -3,23 +3,47 @@
 		"version": ">= 3.9.2"
 	},
 	"build": {
-		"development": {
+		"client-development": {
 			"developmentClient": true,
 			"distribution": "internal",
 			"ios": {
 				"resourceClass": "m-medium"
-			}
+			},
+			"android": {}
 		},
-		"preview": {
+		"donor-development": {
+			"developmentClient": true,
 			"distribution": "internal",
 			"ios": {
 				"resourceClass": "m-medium"
-			}
+			},
+			"android": {}
 		},
-		"production": {
+		"client-preview": {
+			"distribution": "internal",
 			"ios": {
 				"resourceClass": "m-medium"
-			}
+			},
+			"android": {}
+		},
+		"donor-preview": {
+			"distribution": "internal",
+			"ios": {
+				"resourceClass": "m-medium"
+			},
+			"android": {}
+		},
+		"client-production": {
+			"ios": {
+				"resourceClass": "m-medium"
+			},
+			"android": {}
+		},
+		"donor-production": {
+			"ios": {
+				"resourceClass": "m-medium"
+			},
+			"android": {}
 		}
 	},
 	"submit": {
