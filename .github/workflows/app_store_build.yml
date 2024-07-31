@@ -32,25 +32,6 @@ jobs:
       - name: 📦 Install dependencies
         run: npm install
 
-      - name: Debug Environment Variables
-        run: |
-          if [ "${{ matrix.variant }}" == "client" ]; then
-            echo "EAS_BUILD_PROFILE=client-production"
-            echo "EAS_PROJECT_ID=${{ secrets.CLIENT_APP_ID }}"
-          fi
-          if [ "${{ matrix.variant }}" == "donor" ]; then
-            echo "EAS_BUILD_PROFILE=donor-production"
-            echo "EAS_PROJECT_ID=${{ secrets.DONOR_APP_ID }}"
-          fi
-          echo "EXPO_PUBLIC_APP_VARIANT=${EXPO_PUBLIC_APP_VARIANT}"
-          echo "EXPO_USE_DEFAULT_LOCATION=${EXPO_USE_DEFAULT_LOCATION}"
-          echo "ENVIRONMENT_MODE=${ENVIRONMENT_MODE}"
-          echo "GOOGLE_MAPS_API_KEY is set"
-          echo "EXPO_IP_ADDRESS is set"
-          echo "EXPO_STORYBOOK=${EXPO_STORYBOOK}"
-          echo "EAS_BUILD_PROFILE=${EAS_BUILD_PROFILE}"
-          echo "EAS_PROJECT_ID is set"
-
       - name: Set environment variables
         run: |
           echo "EXPO_PUBLIC_APP_VARIANT=${{ matrix.variant }}" >> $GITHUB_ENV
@@ -59,12 +40,23 @@ jobs:
           echo "EXPO_STORYBOOK=false" >> $GITHUB_ENV
           if [ "${{ matrix.variant }}" == "client" ]; then
             echo "EAS_BUILD_PROFILE=client-production" >> $GITHUB_ENV
-            echo "CLIENT_APP_ID=${{ secrets.CLIENT_APP_ID }}" >> $GITHUB_ENV
+            echo "EAS_PROJECT_ID=${{ secrets.CLIENT_APP_ID }}" >> $GITHUB_ENV
           fi
           if [ "${{ matrix.variant }}" == "donor" ]; then
             echo "EAS_BUILD_PROFILE=donor-production" >> $GITHUB_ENV
-            echo "DONOR_APP_ID=${{ secrets.DONOR_APP_ID }}" >> $GITHUB_ENV
+            echo "EAS_PROJECT_ID=${{ secrets.DONOR_APP_ID }}" >> $GITHUB_ENV
           fi
+
+      - name: Debug Environment Variables
+        run: |
+          echo "EXPO_PUBLIC_APP_VARIANT=${EXPO_PUBLIC_APP_VARIANT}"
+          echo "EXPO_USE_DEFAULT_LOCATION=${EXPO_USE_DEFAULT_LOCATION}"
+          echo "ENVIRONMENT_MODE=${ENVIRONMENT_MODE}"
+          echo "GOOGLE_MAPS_API_KEY is set"
+          echo "EXPO_IP_ADDRESS is set"
+          echo "EXPO_STORYBOOK=${EXPO_STORYBOOK}"
+          echo "EAS_BUILD_PROFILE=${EAS_BUILD_PROFILE}"
+          echo "EAS_PROJECT_ID is set"
 
       - name: 🚀 Build app
         run: eas build --platform ${{ matrix.platform }} --profile ${{ env.EAS_BUILD_PROFILE }} --non-interactive
