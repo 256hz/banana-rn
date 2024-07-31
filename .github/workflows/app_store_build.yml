@@ -52,11 +52,9 @@ jobs:
           echo "EXPO_PUBLIC_APP_VARIANT=${EXPO_PUBLIC_APP_VARIANT}"
           echo "EXPO_USE_DEFAULT_LOCATION=${EXPO_USE_DEFAULT_LOCATION}"
           echo "ENVIRONMENT_MODE=${ENVIRONMENT_MODE}"
-          echo "GOOGLE_MAPS_API_KEY is set"
-          echo "EXPO_IP_ADDRESS is set"
           echo "EXPO_STORYBOOK=${EXPO_STORYBOOK}"
           echo "EAS_BUILD_PROFILE=${EAS_BUILD_PROFILE}"
-          echo "EAS_PROJECT_ID is set"
+          echo "EAS_PROJECT_ID=${EAS_PROJECT_ID}"
 
       - name: 🚀 Build app
         run: eas build --platform ${{ matrix.platform }} --profile ${{ env.EAS_BUILD_PROFILE }} --non-interactive
