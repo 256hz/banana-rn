@@ -32,6 +32,23 @@ jobs:
       - name: 📦 Install dependencies
         run: npm install
 
+      - name: Debug Environment Variables
+        run: |
+          echo "EXPO_PUBLIC_APP_VARIANT=${{ matrix.variant }}"
+          echo "EXPO_USE_DEFAULT_LOCATION=true"
+          echo "ENVIRONMENT_MODE=production"
+          echo "GOOGLE_MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }}"
+          echo "EXPO_IP_ADDRESS=${{ secrets.EXPO_IP_ADDRESS }}"
+          echo "EXPO_STORYBOOK=false"
+          if [ "${{ matrix.variant }}" == "client" ]; then
+            echo "EAS_BUILD_PROFILE=client-production"
+            echo "EAS_PROJECT_ID=${{ secrets.CLIENT_APP_ID }}"
+          fi
+          if [ "${{ matrix.variant }}" == "donor" ]; then
+            echo "EAS_BUILD_PROFILE=donor-production"
+            echo "EAS_PROJECT_ID=${{ secrets.DONOR_APP_ID }}"
+          fi
+
       - name: Set environment variables
         run: |
           echo "EXPO_PUBLIC_APP_VARIANT=${{ matrix.variant }}" >> $GITHUB_ENV
