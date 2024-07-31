@@ -34,7 +34,7 @@
 			"android": {}
 		},
 		"client-production": {
-			"developmentClient": true,
+			"developmentClient": false,
 			"distribution": "internal",
 			"ios": {
 				"resourceClass": "m-medium"
@@ -42,7 +42,7 @@
 			"android": {}
 		},
 		"donor-production": {
-			"developmentClient": true,
+			"developmentClient": false,
 			"distribution": "internal",
 			"ios": {
 				"resourceClass": "m-medium"
