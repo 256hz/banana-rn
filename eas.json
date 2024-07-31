@@ -34,12 +34,16 @@
 			"android": {}
 		},
 		"client-production": {
+			"developmentClient": true,
+			"distribution": "internal",
 			"ios": {
 				"resourceClass": "m-medium"
 			},
 			"android": {}
 		},
 		"donor-production": {
+			"developmentClient": true,
+			"distribution": "internal",
 			"ios": {
 				"resourceClass": "m-medium"
 			},
