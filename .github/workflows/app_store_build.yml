@@ -40,11 +40,11 @@ jobs:
           echo "EXPO_STORYBOOK=false" >> $GITHUB_ENV
           if [ "${{ matrix.variant }}" == "client" ]; then
             echo "EAS_BUILD_PROFILE=client-production" >> $GITHUB_ENV
-            echo "EAS_PROJECT_ID=${{ secrets.CLIENT_APP_ID }}" >> $GITHUB_ENV
+            echo "CLIENT_APP_ID=${{ secrets.CLIENT_APP_ID }}" >> $GITHUB_ENV
           fi
           if [ "${{ matrix.variant }}" == "donor" ]; then
             echo "EAS_BUILD_PROFILE=donor-production" >> $GITHUB_ENV
-            echo "EAS_PROJECT_ID=${{ secrets.DONOR_APP_ID }}" >> $GITHUB_ENV
+            echo "DONOR_APP_ID=${{ secrets.DONOR_APP_ID }}" >> $GITHUB_ENV
           fi
 
       - name: 🚀 Build app
