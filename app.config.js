@@ -1,8 +1,9 @@
+import 'dotenv/config';
 import donorConfig from './app.donor.json';
 import clientConfig from './app.client.json';
-import 'dotenv/config';
 
 export default ({ config }) => {
+	const isClient = process.env.EXPO_PUBLIC_APP_VARIANT === 'client';
 	const dynamicConfig = {
 		extra: {
 			ipAddress: process.env.EXPO_IP_ADDRESS,
@@ -12,18 +13,19 @@ export default ({ config }) => {
 			productionBuild: process.env.ENVIRONMENT_MODE === 'production',
 			googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
 			eas: {
-				projectId:
-					process.env.EXPO_PUBLIC_APP_VARIANT === 'client' ? process.env.CLIENT_APP_ID : process.env.DONOR_APP_ID,
+				projectId: isClient ? process.env.CLIENT_APP_ID : process.env.DONOR_APP_ID,
 			},
 		},
 	};
 
-	let configVariant = process.env.EXPO_PUBLIC_APP_VARIANT === 'client' ? clientConfig : donorConfig;
+	const configVariant = isClient ? clientConfig : donorConfig;
+	const slug = isClient ? 'banana-app-client' : 'banana-app-donor';
 
 	// Merge the configurations
 	return {
 		...config,
 		...configVariant.expo,
+		slug, // Dynamically set the slug
 		extra: {
 			...config.extra,
 			...configVariant.expo.extra,
