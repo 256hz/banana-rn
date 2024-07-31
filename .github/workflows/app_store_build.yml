@@ -35,6 +35,9 @@ jobs:
       - name: Set environment variables
         run: |
           echo "EXPO_PUBLIC_APP_VARIANT=${{ matrix.variant }}" >> $GITHUB_ENV
+          echo "EXPO_USE_DEFAULT_LOCATION=true" >> $GITHUB_ENV
+          echo "ENVIRONMENT_MODE=production" >> $GITHUB_ENV
+          echo "EXPO_STORYBOOK=false" >> $GITHUB_ENV
           if [ "${{ matrix.variant }}" == "client" ]; then
             echo "EAS_BUILD_PROFILE=client-production" >> $GITHUB_ENV
             echo "EAS_PROJECT_ID=${{ secrets.CLIENT_APP_ID }}" >> $GITHUB_ENV
