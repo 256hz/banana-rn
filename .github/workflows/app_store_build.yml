@@ -34,12 +34,6 @@ jobs:
 
       - name: Debug Environment Variables
         run: |
-          echo "EXPO_PUBLIC_APP_VARIANT=${{ matrix.variant }}"
-          echo "EXPO_USE_DEFAULT_LOCATION=true"
-          echo "ENVIRONMENT_MODE=production"
-          echo "GOOGLE_MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }}"
-          echo "EXPO_IP_ADDRESS=${{ secrets.EXPO_IP_ADDRESS }}"
-          echo "EXPO_STORYBOOK=false"
           if [ "${{ matrix.variant }}" == "client" ]; then
             echo "EAS_BUILD_PROFILE=client-production"
             echo "EAS_PROJECT_ID=${{ secrets.CLIENT_APP_ID }}"
@@ -48,6 +42,14 @@ jobs:
             echo "EAS_BUILD_PROFILE=donor-production"
             echo "EAS_PROJECT_ID=${{ secrets.DONOR_APP_ID }}"
           fi
+          echo "EXPO_PUBLIC_APP_VARIANT=${EXPO_PUBLIC_APP_VARIANT}"
+          echo "EXPO_USE_DEFAULT_LOCATION=${EXPO_USE_DEFAULT_LOCATION}"
+          echo "ENVIRONMENT_MODE=${ENVIRONMENT_MODE}"
+          echo "GOOGLE_MAPS_API_KEY is set"
+          echo "EXPO_IP_ADDRESS is set"
+          echo "EXPO_STORYBOOK=${EXPO_STORYBOOK}"
+          echo "EAS_BUILD_PROFILE=${EAS_BUILD_PROFILE}"
+          echo "EAS_PROJECT_ID is set"
 
       - name: Set environment variables
         run: |
