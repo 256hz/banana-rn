@@ -28,8 +28,14 @@ jobs:
           node-version: 18.x
           cache: 'npm'
 
+      - name: Clean npm cache
+        run: npm cache clean --force
+
       - name: 📝 Configure Git safe directory
         run: git config --global --add safe.directory $GITHUB_WORKSPACE
+
+      - name: Install EAS CLI
+        run: npm install -g eas-cli
 
       - name: 🏗 Setup EAS
         uses: expo/expo-github-action@v8
