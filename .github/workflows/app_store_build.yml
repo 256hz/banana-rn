@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - CI/CD_Setup
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -45,6 +46,26 @@ jobs:
           if [ "${{ matrix.variant }}" == "donor" ]; then
             echo "EAS_BUILD_PROFILE=donor-production" >> $GITHUB_ENV
             echo "EAS_PROJECT_ID=${{ secrets.DONOR_APP_ID }}" >> $GITHUB_ENV
+          fi
+
+      - name: Check CLIENT_APP_ID
+        if: matrix.variant == 'client'
+        run: |
+          if [ -z "${{ secrets.CLIENT_APP_ID }}" ]; then
+            echo "CLIENT_APP_ID is not set or is empty"
+            exit 1
+          else
+            echo "CLIENT_APP_ID is set"
+          fi
+
+      - name: Check DONOR_APP_ID
+        if: matrix.variant == 'donor'
+        run: |
+          if [ -z "${{ secrets.DONOR_APP_ID }}" ]; then
+            echo "DONOR_APP_ID is not set or is empty"
+            exit 1
+          else
+            echo "DONOR_APP_ID is set"
           fi
 
       - name: Debug Environment Variables
