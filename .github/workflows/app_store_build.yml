@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - CI/CD_Setup
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -11,6 +12,13 @@ jobs:
         platform: [ios] # Include android if needed
 
     steps:
+      - name: Increase inotify watchers limit
+        run: |
+          echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
+          echo "fs.inotify.max_user_instances=524288" | sudo tee -a /etc/sysctl.conf
+          echo "fs.inotify.max_queued_events=524288" | sudo tee -a /etc/sysctl.conf
+          sudo sysctl -p
+
       - name: 🏗 Setup repo
         uses: actions/checkout@v4
 
@@ -18,7 +26,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-          cache: npm
+          cache: 'npm'
 
       - name: 📝 Configure Git safe directory
         run: git config --global --add safe.directory $GITHUB_WORKSPACE
@@ -38,12 +46,14 @@ jobs:
           echo "EXPO_USE_DEFAULT_LOCATION=true" >> $GITHUB_ENV
           echo "ENVIRONMENT_MODE=production" >> $GITHUB_ENV
           echo "EXPO_STORYBOOK=false" >> $GITHUB_ENV
+          echo "GOOGLE_MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }}" >> $GITHUB_ENV
           if [ "${{ matrix.variant }}" == "client" ]; then
             echo "EAS_BUILD_PROFILE=client-production" >> $GITHUB_ENV
+            echo "CLIENT_APP_ID=${{ secrets.CLIENT_APP_ID }}" >> $GITHUB_ENV
             echo "EAS_PROJECT_ID=${{ secrets.CLIENT_APP_ID }}" >> $GITHUB_ENV
-          fi
-          if [ "${{ matrix.variant }}" == "donor" ]; then
+          elif [ "${{ matrix.variant }}" == "donor" ]; then
             echo "EAS_BUILD_PROFILE=donor-production" >> $GITHUB_ENV
+            echo "DONOR_APP_ID=${{ secrets.DONOR_APP_ID }}" >> $GITHUB_ENV
             echo "EAS_PROJECT_ID=${{ secrets.DONOR_APP_ID }}" >> $GITHUB_ENV
           fi
 
@@ -53,8 +63,14 @@ jobs:
           echo "EXPO_USE_DEFAULT_LOCATION=${EXPO_USE_DEFAULT_LOCATION}"
           echo "ENVIRONMENT_MODE=${ENVIRONMENT_MODE}"
           echo "EXPO_STORYBOOK=${EXPO_STORYBOOK}"
+          echo "GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}"
           echo "EAS_BUILD_PROFILE=${EAS_BUILD_PROFILE}"
           echo "EAS_PROJECT_ID=${EAS_PROJECT_ID}"
+          if [ "${EXPO_PUBLIC_APP_VARIANT}" == "client" ]; then
+            echo "CLIENT_APP_ID=${CLIENT_APP_ID}"
+          elif [ "${EXPO_PUBLIC_APP_VARIANT}" == "donor" ]; then
+            echo "DONOR_APP_ID=${DONOR_APP_ID}"
+          fi
 
       - name: 🚀 Build app
-        run: eas build --platform ${{ matrix.platform }} --profile ${{ env.EAS_BUILD_PROFILE }} --non-interactive
+        run: npx eas build --platform ${{ matrix.platform }} --profile ${{ env.EAS_BUILD_PROFILE }} --non-interactive
