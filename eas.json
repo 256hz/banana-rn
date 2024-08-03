@@ -40,7 +40,7 @@
 				"EXPO_PUBLIC_APP_VARIANT": "client",
 				"EXPO_USE_DEFAULT_LOCATION": "true",
 				"ENVIRONMENT_MODE": "production",
-				"CLIENT_APP_ID": "CLIENT_APP_ID"
+				"CLIENT_APP_ID": "${CLIENT_APP_ID}"
 			},
 			"ios": {
 				"resourceClass": "m-medium"
@@ -54,7 +54,7 @@
 				"EXPO_PUBLIC_APP_VARIANT": "donor",
 				"EXPO_USE_DEFAULT_LOCATION": "true",
 				"ENVIRONMENT_MODE": "production",
-				"DONOR_APP_ID": "DONOR_APP_ID"
+				"DONOR_APP_ID": "${DONOR_APP_ID}"
 			},
 			"ios": {
 				"resourceClass": "m-medium"
