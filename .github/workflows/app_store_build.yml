@@ -76,6 +76,11 @@ jobs:
           echo "EXPO_STORYBOOK=${EXPO_STORYBOOK}"
           echo "EAS_BUILD_PROFILE=${EAS_BUILD_PROFILE}"
           echo "EAS_PROJECT_ID=${EAS_PROJECT_ID}"
+          echo "CLIENT_APP_ID=${{ secrets.CLIENT_APP_ID }}"  # Add this line
+          echo "DONOR_APP_ID=${{ secrets.DONOR_APP_ID }}"    # Add this line
 
       - name: 🚀 Build app
-        run: eas build --platform ${{ matrix.platform }} --profile ${{ env.EAS_BUILD_PROFILE }} --non-interactive
+        run: |
+          eas build --platform ${{ matrix.platform }} --profile $EAS_BUILD_PROFILE --non-interactive
+        env:
+          EAS_BUILD_PROFILE: ${{ env.EAS_BUILD_PROFILE }}
