@@ -1,7 +1,7 @@
 {
 	"expo": {
 		"name": "Banana App - Client",
-		"slug": "banana-app-client-2024",
+		"slug": "banana-app-client",
 		"privacy": "public",
 		"platforms": ["ios", "android", "web"],
 		"version": "1.1.17",
