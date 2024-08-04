@@ -41,7 +41,7 @@ jobs:
           echo "EXPO_STORYBOOK=false" >> $GITHUB_ENV
           if [ "${{ matrix.variant }}" == "client" ]; then
             echo "EAS_BUILD_PROFILE=client-production" >> $GITHUB_ENV
-            echo "EAS_PROJECT_ID=${{ secrets.CLIENT_APP_ID }}" >> $GITHUB_ENV
+            echo "EAS_PROJECT_ID=07930517-a6b3-4a60-96b2-842eb4ee9f5d" >> $GITHUB_ENV
           fi
           if [ "${{ matrix.variant }}" == "donor" ]; then
             echo "EAS_BUILD_PROFILE=donor-production" >> $GITHUB_ENV
@@ -67,17 +67,6 @@ jobs:
           else
             echo "DONOR_APP_ID is set"
           fi
-
-      - name: Debug Environment Variables
-        run: |
-          echo "EXPO_PUBLIC_APP_VARIANT=${EXPO_PUBLIC_APP_VARIANT}"
-          echo "EXPO_USE_DEFAULT_LOCATION=${EXPO_USE_DEFAULT_LOCATION}"
-          echo "ENVIRONMENT_MODE=${ENVIRONMENT_MODE}"
-          echo "EXPO_STORYBOOK=${EXPO_STORYBOOK}"
-          echo "EAS_BUILD_PROFILE=${EAS_BUILD_PROFILE}"
-          echo "EAS_PROJECT_ID=${EAS_PROJECT_ID}"
-          echo "CLIENT_APP_ID=${{ secrets.CLIENT_APP_ID }}"
-          echo "DONOR_APP_ID=${{ secrets.DONOR_APP_ID }}"
 
       - name: 🚀 Build app
         run: |
