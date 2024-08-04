@@ -6,10 +6,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        variant: [client, donor]
-        platform: [ios] # Include android if needed
 
     steps:
       - name: 🏗 Setup repo
@@ -35,21 +31,14 @@ jobs:
 
       - name: Set environment variables
         run: |
-          echo "EXPO_PUBLIC_APP_VARIANT=${{ matrix.variant }}" >> $GITHUB_ENV
+          echo "EXPO_PUBLIC_APP_VARIANT=client" >> $GITHUB_ENV
           echo "EXPO_USE_DEFAULT_LOCATION=true" >> $GITHUB_ENV
           echo "ENVIRONMENT_MODE=production" >> $GITHUB_ENV
           echo "EXPO_STORYBOOK=false" >> $GITHUB_ENV
-          if [ "${{ matrix.variant }}" == "client" ]; then
-            echo "EAS_BUILD_PROFILE=client-production" >> $GITHUB_ENV
-            echo "EAS_PROJECT_ID=${{ secrets.CLIENT_APP_ID }}" >> $GITHUB_ENV
-          fi
-          if [ "${{ matrix.variant }}" == "donor" ]; then
-            echo "EAS_BUILD_PROFILE=donor-production" >> $GITHUB_ENV
-            echo "EAS_PROJECT_ID=${{ secrets.DONOR_APP_ID }}" >> $GITHUB_ENV
-          fi
+          echo "EAS_BUILD_PROFILE=client-production" >> $GITHUB_ENV
+          echo "EAS_PROJECT_ID=${{ secrets.CLIENT_APP_ID }}" >> $GITHUB_ENV
 
       - name: Check CLIENT_APP_ID
-        if: matrix.variant == 'client'
         run: |
           if [ -z "${{ secrets.CLIENT_APP_ID }}" ]; then
             echo "CLIENT_APP_ID is not set or is empty"
@@ -58,18 +47,8 @@ jobs:
             echo "CLIENT_APP_ID is set"
           fi
 
-      - name: Check DONOR_APP_ID
-        if: matrix.variant == 'donor'
-        run: |
-          if [ -z "${{ secrets.DONOR_APP_ID }}" ]; then
-            echo "DONOR_APP_ID is not set or is empty"
-            exit 1
-          else
-            echo "DONOR_APP_ID is set"
-          fi
-
       - name: 🚀 Build app
         run: |
-          eas build --platform ${{ matrix.platform }} --profile $EAS_BUILD_PROFILE --non-interactive
+          eas build --platform ios --profile $EAS_BUILD_PROFILE --non-interactive
         env:
           EAS_BUILD_PROFILE: ${{ env.EAS_BUILD_PROFILE }}
