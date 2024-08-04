@@ -12,9 +12,7 @@
 				"ENVIRONMENT_MODE": "production",
 				"CLIENT_APP_ID": "${CLIENT_APP_ID}"
 			},
-			"node": {
-				"version": "18.x"
-			},
+			"node": "18.x",
 			"ios": {
 				"resourceClass": "m-medium"
 			},
@@ -29,9 +27,7 @@
 				"ENVIRONMENT_MODE": "production",
 				"DONOR_APP_ID": "${DONOR_APP_ID}"
 			},
-			"node": {
-				"version": "18.x"
-			},
+			"node": "18.x",
 			"ios": {
 				"resourceClass": "m-medium"
 			},
