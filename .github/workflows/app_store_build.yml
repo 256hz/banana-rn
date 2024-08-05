@@ -9,7 +9,7 @@ jobs:
 
     strategy:
       matrix:
-        variant: [client, donor]
+        variant: [donor]
         platform: [ios] # Include android if needed
 
     steps:
