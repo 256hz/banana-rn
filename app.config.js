@@ -13,8 +13,11 @@ export default ({ config }) => {
 			productionBuild: process.env.ENVIRONMENT_MODE === 'production',
 			googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
 			eas: {
-				projectId: isClient ? process.env.CLIENT_APP_ID : process.env.DONOR_APP_ID,
+				projectId: 'ce5107de-81bb-40d1-8cd2-dc61daf0c9d3',
 			},
+			// eas: {
+			// 	projectId: isClient ? process.env.CLIENT_APP_ID : process.env.DONOR_APP_ID,
+			// },
 		},
 	};
 
