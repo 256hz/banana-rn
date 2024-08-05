@@ -3,7 +3,7 @@ import donorConfig from './app.donor.json';
 import clientConfig from './app.client.json';
 
 export default ({ config }) => {
-	const isClient = process.env.EXPO_PUBLIC_APP_VARIANT === 'client';
+	const isClient = process.env.EXPO_PUBLIC_APP_VARIANT === 'donor';
 	const dynamicConfig = {
 		extra: {
 			ipAddress: process.env.EXPO_IP_ADDRESS,
