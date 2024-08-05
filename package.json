@@ -29,7 +29,7 @@
     "axios": "^1.4.0",
     "dotenv": "^16.3.1",
     "eslint-plugin-jest": "^23.17.1",
-    "expo": "^51.0.22",
+    "expo": "~51.0.24",
     "expo-application": "~5.9.1",
     "expo-barcode-scanner": "~13.0.1",
     "expo-camera": "~15.0.14",
