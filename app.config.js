@@ -22,7 +22,8 @@ export default ({ config }) => {
 	};
 
 	const configVariant = isClient ? clientConfig : donorConfig;
-	const slug = isClient ? 'banana-app-client' : 'banana-app-donor';
+	// const slug = isClient ? 'banana-app-client' : 'banana-app-donor';
+	const slug = 'banana-app-donor';
 
 	// Merge the configurations
 	return {
