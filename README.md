@@ -380,7 +380,7 @@ To run a local build (not throught the CI/CD process), follow the expo docs on h
   - "slug": "banana-app-donor",
   - "bundleIdentifier": "com.thebegoodproject.org.bananaapp"
 
-### Deployment Steps:
+### Deployment Steps (old):
 
 1. `npm install`
 2. Increment the version according to version number in the appropriate file:
@@ -455,3 +455,11 @@ expo build:android --config app.donor.json
 ---
 
 [back to top](<#BANANA-APP:-Donor/Client-Apps-(React-Native/Typescript)>)
+
+
+### Deployment Steps (2024):
+
+[Local Build](https://docs.expo.dev/build/setup/)
+1. Install the latest EAS CLI - `npm install -g eas-cli`
+2. Log into your Expo account - `eas login`
+3. Project builds are configured in the `eas.json` file. 
