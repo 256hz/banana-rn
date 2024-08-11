@@ -34,11 +34,6 @@ jobs:
       - name: 📦 Install dependencies
         run: npm install
 
-      - name: 🏗 Install Fastlane
-        run: |
-          sudo gem install fastlane -NV
-          export PATH="$PATH:$(gem environment gemdir)/bin"
-
       - name: Set environment variables
         run: |
           echo "EXPO_PUBLIC_APP_VARIANT=${{ matrix.variant }}" >> $GITHUB_ENV
@@ -87,9 +82,3 @@ jobs:
         env:
           EAS_BUILD_PROFILE: ${{ env.EAS_BUILD_PROFILE }}
           EAS_PROJECT_ID: ${{ env.EAS_PROJECT_ID }}
-          EXPO_APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.EXPO_APPLE_APP_SPECIFIC_PASSWORD }}
-          EXPO_APPLE_ID: ${{ secrets.EXPO_APPLE_ID }}
-          EXPO_TEAM_ID: ${{ secrets.EXPO_TEAM_ID }}
-          EXPO_IOS_DIST_P12_PASSWORD: ${{ secrets.EXPO_IOS_DIST_P12_PASSWORD }}
-          EXPO_IOS_DIST_P12_BASE64: ${{ secrets.EXPO_IOS_DIST_P12_BASE64 }}
-          EXPO_IOS_PROVISIONING_PROFILE_BASE64: ${{ secrets.EXPO_IOS_PROVISIONING_PROFILE_BASE64 }}
